@@ -1,4 +1,4 @@
-import { site } from "@/data/site";
+import { site } from "@/data/portfolio";
 import Reveal from "@/components/ui/Reveal";
 
 export default function Introduction() {
@@ -35,7 +35,7 @@ export default function Introduction() {
             </a>
             <a
               href={`mailto:${site.email}`}
-              className="border border-black/25 px-6 py-4 font-button text-xs font-bold uppercase tracking-widest text-black transition-all duration-300 hover:scale-105 hover:border-black hover:bg-black/5 hover:backdrop-blur-md"
+              className="border border-black/25 px-6 py-4 font-button text-xs font-bold uppercase tracking-widest text-black transition-all duration-300 hover:scale-105 hover:border-black hover:bg-black/5"
             >
               Contact Me
             </a>
@@ -46,7 +46,7 @@ export default function Introduction() {
               href={site.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-black/15 px-4 py-3.5 transition-all duration-300 hover:scale-105 hover:border-black/40 hover:bg-black/5 hover:text-black hover:backdrop-blur-md"
+              className="border border-black/15 px-4 py-3.5 transition-all duration-300 hover:scale-105 hover:border-black/40 hover:bg-black/5 hover:text-black"
             >
               GitHub ↗
             </a>
@@ -54,7 +54,7 @@ export default function Introduction() {
               href={site.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-black/15 px-4 py-3.5 transition-all duration-300 hover:scale-105 hover:border-black/40 hover:bg-black/5 hover:text-black hover:backdrop-blur-md"
+              className="border border-black/15 px-4 py-3.5 transition-all duration-300 hover:scale-105 hover:border-black/40 hover:bg-black/5 hover:text-black"
             >
               LinkedIn ↗
             </a>

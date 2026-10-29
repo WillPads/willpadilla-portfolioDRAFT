@@ -1,4 +1,4 @@
-import { skills } from "@/data/site";
+import { skills } from "@/data/portfolio";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 
@@ -14,7 +14,7 @@ export default function About() {
             sentences — visitors will read the projects below for the details.
           </p>
           <div id="skills" className="flex scroll-mt-24 flex-wrap content-start gap-1.5">
-            {skills.map((skill) => (
+            {skills.flatMap((group) => group.items).map((skill) => (
               <span
                 key={skill}
                 className="border border-black/15 px-3 py-1 font-button text-xs uppercase tracking-wider text-black/70"

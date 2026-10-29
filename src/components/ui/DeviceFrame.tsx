@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { DeviceFrame as DeviceFrameVariant } from "@/data/projects";
+import type { DeviceFrame as DeviceFrameVariant } from "@/data/portfolio";
 
 export default function DeviceFrame({
   variant,

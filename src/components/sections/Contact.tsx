@@ -1,4 +1,4 @@
-import { site } from "@/data/site";
+import { site } from "@/data/portfolio";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 

@@ -1,4 +1,4 @@
-import { site } from "@/data/site";
+import { site } from "@/data/portfolio";
 
 export default function Footer() {
   return (
@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="flex items-center gap-2">
           <a
             href={`mailto:${site.email}`}
-            className="rounded-full px-3 py-3.5 transition-all duration-300 hover:scale-105 hover:bg-black/5 hover:text-black hover:backdrop-blur-sm"
+            className="rounded-full px-3 py-3.5 transition-all duration-300 hover:scale-105 hover:bg-black/5 hover:text-black"
           >
             Email
           </a>
@@ -15,7 +15,7 @@ export default function Footer() {
             href={site.social.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full px-3 py-3.5 transition-all duration-300 hover:scale-105 hover:bg-black/5 hover:text-black hover:backdrop-blur-sm"
+            className="rounded-full px-3 py-3.5 transition-all duration-300 hover:scale-105 hover:bg-black/5 hover:text-black"
           >
             GitHub
           </a>
@@ -23,7 +23,7 @@ export default function Footer() {
             href={site.social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full px-3 py-3.5 transition-all duration-300 hover:scale-105 hover:bg-black/5 hover:text-black hover:backdrop-blur-sm"
+            className="rounded-full px-3 py-3.5 transition-all duration-300 hover:scale-105 hover:bg-black/5 hover:text-black"
           >
             LinkedIn
           </a>

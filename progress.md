@@ -1,5 +1,27 @@
 # Progress Log
 
+## 2026-10-30 — Phase 1: setup & architecture
+
+Plan, decisions and open items now live in [docs/ROADMAP.md](docs/ROADMAP.md). How to edit content:
+[docs/EDITING-CONTENT.md](docs/EDITING-CONTENT.md).
+
+What changed:
+
+- **One content file.** Merged `src/data/site.ts` and `src/data/projects.ts` into
+  [src/data/portfolio.ts](src/data/portfolio.ts) and deleted the old two. Every component now imports from it.
+- **Skills are grouped** into Languages / Frontend / Backend / Databases & Tools. Express, Prisma,
+  WebSockets and Android were added from the PixelDerm and SyncSpace stacks. About still shows them as one
+  tag list until the Phase 2 skills grid.
+- **Certifications** have a type and an empty list, ready for Will's certification.
+- **Removed "AI-template" effects:** the blurred glow blobs on project cards and every `hover:backdrop-blur`.
+  Hover accents are now solid border and text colour only. Removed the unused `green` accent.
+- **Installed `lucide-react`** (v1.64) for functional icons. It has no GitHub/LinkedIn logos, so those will
+  be inline SVGs in Phase 2.
+- **CLAUDE.md** updated to match (icons allowed, no blur/glow, single content file, link to the roadmap).
+
+Checked: `npx tsc --noEmit` passes, `npm run lint` has 0 errors (1 warning from the `.remember/` tool file),
+`next build` passes. Not yet viewed in a browser; nothing visible changed except hover effects.
+
 ## 2026-08-30 — Trim Projects to PixelDerm & SyncSpace
 
 - Removed "SkillPort" and "EcoLog" entries from [src/data/projects.ts](src/data/projects.ts), leaving

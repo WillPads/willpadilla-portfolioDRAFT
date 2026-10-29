@@ -1,4 +1,4 @@
-import { projects } from "@/data/projects";
+import { projects } from "@/data/portfolio";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ProjectCard from "@/components/ui/ProjectCard";
 import Reveal from "@/components/ui/Reveal";

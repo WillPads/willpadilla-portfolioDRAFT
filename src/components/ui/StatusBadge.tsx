@@ -1,4 +1,4 @@
-import type { ProjectStatus } from "@/data/projects";
+import type { ProjectStatus } from "@/data/portfolio";
 
 export default function StatusBadge({ status }: { status: ProjectStatus }) {
   const isCompleted = status === "completed";

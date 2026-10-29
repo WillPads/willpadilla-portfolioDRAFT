@@ -1,22 +1,19 @@
-import type { Project } from "@/data/projects";
+import type { Project } from "@/data/portfolio";
 import StatusBadge from "@/components/ui/StatusBadge";
 import DeviceFrame from "@/components/ui/DeviceFrame";
 
 const accentBorder = {
   mono: "hover:border-black",
-  green: "hover:border-emerald-500",
   "blue-purple": "hover:border-t-blue-500 hover:border-b-purple-500",
 } as const;
 
 const accentTitle = {
   mono: "group-hover:text-black",
-  green: "group-hover:text-emerald-600",
   "blue-purple": "group-hover:text-blue-600",
 } as const;
 
 const accentCta = {
   mono: "group-hover:text-black",
-  green: "group-hover:text-emerald-600",
   "blue-purple": "group-hover:text-purple-600",
 } as const;
 
@@ -27,31 +24,6 @@ export default function ProjectCard({ project }: { project: Project }) {
     <div
       className={`group relative flex h-full flex-col gap-6 overflow-hidden border border-black/10 bg-background p-6 transition-all duration-300 hover:-translate-y-2 hover:bg-white hover:shadow-[0_20px_45px_rgba(0,0,0,0.10)] sm:p-8 ${accentBorder[project.accent]}`}
     >
-      {project.accent === "mono" && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-black/0 blur-3xl transition-colors duration-500 group-hover:bg-black/[.06]"
-        />
-      )}
-      {project.accent === "green" && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-emerald-400/0 blur-3xl transition-colors duration-500 group-hover:bg-emerald-400/30"
-        />
-      )}
-      {project.accent === "blue-purple" && (
-        <>
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full bg-blue-500/0 blur-3xl transition-colors duration-500 group-hover:bg-blue-500/25"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-purple-500/0 blur-3xl transition-colors duration-500 group-hover:bg-purple-500/25"
-          />
-        </>
-      )}
-
       <div className="relative flex items-start justify-between gap-3">
         <div className="flex flex-col gap-1.5">
           <h3

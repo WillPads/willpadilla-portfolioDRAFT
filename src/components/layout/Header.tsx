@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { nav, site } from "@/data/site";
+import { nav, site } from "@/data/portfolio";
 
 export default function Header() {
   return (
@@ -17,7 +17,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-full px-2.5 py-3 sm:px-3 transition-all duration-300 hover:scale-105 hover:bg-black/5 hover:text-black hover:backdrop-blur-sm"
+              className="rounded-full px-2.5 py-3 sm:px-3 transition-all duration-300 hover:scale-105 hover:bg-black/5 hover:text-black"
             >
               {item.label}
             </Link>
