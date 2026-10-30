@@ -12,8 +12,8 @@ How to read this draft:
 - `[CHECK]` marks something inferred, or read from a source that may not match the final version.
 - The prose is in first person, as Will. Numbers appear only where a source states them.
 
-**Readiness:** SyncSpace and Signal No. 5 are done and on the site. **Gabay Aralin is next**, then PixelDerm
-(it needs the most from Will).
+**Readiness:** SyncSpace, Signal No. 5 and Gabay Aralin are done and on the site. **PixelDerm is last** (it
+needs the most from Will).
 
 ---
 
@@ -315,69 +315,77 @@ manager, is still finalising its development.
 
 ## 4. Gabay Aralin (`public/projects/gabay-aralin/`)
 
-> **Questions for Will (5)**
->
-> 1. **Who did what.** Draft: "Shana and I split the work: I ___, Shana ___." (The commits on Shana's repo
->    are co-authored with an AI coding tool; your copy is a single "post-hackathon push".)
-> 2. **AI tools.** Your notes say the organizers gave you Codex, but the commits list Claude as co-author. OK
->    to say "AI coding tools the organizers provided" without naming one?
-> 3. **Date.** The commits are all dated Oct 25, 2026. Use Oct 25?
-> 4. **Why parents.** Draft: "Many parents want to help with homework but aren't sure how to teach a topic,
->    and the easy shortcut is giving the child the answer." Keep, edit or drop?
-> 5. **What's next.** What are you improving now? Draft: "I'm now refining ___." And keep the 2 takeaway
->    drafts below?
-
 **Facts**
 
-- Event: UX+AI Hackathon at Zone Offices, BGC, Oct 25, 2026 [Q3]. A 3-4 hour sprint.
-- Built with Shana Patio, using AI coding tools the organizers provided [Q2].
-- Did not make the top contenders. Still being refined.
-- Tech stack: on hold until Will confirms. The prose doesn't name it.
+Status: FINAL. Will answered the questions on 2026-10-30. This text is now in `src/data/portfolio.ts`
+(`caseStudy` on the Gabay Aralin entry). No takeaways, at Will's request. Status stays In Development; the
+stack, repo link and live link stay on hold.
+
+- Date: Oct 25, 2026 (initial hackathon submission)
+- Context: UX+AI Hackathon, Zone Offices BGC, 3-4 hour sprint
+- Role: Co-developer
+- Team: 2: Shana Anikka Patio and me
 
 **Summary**
 
-Gabay Aralin is a mobile-first tutoring helper for parents of preschool and elementary kids. A parent snaps a
-photo of the homework, types it in, or picks a topic, and the app builds a short lesson, practice questions, a
-printable worksheet and tips for guiding their child. Shana Patio and I built it in a 3-4 hour sprint at a
-UX+AI hackathon.
+Gabay Aralin is a mobile-first home tutor for parents of preschool and elementary kids. A parent snaps a photo
+of the homework, types it in or picks a topic, and the app builds a short lesson, practice questions, a
+printable worksheet and tips for guiding their child. My teammate Shana Anikka Patio came up with the idea and
+built the first version at a UX+AI hackathon; I helped with core functions, features, deployment and the pitch.
+
+**Overview**
+
+Gabay Aralin started at a UX+AI hackathon at Zone Offices in BGC, a 3-4 hour sprint. Shana came up with the
+concept and built the first stages, and I helped with the core functions, features, deployment and the pitch.
+We submitted the first version on Oct 25, 2026, and kept working on it after the event.
 
 **The problem**
 
-Many parents want to help with homework but aren't sure how to teach a topic, and the easy shortcut is giving
-the child the answer. Gabay Aralin gives parents guiding questions for each homework item instead. [Q4]
+At preschool and elementary age, a child's main teacher at home is usually a parent. Parents are the ones
+sitting beside their kids at homework time, but they aren't trained tutors.
+
+That's when the hard moments happen: a parent isn't sure how to explain a topic, and the quickest way out is
+to hand over the answer. Gabay Aralin is built for moments like that. It helps the parent teach, with a lesson
+to follow, questions that guide the child, and an answer key only for the grown-up.
 
 **The process**
 
+We had 3-4 hours to go from an idea to a working app.
+
 - **Step 1: From homework guide to tutor center**
-  We started with a homework guide for parents, written in Tagalog. Within the sprint we switched the app to
-  English, added family profiles with each child's grade, and sorted saved lessons by child, grade and
-  subject. Then we rebuilt it as a home tutor center around four parts: lessons, practice, worksheets and
-  parent tips. [Q1]
-  Image: none
+  Shana built the first stages using the event's sponsored Codex API credits. The app began as a homework
+  guide for parents, written in Tagalog.
+  By the end of the day it was in English, had family profiles with each child's grade, sorted saved lessons
+  by child, grade and subject, and had been rebuilt as a home tutor center around four parts: lessons,
+  practice, worksheets and parent tips.
+  Image: none (`poster.jpg` is the cover)
 
 - **Step 2: Designing for parents and kids together**
   Each lesson is 3 to 5 short steps written for the child, with a note for grown-ups and a quick check after
   every step. Wrong answers get an encouraging hint, then a second one, and the answer only appears after the
-  third try. The worksheet prints with an answer key that explains each answer for the parent.
-  Image: `poster.jpg`
+  third try.
+  The worksheet prints with an answer key that explains each answer for the parent.
+  Image: none
 
 - **Step 3: Keeping homework unsolved**
   The parts that write lessons and worksheets never see the homework itself, only the subject, topic, grade
   and skills. A separate check solves every practice and worksheet question, drops any with a wrong or
   ambiguous answer key, and makes sure no question copies a homework item.
-  Image: `demo.mp4` (video; plays only when clicked)
+  Image: none
+
+- **Step 4: Features, deployment and the pitch**
+  My part was helping build the core functions and features, deploying the app, and pitching it.
+  Image: none
+
+**Demo** (shows the project's `demo.mp4` through `showDemoVideo`)
+
+A walkthrough of the app.
 
 **Results and what's next**
 
-We didn't make the top contenders, and I'm still refining the app. [Q5]
+We didn't make the top contenders. Improvements are in the works.
 
-**Takeaways** [Q5]
+**Cover image:** `poster.jpg` (1280x720, the family setup screen)
 
-- Change direction early. We turned a homework guide into a full tutor center within the same day.
-- Check the AI's output, not just its prompt. A second pass that solves every question catches wrong answer
-  keys before a parent sees them.
-
-**Cover image:** `poster.jpg`
-
-**Images used:** `poster.jpg`, `demo.mp4`.
+**Images used:** `poster.jpg` (cover), `demo.mp4` (Demo section).
 **Optional extra screenshots:** the lesson with a practice check, and the printable worksheet.

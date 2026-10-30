@@ -496,10 +496,10 @@ export const featuredProjects: FeaturedProject[] = [
   {
     slug: "gabay-aralin",
     title: "Gabay Aralin",
-    role: "Co-developer (2-person team)",
-    tagline: "Mobile tutoring platform that turns parents into confident home tutors for their kids",
+    role: "Co-developer",
+    tagline: "Mobile-first home tutor that helps parents teach their preschool and elementary kids",
     description:
-      "Built for parents of preschool and elementary-aged children, Gabay Aralin makes home learning more effort-efficient with step-by-step lesson plans and study guides, habit-building study frameworks, and collaborative digital and printable worksheets. Built with my teammate Shana Patio during a 3-4 hour UX+AI hackathon sprint, and still being refined after the event.",
+      "A parent snaps a photo of the homework, types it in or picks a topic, and Gabay Aralin builds a step-by-step lesson with practice checks, a printable worksheet with an answer key, and tips for guiding the child. For homework, it gives guiding questions instead of answers. My teammate Shana Anikka Patio came up with the concept and built the first version during a 3-4 hour UX+AI hackathon sprint; I helped with core functions, features, deployment and the pitch. Improvements are in the works.",
     stack: [], // TODO(Will): add the tech stack
     status: "in-development",
     year: "Oct 2026",
@@ -510,6 +510,78 @@ export const featuredProjects: FeaturedProject[] = [
       src: "/projects/gabay-aralin/demo.mp4",
       poster: "/projects/gabay-aralin/poster.jpg",
       caption: "App walkthrough",
+    },
+    caseStudy: {
+      summary:
+        "Gabay Aralin is a mobile-first home tutor for parents of preschool and elementary kids. A parent snaps a photo of the homework, types it in or picks a topic, and the app builds a short lesson, practice questions, a printable worksheet and tips for guiding their child. My teammate Shana Anikka Patio came up with the idea and built the first version at a UX+AI hackathon; I helped with core functions, features, deployment and the pitch.",
+      cover: {
+        src: "/projects/gabay-aralin/poster.jpg",
+        alt: "Gabay Aralin's family setup screen: \"Your free Home Tutor Center\", with steps to add each child and their grade level, and a parent profile form",
+        width: 1280,
+        height: 720,
+      },
+      facts: [
+        { label: "Date", value: "Oct 25, 2026 (initial hackathon submission)" },
+        { label: "Context", value: "UX+AI Hackathon, Zone Offices BGC, 3-4 hour sprint" },
+        { label: "Role", value: "Co-developer" },
+        { label: "Team", value: "2: Shana Anikka Patio and me" },
+      ],
+      sections: [
+        {
+          title: "Overview",
+          paragraphs: [
+            "Gabay Aralin started at a UX+AI hackathon at Zone Offices in BGC, a 3-4 hour sprint. Shana came up with the concept and built the first stages, and I helped with the core functions, features, deployment and the pitch. We submitted the first version on Oct 25, 2026, and kept working on it after the event.",
+          ],
+        },
+        {
+          title: "The problem",
+          paragraphs: [
+            "At preschool and elementary age, a child's main teacher at home is usually a parent. Parents are the ones sitting beside their kids at homework time, but they aren't trained tutors.",
+            "That's when the hard moments happen: a parent isn't sure how to explain a topic, and the quickest way out is to hand over the answer. Gabay Aralin is built for moments like that. It helps the parent teach, with a lesson to follow, questions that guide the child, and an answer key only for the grown-up.",
+          ],
+        },
+        {
+          title: "The process",
+          paragraphs: ["We had 3-4 hours to go from an idea to a working app."],
+          steps: [
+            {
+              title: "From homework guide to tutor center",
+              paragraphs: [
+                "Shana built the first stages using the event's sponsored Codex API credits. The app began as a homework guide for parents, written in Tagalog.",
+                "By the end of the day it was in English, had family profiles with each child's grade, sorted saved lessons by child, grade and subject, and had been rebuilt as a home tutor center around four parts: lessons, practice, worksheets and parent tips.",
+              ],
+            },
+            {
+              title: "Designing for parents and kids together",
+              paragraphs: [
+                "Each lesson is 3 to 5 short steps written for the child, with a note for grown-ups and a quick check after every step. Wrong answers get an encouraging hint, then a second one, and the answer only appears after the third try.",
+                "The worksheet prints with an answer key that explains each answer for the parent.",
+              ],
+            },
+            {
+              title: "Keeping homework unsolved",
+              paragraphs: [
+                "The parts that write lessons and worksheets never see the homework itself, only the subject, topic, grade and skills. A separate check solves every practice and worksheet question, drops any with a wrong or ambiguous answer key, and makes sure no question copies a homework item.",
+              ],
+            },
+            {
+              title: "Features, deployment and the pitch",
+              paragraphs: [
+                "My part was helping build the core functions and features, deploying the app, and pitching it.",
+              ],
+            },
+          ],
+        },
+        {
+          title: "Demo",
+          paragraphs: ["A walkthrough of the app."],
+          showDemoVideo: true,
+        },
+        {
+          title: "Results and what's next",
+          paragraphs: ["We didn't make the top contenders. Improvements are in the works."],
+        },
+      ],
     },
   },
 ];
