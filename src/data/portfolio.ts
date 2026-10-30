@@ -373,10 +373,10 @@ export const featuredProjects: FeaturedProject[] = [
   {
     slug: "signal-no-5",
     title: "Signal No. 5",
-    role: "Lead Backend Engineer & Project Manager",
+    role: "Associate Project Manager & Backend Developer",
     tagline: "8-bit RPG that teaches typhoon preparedness, with dialogue from an AI model running locally on the laptop",
     description:
-      "Players prepare a household for a fictional storm: manage limited resources, respond to warnings and evacuation advisories, and get through the storm and its aftermath, ending with a preparedness score and a personalised plan. I led backend development and project coordination, building a deterministic simulation engine and integrating Qwen3-4B through llama.cpp for locally generated dialogue, scene descriptions and debriefs. AI output is kept separate from the game logic, with validation, grounding checks and fallback responses. Built for kids aged 10-16 by a team of four.",
+      "Players prepare a household for a fictional typhoon: manage limited resources, respond to warnings and evacuation advisories, and get through the storm and its aftermath, ending with a preparedness score, badges and a personal debrief. On the backend, I worked on the game details, levels and badges, game flow and debrief findings. As associate project manager, I helped lead the concept, run the team's plans and progress checkpoints, check documentation and status, and design the pitch. The team built a deterministic simulation engine and ran Qwen3-4B locally through llama.cpp for dialogue and debrief wording, with AI output kept apart from the game logic and checked by validation, grounding checks and fallback text. Built for kids aged 10-16 by a team of four.",
     stack: ["TypeScript", "Electron", "React", "Phaser 3", "llama.cpp", "Qwen3-4B"],
     status: "completed",
     year: "Oct 2026",
@@ -391,6 +391,106 @@ export const featuredProjects: FeaturedProject[] = [
       src: "/projects/signal-no-5/promo.mp4",
       poster: "/projects/signal-no-5/cover.jpg",
       caption: "Promotional video for the AppBuildersPH demo day",
+    },
+    caseStudy: {
+      summary:
+        "Signal No. 5 is an 8-bit typhoon preparedness RPG for Windows, built for kids aged 10 to 16. Players prepare a Filipino home for a storm, live through it and its aftermath, and get a score, badges and a personal debrief, with dialogue written by a small AI model running on the same laptop. My team of four built it in about 20 hours for the AppBuildersPH Local AI Hackathon 2026, where I worked on the backend and was associate project manager.",
+      cover: {
+        src: "/projects/signal-no-5/cover.jpg",
+        alt: "Signal No. 5 title art: a pixel-art house at night under a typhoon, with a signal tower and the line \"Storm's coming... ready or not?\"",
+        width: 682,
+        height: 381,
+      },
+      facts: [
+        { label: "Duration", value: "Oct 9-10, 2026 (about 20 hours plus demo day)" },
+        { label: "Context", value: "AppBuildersPH Local AI Hackathon 2026" },
+        { label: "Role", value: "Associate Project Manager & Backend Developer" },
+        {
+          label: "Team",
+          value: "4: Karl Stephen Mangahas (lead project manager), Martonie Ayaay, Adrian Louise Sevilla and me",
+        },
+        { label: "Stack", value: "TypeScript, Phaser 3, React, Electron, llama.cpp, Qwen3-4B" },
+      ],
+      sections: [
+        {
+          title: "Overview",
+          paragraphs: [
+            "The hackathon's theme was local AI: the model had to run on the player's own machine, not in the cloud. Our idea was that every household is different, so players set up their own household and play through a typhoon shaped by it.",
+          ],
+        },
+        {
+          title: "The problem",
+          paragraphs: [
+            "Typhoons hit the Philippines every year, yet most preparedness material is a checklist. It tells you what to do but not why, and it gives every household the same advice.",
+            "Kids get the least out of that. A list can't show what happens when you pack too late or ignore an advisory. Signal No. 5 lets them practise those decisions before a real storm: they choose, watch the consequences play out, and finish with a preparedness plan for their own household.",
+          ],
+        },
+        {
+          title: "The process",
+          paragraphs: ["We had about 20 hours to go from an idea to a playable game."],
+          steps: [
+            {
+              title: "Picking tools the team already knew",
+              paragraphs: [
+                "We built the game with Phaser 3, React and TypeScript, packaged as an Electron app for Windows. Godot scored well in our comparison, but nobody on the team knew it, and switching languages would have meant rewriting our shared contracts.",
+              ],
+            },
+            {
+              title: "Designing the game flow, levels and badges",
+              paragraphs: [
+                "A deterministic simulation engine owns every rule, resource, consequence and score, so the same choices always give the same result. My part of the backend was what runs on it: the game details, levels and badges, the game flow, and the debrief findings that tell players what they did well and what they missed.",
+                "Players work through a 48-hour countdown with 19 preparation actions and 16 typhoon events, then evacuation and a three-day aftermath.",
+              ],
+              images: [
+                {
+                  src: "/projects/signal-no-5/gameplay.jpg",
+                  alt: "Signal No. 5 gameplay: a top-down pixel-art house where the family prepares, with the phase, go-bag status and checklist at the top",
+                  width: 1280,
+                  height: 713,
+                },
+              ],
+            },
+            {
+              title: "Fitting a model on a 4 GB laptop GPU",
+              paragraphs: [
+                "We benchmarked Qwen3-1.7B and Qwen3-4B on a laptop with a 4 GB GTX 1650 Ti. Both returned valid JSON in all 30 test runs. The 4B was slower (about 5 seconds per reply against 2.4) but wrote better dialogue, so it's the one the game ships with.",
+                "We ran it with llama.cpp instead of Ollama: it's a smaller install and gives direct control over GPU memory.",
+              ],
+            },
+            {
+              title: "Keeping the AI out of the rules",
+              paragraphs: [
+                "The model only writes NPC dialogue and debrief wording. Every reply goes through constrained JSON decoding, validation and a grounding guard that rejects anything contradicting the game, such as the home's layout or the storm's timing.",
+                "If a reply fails, the game uses fallback text written in advance, so it stays playable even without the model.",
+              ],
+            },
+            {
+              title: "Build day and demo day",
+              paragraphs: [
+                "We built the game remotely on Oct 9 and demoed it on Oct 10 at SM Makati CyberZone. Alongside the build, I helped run our plans and progress checkpoints, checked the documentation and status, and designed the presentation and the reasoning behind our pitch.",
+              ],
+            },
+          ],
+        },
+        {
+          title: "Struggles",
+          paragraphs: [
+            "The 4B model wrote better dialogue than the 1.7B, but it also made things up. In our benchmark review it invented facts the game must never state in 4 of 10 samples, and it scored 9 out of 20 on grounding against 19 for the smaller model.",
+            "We kept the 4B for its writing and added a grounding guard: a reply that contradicts the game, like the wrong home layout or storm timing, is rejected and replaced with fallback text.",
+          ],
+        },
+        {
+          title: "Demo",
+          paragraphs: ["Our promotional video for the AppBuildersPH demo day."],
+          showDemoVideo: true,
+        },
+        {
+          title: "Results",
+          paragraphs: [
+            "We built and demoed a working game in about 20 hours. It didn't place. Karl Stephen Mangahas, our lead project manager, is still finalising its development.",
+          ],
+        },
+      ],
     },
   },
   {

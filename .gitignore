@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# review screenshots and the agent team board (local only)
+/docs/review/
+/.claude/team/

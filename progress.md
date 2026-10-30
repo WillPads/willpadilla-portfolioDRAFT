@@ -149,3 +149,5 @@ Next:
 - Nav scroll-spy now follows the section at 40% of the screen height; the last section is active at the page bottom and nothing is active at the top.
 - Gabay Aralin demo video got `poster.jpg` (frame at 6.8 seconds). Signal No. 5's `cover.jpg` poster was kept.
 - QA across 375 to 1440px in both themes: no horizontal scroll, tap targets, focus, carousel wraps, all 4 panels, contrast, no shadows or filters, reduced motion. Review screenshots refreshed.
+- Nav scroll-spy fix: at the page bottom Contact now wins only when its top is above 70% of the screen and About's top is above 25%, so About keeps the underline while it is being read near the reading line (no more jump to Contact).
+- Nav scroll-spy click lock: clicking a nav link marks it and ignores the scroll its smooth scroll causes until the visitor scrolls (wheel, touch, scroll keys, scrollbar) or the hash changes; fixes Contact at 1280x1200 and About at 414x896.

@@ -12,8 +12,8 @@ How to read this draft:
 - `[CHECK]` marks something inferred, or read from a source that may not match the final version.
 - The prose is in first person, as Will. Numbers appear only where a source states them.
 
-**Readiness:** SyncSpace is done. **Signal No. 5 is closest** (its repo documents most of the story), then
-Gabay Aralin, then PixelDerm (it needs the most from Will).
+**Readiness:** SyncSpace and Signal No. 5 are done and on the site. **Gabay Aralin is next**, then PixelDerm
+(it needs the most from Will).
 
 ---
 
@@ -213,52 +213,44 @@ PixelDerm was completed as our thesis and evaluated with ISO/IEC 25010. [Q5]
 
 ## 3. Signal No. 5 (`public/projects/signal-no-5/`)
 
-> **Questions for Will (5)**
->
-> 1. **Your part.** The team's architecture doc splits the backend in two. Backend A owned the events, action
->    effects, badges, debrief findings and shared contracts; Backend B owned the prompts and prompt tests. Were
->    you A, B, or something else? As PM, what did you run (the plan, the checkpoints, the pitch)?
->    Draft: "I owned ___ and ran the team's plan and merge checkpoints."
-> 2. **Audience.** The site says "kids aged 10-16", but the repo docs don't name an age. Keep "kids aged 10 to
->    16"?
-> 3. **The problem.** Draft (from the team's pitch): "Most preparedness material tells you what to do but not
->    why it matters, and it gives every household the same advice." Keep, edit or drop? Anything from your own
->    experience of typhoons you'd add?
-> 4. **Result.** It didn't place. Did the judges say anything worth quoting? And who is still developing it,
->    and what are they adding? (Skip either if there's nothing to say.)
-> 5. **Takeaways.** Keep the 3 drafts below? Edit or drop any.
-
 **Facts**
 
-- Event: AppBuildersPH Local AI Hackathon 2026, theme "Localized A.I.". Built remotely on Oct 9 (about 20
-  hours), demoed Oct 10 at SM Makati CyberZone. Did not place.
-- Role: Lead Backend Engineer & Project Manager.
-- Team of four: Will, Karl Stephen Mangahas, Martonie Ayaay and Adrian Louise Sevilla.
-- Stack: TypeScript, Phaser 3, React, Electron (Windows app), Zod, Vitest, llama.cpp running
-  Qwen3-4B-Instruct-2507.
-- Repo: github.com/stfnnnnnnn/signal-no.5 (public; the visible commits are all dated Oct 9-10, 2026). The site
-  link is on hold.
+Status: FINAL. Will answered the questions on 2026-10-30. This text is now in `src/data/portfolio.ts`
+(`caseStudy` on the Signal No. 5 entry). No takeaways, at Will's request.
+
+- Duration: Oct 9-10, 2026 (about 20 hours plus demo day)
+- Context: AppBuildersPH Local AI Hackathon 2026
+- Role: Associate Project Manager & Backend Developer
+- Team: 4: Karl Stephen Mangahas (lead project manager), Martonie Ayaay, Adrian Louise Sevilla and me
+- Stack: TypeScript, Phaser 3, React, Electron, llama.cpp, Qwen3-4B
+- Repo: github.com/stfnnnnnnn/signal-no.5 (public). The site link is on hold.
 
 **Summary**
 
-Signal No. 5 is an 8-bit typhoon preparedness RPG for Windows. Players prepare a Filipino home for a storm,
-live through it and its aftermath, and get a score, badges and a personal debrief, with dialogue written by a
-small language model running on the same laptop. My team of four built it in about 20 hours for the
-AppBuildersPH Local AI Hackathon 2026, where I was lead backend engineer and project manager.
+Signal No. 5 is an 8-bit typhoon preparedness RPG for Windows, built for kids aged 10 to 16. Players prepare a
+Filipino home for a storm, live through it and its aftermath, and get a score, badges and a personal debrief,
+with dialogue written by a small AI model running on the same laptop. My team of four built it in about 20
+hours for the AppBuildersPH Local AI Hackathon 2026, where I worked on the backend and was associate project
+manager.
 
 **Overview**
 
 The hackathon's theme was local AI: the model had to run on the player's own machine, not in the cloud. Our
 idea was that every household is different, so players set up their own household and play through a typhoon
-shaped by it. We made it for kids aged 10 to 16. [Q2]
+shaped by it.
 
 **The problem**
 
-Most preparedness material tells you what to do but not why it matters, and it gives every household the same
-advice. In Signal No. 5, players make the decisions themselves, see what happens, and get a checklist based on
-their own household. [Q3]
+Typhoons hit the Philippines every year, yet most preparedness material is a checklist. It tells you what to
+do but not why, and it gives every household the same advice.
+
+Kids get the least out of that. A list can't show what happens when you pack too late or ignore an advisory.
+Signal No. 5 lets them practise those decisions before a real storm: they choose, watch the consequences play
+out, and finish with a preparedness plan for their own household.
 
 **The process**
+
+We had about 20 hours to go from an idea to a playable game.
 
 - **Step 1: Picking tools the team already knew**
   We built the game with Phaser 3, React and TypeScript, packaged as an Electron app for Windows. Godot scored
@@ -266,10 +258,12 @@ their own household. [Q3]
   our shared contracts.
   Image: none
 
-- **Step 2: A deterministic engine owns the rules**
-  A simulation engine owns every rule, resource, consequence and score, so the same choices always give the
-  same result. Players work through a 48-hour countdown with 19 preparation actions and 16 typhoon events,
-  then evacuation and a three-day aftermath. [Q1: if this was your part, it becomes "I built..."]
+- **Step 2: Designing the game flow, levels and badges**
+  A deterministic simulation engine owns every rule, resource, consequence and score, so the same choices
+  always give the same result. My part of the backend was what runs on it: the game details, levels and
+  badges, the game flow, and the debrief findings that tell players what they did well and what they missed.
+  Players work through a 48-hour countdown with 19 preparation actions and 16 typhoon events, then evacuation
+  and a three-day aftermath.
   Image: `gameplay.jpg`
 
 - **Step 3: Fitting a model on a 4 GB laptop GPU**
@@ -287,9 +281,10 @@ their own household. [Q3]
   Image: none
 
 - **Step 5: Build day and demo day**
-  We built the game remotely on Oct 9 and demoed it on Oct 10 at SM Makati CyberZone. [Q1: one line on how you
-  kept four people in sync, if you want it]
-  Image: `promo.mp4` (video; plays only when clicked)
+  We built the game remotely on Oct 9 and demoed it on Oct 10 at SM Makati CyberZone. Alongside the build, I
+  helped run our plans and progress checkpoints, checked the documentation and status, and designed the
+  presentation and the reasoning behind our pitch.
+  Image: none (the video gets its own "Demo" section)
 
 **Struggles**
 
@@ -302,23 +297,18 @@ home layout or storm timing, is rejected and replaced with fallback text.
 
 **Results**
 
-We built and demoed a working game in about 20 hours. It didn't place. [Q4]
+**Demo** (shows the project's `promo.mp4` through `showDemoVideo`)
 
-What's still open: the Windows build isn't code-signed, the packaged app's fully offline run hasn't been
-tested yet, and the lesson and checklist text is placeholder wording waiting for review. [CHECK: from the
-repo's "Known limitations"; keep this paragraph or drop it]
+Our promotional video for the AppBuildersPH demo day.
 
-**Takeaways** [Q5]
+**Results**
 
-- Keep the AI out of the rules. Because the engine owns every score and consequence, a bad model reply can't
-  break the game.
-- Benchmark on the real hardware. The bigger model was only worth it once we'd measured it on the 4 GB laptop
-  we'd demo on.
-- Pick tools the team already knows. In a 20-hour build, a familiar stack beat a better-scoring one.
+We built and demoed a working game in about 20 hours. It didn't place. Karl Stephen Mangahas, our lead project
+manager, is still finalising its development.
 
-**Cover image:** `cover.jpg`
+**Cover image:** `cover.jpg` (682x381)
 
-**Images used:** `gameplay.jpg`, `promo.mp4`, `cover.jpg`.
+**Images used:** `cover.jpg` (cover), `gameplay.jpg` (step 2, 1280x713), `promo.mp4` (Demo section).
 **Optional extra screenshots:** the household setup screen and the debrief with badges.
 
 ---
