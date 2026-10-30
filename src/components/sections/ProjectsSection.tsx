@@ -1,24 +1,22 @@
-import { projects } from "@/data/portfolio";
+import { featuredProjects } from "@/data/portfolio";
 import SectionHeading from "@/components/ui/SectionHeading";
-import ProjectCard from "@/components/ui/ProjectCard";
 import Reveal from "@/components/ui/Reveal";
+import ProjectCarousel from "@/components/sections/ProjectCarousel";
+import MoreProjects from "@/components/sections/MoreProjects";
+import { containerClass, sectionGapClass } from "@/components/ui/styles";
 
+// overflow-x-clip: on phones the turntable track runs edge to edge, so this stops it from
+// ever adding a sideways scrollbar.
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="border-b border-black/10">
-      <div className="mx-auto w-full max-w-5xl px-6 pt-20 pb-28">
-        <SectionHeading eyebrow="Projects" title="Selected work" />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <Reveal
-              key={project.title}
-              className={project.span === "wide" ? "lg:col-span-2" : "lg:col-span-1"}
-            >
-              <ProjectCard project={project} />
-            </Reveal>
-          ))}
-        </div>
-      </div>
+    <section id="projects" aria-labelledby="projects-title" className={`${containerClass} ${sectionGapClass} overflow-x-clip`}>
+      <Reveal>
+        <SectionHeading id="projects-title" title="Projects" />
+      </Reveal>
+      <Reveal delay={90}>
+        {featuredProjects.length > 0 && <ProjectCarousel projects={featuredProjects} />}
+        <MoreProjects />
+      </Reveal>
     </section>
   );
 }

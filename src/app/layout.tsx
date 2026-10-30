@@ -1,23 +1,18 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono, Space_Mono } from "next/font/google";
+import { Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
+import Background from "@/components/ui/Background";
+import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+// Two variable fonts, so one file each covers every weight we use.
+const hankenGrotesk = Hanken_Grotesk({
+  variable: "--font-hanken-grotesk",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-  weight: ["400", "500"],
-});
-
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
-  subsets: ["latin"],
-  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -32,11 +27,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // suppressHydrationWarning: the inline script below adds data-theme before React hydrates.
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${spaceMono.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${hankenGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col font-body">{children}</body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body id="top" className="flex min-h-full flex-col bg-background font-sans text-foreground">
+        {/* Faint dot grid and drifting shapes under everything; see Background.tsx. */}
+        <Background />
+        {children}
+      </body>
     </html>
   );
 }
