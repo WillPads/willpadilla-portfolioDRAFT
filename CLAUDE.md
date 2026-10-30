@@ -31,13 +31,24 @@ underline, the resume link's bottom border and 10% tint, and the status dots.
 Layout is wide: header, sections and footer share `containerClass` in `src/components/ui/styles.ts`
 (`max-w-[1280px]`, 90% of the viewport from 768px, `px-4` full width on phones). Long paragraphs stop at 65ch
 (`proseClass`). Use the width: grids for skills, certifications and more projects, two columns for the project
-panel and About. When `site.avatar` is set, the hero shows a small round photo (64px, 72px from `sm`) above
-the headline. Section labels are small and plain.
+panel and About.
+
+Section order: Hero, Projects, Skills (with Certifications), Experience, About, Contact; the `nav` array in
+`portfolio.ts` follows it. The header (56px) holds a small mono wordmark (`site.name`, link home), the nav links,
+the theme toggle and the mobile menu; it does not show the role. The hero opens with `site.name` as the page's h1
+and `site.role` under it, directly above the headline, which is `site.tagline` (a styled paragraph). When
+`site.avatar` is set, a round photo sits on the right from 768px (176px, 224px from 1024px); on phones it is 64px
+beside the name and role. The location shows only in the footer; About is the bio alone.
+
+Section titles (Projects, Skills, Experience, About, Contact) are real headlines: `text-3xl md:text-4xl
+font-medium tracking-tight`, full foreground colour (`SectionHeading`). Sub-labels inside a section
+(Certifications, More projects) are one step down: `text-xl md:text-2xl` (`subHeadingClass`).
 
 Background (`src/components/ui/Background.tsx`, `.page-dots` and `.drift` in `globals.css`): a fixed,
-click-through dot grid plus four slow outlined shapes that drift up and down in the side margins only, never
-behind text, hidden below `lg`. The dots use a radial-gradient purely to draw dots: the only gradient allowed.
-Shapes are flat 1.5px strokes at low opacity, moved with `transform` only, still under `prefers-reduced-motion`.
+click-through dot grid plus four slow outlined shapes (29 to 42px) that drift up and down in the side margins
+only, never behind text, hidden below `lg`. Light mode is slightly stronger (shapes 20%, dots 17% via
+`--dot-alpha`); dark mode uses 15% and 13%. The dots use a radial-gradient purely to draw dots: the only gradient
+allowed. Shapes are flat 1.5px strokes, moved with `transform` only, still under `prefers-reduced-motion`.
 
 Otherwise zero gradients, blur, glow, noise or shadows (box-shadow, drop-shadow, text-shadow). Surfaces are flat:
 thin `border-foreground/10` borders on `bg-background`. Two fonts: `font-sans` (Hanken Grotesk) for headings
@@ -49,10 +60,10 @@ target is at least 44px, focus is always visible (`focus-visible:`), and there i
 Sections wrap their content in `src/components/ui/Reveal.tsx`: content is visible by default (server HTML,
 no JS, reduced motion) and blocks below the fold slide up a few pixels and fade in once, staggered with the
 `delay` prop, never back out. The hero is never wrapped in Reveal; it only slides up (translate only, opacity
-stays 1) via `.rise`. The hero headline is `site.tagline`.
+stays 1) via `.rise`.
 
-Optional content hides itself when unset: `site.avatar` (path under `public/`, shown in the hero; no placeholder
-or initials), `experience`, `site.bio` (About) and `certifications`.
+Optional content hides itself when unset: `site.avatar` (path under `public/`, shown on the right of the hero; no
+placeholder or initials), `experience`, `site.bio` (About) and `certifications`.
 
 ## Projects
 
@@ -64,7 +75,11 @@ The turntable centres the active project and shows its neighbours smaller and di
 blur). With three or more projects the turntable loops (previous on the left, next on the right; wrapping animates
 one step); with exactly two, screens from 768px keep the pair side by side, no loop. Visitors turn it with
 buttons, swipe, arrow keys or by clicking a side card. Cards show text only; screenshots and demo videos load only
-after a visitor clicks "View project", which opens a detail panel below. Demo videos never preload or autoplay.
+after a visitor clicks "View project", which opens a detail panel below. That click runs a view transition
+(View Transitions API, started in `ProjectCarousel`, styled in `globals.css`): the card title glides into the
+panel heading (a `view-transition-name` set on one element at a time), the panel rises in (transform and opacity,
+380ms, no root crossfade), then the page scrolls so the panel sits about 88px from the top and focus moves to its
+heading. Reduced motion and browsers without the API just open the panel. Demo videos never preload or autoplay.
 Reduced motion makes turning instant.
 
 One status scale everywhere: `live` (deployed with a public URL), `completed` (finished, not deployed),

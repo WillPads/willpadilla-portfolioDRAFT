@@ -9,7 +9,7 @@ Tick items off as you go. Last updated: 2026-10-30.
 
 - [x] **You:** Review the site and send your bio edit (done 2026-10-30).
 - [x] **Team + You:** Bio, "Looking for" line and Contact text written, approved and on the site (2026-10-30).
-- [ ] **You:** Commit Phase 2 with the commands in [PHASE-2-REVIEW.md](PHASE-2-REVIEW.md), section 9.
+- [x] **You:** Commit Phase 2 (done 2026-10-30, commit d9f3c36 on the `redesign` branch). Push to `main` only after Phase 4.
 
 ## 2. Quick facts (5 minutes, whenever)
 
@@ -19,7 +19,8 @@ Tick items off as you go. Last updated: 2026-10-30.
 ## 3. Phase 3: content
 
 - [x] **Team (Winston):** Draft all 4 case studies into [CASE-STUDIES-DRAFT.md](CASE-STUDIES-DRAFT.md) (done 2026-10-30).
-- [ ] **You:** Answer the 7 SyncSpace questions first, and say whether the PixelDerm storage (SQLite or server?) and screenshots are OK to keep.
+- [x] **You:** SyncSpace answers and PixelDerm checks (done 2026-10-30). SyncSpace case study is on the site.
+- [ ] **You:** Replace the 2 SyncSpace mockup screenshots with real ones from the live app.
 - [ ] **You:** Review the drafts and answer the `[ASK WILL]` questions.
 - [ ] **Team:** Put the approved case studies on the site.
 

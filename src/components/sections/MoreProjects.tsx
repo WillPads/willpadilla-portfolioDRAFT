@@ -2,15 +2,15 @@ import { moreProjects } from "@/data/portfolio";
 import StatusBadge from "@/components/ui/StatusBadge";
 import TagList from "@/components/ui/TagList";
 import ProjectLinks from "@/components/ui/ProjectLinks";
-import { proseClass } from "@/components/ui/styles";
+import { proseClass, subHeadingClass } from "@/components/ui/styles";
 
 // A compact list under the turntable. Hidden, heading included, while moreProjects is empty.
 export default function MoreProjects() {
   if (moreProjects.length === 0) return null;
 
   return (
-    <div className="mt-10">
-      <h3 className="mb-3 text-sm font-medium text-foreground/65">More projects</h3>
+    <div className="mt-14">
+      <h3 className={subHeadingClass}>More projects</h3>
       <ul className="grid gap-4 md:grid-cols-2">
         {moreProjects.map((project) => {
           const meta = [project.year, project.context].filter(Boolean).join(" / ");

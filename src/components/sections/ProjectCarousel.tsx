@@ -1,11 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { FeaturedProject } from "@/data/portfolio";
 import ProjectSlide from "@/components/ui/ProjectSlide";
 import ProjectDetail from "@/components/ui/ProjectDetail";
 import { iconButtonClass } from "@/components/ui/styles";
+
+// The two view-transition names (see globals.css). They are only set while a transition runs, one element
+// at a time, so no name is ever on the page twice (a duplicate would abort the transition).
+const TITLE_VT = "project-title";
+const PANEL_VT = "project-panel-card";
+// Where the panel's top edge lands after opening, in px from the top of the viewport (below the 56px header).
+const PANEL_TOP = 88;
 
 // Swipe must travel at least this far sideways, and mostly sideways, to count.
 const SWIPE_DISTANCE = 48;
@@ -46,12 +54,16 @@ export default function ProjectCarousel({
   const pendingFocus = useRef<FocusTarget | null>(null);
   const drag = useRef<{ x: number; y: number } | null>(null);
   const swiped = useRef(false);
+  const opening = useRef(false);
 
   // Moves keyboard focus once the DOM has updated (the focused button may have been replaced).
   useEffect(() => {
     const target = pendingFocus.current;
     pendingFocus.current = null;
-    if (target === "panel") headingRef.current?.focus();
+    if (target === "panel") {
+      headingRef.current?.focus({ preventScroll: true });
+      placePanel();
+    }
     else if (target === "view")
       document.getElementById(`view-${projects[active].slug}`)?.focus();
     else if (target === "region") regionRef.current?.focus();
@@ -69,10 +81,53 @@ export default function ProjectCarousel({
     setAnnouncement(`Project ${next + 1} of ${count}: ${projects[next].title}`);
   }
 
+  // Brings the panel's top edge near the top of the screen (smooth, or instant for reduced motion).
+  function placePanel() {
+    const panel = document.getElementById("project-panel");
+    if (!panel) return;
+    const delta = panel.getBoundingClientRect().top - PANEL_TOP;
+    if (Math.abs(delta) < 8) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: window.scrollY + delta, behavior: reduce ? "instant" : "smooth" });
+  }
+
+  // Opening: the card's title morphs into the panel's heading and the panel rises in (browser View
+  // Transitions API, transform and opacity only, see globals.css); then the page glides so the panel sits
+  // near the top. Without the API, or under reduced motion, the panel simply opens (and the effect above
+  // focuses the heading and scrolls).
   function openPanel() {
-    if (swiped.current) return;
-    pendingFocus.current = "panel";
-    setOpen(true);
+    if (swiped.current || opening.current) return;
+    const card = document.getElementById(`card-title-${projects[active].slug}`);
+    const canMorph =
+      typeof document.startViewTransition === "function" &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!canMorph || !card) {
+      pendingFocus.current = "panel";
+      setOpen(true);
+      return;
+    }
+
+    opening.current = true;
+    card.style.viewTransitionName = TITLE_VT; // the "before" picture is taken now
+    const transition = document.startViewTransition(() => {
+      card.style.viewTransitionName = "";
+      flushSync(() => setOpen(true));
+      const heading = headingRef.current;
+      const region = document.querySelector<HTMLElement>("#project-panel > [role=region]");
+      if (heading) {
+        heading.style.viewTransitionName = TITLE_VT;
+        heading.focus({ preventScroll: true });
+      }
+      if (region) region.style.viewTransitionName = PANEL_VT;
+    });
+    transition.finished.finally(() => {
+      card.style.viewTransitionName = "";
+      if (headingRef.current) headingRef.current.style.viewTransitionName = "";
+      const region = document.querySelector<HTMLElement>("#project-panel > [role=region]");
+      if (region) region.style.viewTransitionName = "";
+      opening.current = false;
+      placePanel();
+    });
   }
 
   function togglePanel() {

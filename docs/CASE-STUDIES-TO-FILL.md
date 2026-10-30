@@ -17,8 +17,8 @@ Rules:
 
 **Known:** Personal project, Jun 2026 to present, Full-Stack Developer. Live at sync-space-taupe.vercel.app. Next.js,
 TypeScript, Express, Prisma, PostgreSQL, WebSockets. Hosted on Vercel, Render and Neon. Shared Pomodoro rooms,
-chat, notes, uploaded study materials, a quiz built from uploaded notes. Images: `room.jpg`, `dashboard.jpg`,
-`welcome.jpg`, `logo.jpg`.
+chat, notes, uploaded study materials, a quiz built from uploaded notes. Images: `room.jpg`, `dashboard.png`,
+`quiz.jpg`, `upload.jpg`, `welcome.jpg`, `logo.jpg`.
 
 **Facts**
 

@@ -11,7 +11,7 @@ export const containerClass = "mx-auto w-full max-w-[1280px] px-4 md:w-[90%] md:
 export const proseClass = "max-w-[65ch]";
 
 // Vertical rhythm between sections.
-export const sectionGapClass = "mt-14";
+export const sectionGapClass = "mt-20 md:mt-28";
 
 const motion =
   "transition-[background-color,border-color,color,scale] duration-300 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100";
@@ -51,8 +51,9 @@ export const iconButtonClass = `inline-flex size-11 shrink-0 items-center justif
 // Same, without the border, for the quiet footer icons.
 export const iconLinkClass = `inline-flex size-11 shrink-0 items-center justify-center rounded-full text-foreground/65 hover:bg-foreground/5 hover:text-foreground focus-visible:bg-foreground/5 focus-visible:text-foreground ${motion} ${focusRing}`;
 
-// Section label: a small plain header, not a big heading.
-export const sectionLabelClass = "mb-4 text-sm font-medium text-foreground/65";
+// Sub-heading inside a section (an h3 such as "Certifications" or "More projects"): one step below the
+// section title (text-3xl / md:text-4xl, see SectionHeading).
+export const subHeadingClass = "mb-4 text-xl font-medium leading-tight tracking-tight text-foreground md:text-2xl";
 
 // Row that picks up a faint fill on hover (experience, certifications, skills).
 export const rowClass = "-mx-3 rounded-lg px-3 py-3 hover:bg-foreground/5 transition-colors duration-300 motion-reduce:transition-none";

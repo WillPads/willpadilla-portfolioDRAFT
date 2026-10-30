@@ -21,7 +21,7 @@ appear. Nothing says "replace this" on the live site. All the examples below use
 | --- | --- |
 | `site` | Name, role, tagline, intro, email, resume link, location, GitHub and LinkedIn, plus the optional `lookingFor`, `bio` and `avatar` |
 | `experience` | Internships, org roles, freelance work (hidden while empty) |
-| `nav` | The links in the top bar |
+| `nav` | The links in the top bar, in page order: Projects, Skills, Experience, About, Contact (keep this order in step with `src/app/page.tsx`) |
 | `skills` | Skill tags, grouped by category |
 | `featuredProjects` | The turntable carousel at the top of Work (detailed projects) |
 | `moreProjects` | The compact "More projects" list under it |
@@ -33,16 +33,16 @@ appear. Nothing says "replace this" on the live site. All the examples below use
 
 | Field | Required? | What it does | When it is left unset |
 | --- | --- | --- | --- |
-| `name` | Yes | Navbar, hero headline, footer | n/a |
-| `role` | Yes | The line under the headline | n/a |
-| `tagline` | Yes | Small badge above the headline | n/a |
+| `name` | Yes | Header wordmark, the hero name (the page's h1), footer | n/a |
+| `role` | Yes | The line under the name in the hero | n/a |
+| `tagline` | Yes | The big headline in the hero, under the name and role | n/a |
 | `intro` | Yes | Short paragraph under the role | n/a |
 | `email` | Yes | Every "Email" button | n/a |
 | `resume` | Yes | Where the Resume buttons point (`/resume.pdf`) | n/a |
 | `location` | Yes | Footer and the About facts | n/a |
 | `social.github`, `social.linkedin` | Yes | GitHub and LinkedIn buttons (hero, Contact, footer) | n/a |
 | `lookingFor` | No | A "Looking for: ..." line in the hero | The line is hidden |
-| `avatar` | No | A rounded photo beside the hero headline (the hero becomes two columns; use at least 320x320px) | Nothing is shown: no placeholder, no initials |
+| `avatar` | No | A round photo on the right of the hero, level with the name (176px from 768px, 224px from 1024px, 64px beside the name on phones; use at least 448x448px) | Nothing is shown: no placeholder, no initials |
 | `bio` | No | The About section text | The About section **and** its "About" nav link are hidden |
 
 Copy-paste example (add these lines inside `site`):
@@ -52,7 +52,7 @@ lookingFor: "Job Title You Want",
 bio: "Two or three short sentences about who you are and what you build.",
 ```
 
-The About section also shows two facts, "Based in" (from `location`) and "Role" (from `role`).
+The About section shows only the bio. `location` appears only in the footer ("Based in ...").
 
 ### Add your avatar photo
 

@@ -15,10 +15,10 @@ export default function Home() {
       <Header />
       <main id="main" tabIndex={-1} className="flex-1 outline-none">
         <Hero />
-        <Experience />
         <ProjectsSection />
-        <About />
         <Skills />
+        <Experience />
+        <About />
         <Contact />
       </main>
       <Footer />

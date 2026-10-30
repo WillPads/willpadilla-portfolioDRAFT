@@ -1,16 +1,19 @@
 # Case Studies: Draft
 
 Drafted by Winston on 2026-10-30 from `docs/CASE-STUDIES-TO-FILL.md` (the template stays as it is), Will's
-confirmed facts and the project files on this machine. Nothing here is on the site yet.
+confirmed facts, the project folders on this machine and the projects' public GitHub repos. SyncSpace is on
+the site. The other three are drafts waiting for Will.
 
 How to read this draft:
 
-- `[ASK WILL: ...]` marks something the sources don't cover. Answer it, or delete the sentence.
-- `[CHECK]` marks something inferred or taken from a planning document rather than stated as final. Confirm
-  it or correct it.
+- Each project starts with a short **Questions for Will** box (at most 6). Most questions come with a draft
+  answer, so a reply can be just "keep", "drop" or a quick edit.
+- `[Q1]`, `[Q2]` and so on in the text point to the question that settles that sentence.
+- `[CHECK]` marks something inferred, or read from a source that may not match the final version.
 - The prose is in first person, as Will. Numbers appear only where a source states them.
-- Image files named below already exist in `public/projects/`. Suggested extra screenshots are listed at the
-  end of each project.
+
+**Readiness:** SyncSpace is done. **Signal No. 5 is closest** (its repo documents most of the story), then
+Gabay Aralin, then PixelDerm (it needs the most from Will).
 
 ---
 
@@ -74,7 +77,7 @@ SyncSpace went from a rough prototype to a live site in five steps.
   host ends the session, the room becomes a quiz built from those notes.
   Claude writes the questions when an API key is set. Without one, or if the call fails, a built-in generator
   writes fill-in-the-blank questions from the text, so the feature never depends on a paid API.
-  Image: none (`dashboard.jpg` left out, see the note below)
+  Images: `upload.jpg` (session notes panel with an uploaded file), `quiz.jpg` (the quiz phase)
 
 - **Step 4: Hardening the backend before launch**
   A backend audit on Oct 22, 2026 listed what had to change before launch, and every finding was fixed and
@@ -82,7 +85,7 @@ SyncSpace went from a rough prototype to a live site in five steps.
   replaced with server-side sessions that can be revoked, and sign-in, joins and uploads got rate limits.
   A row lock keeps the 10-person room cap from breaking when people join at the same time. The server now has
   234 tests, all running against a real Postgres database instead of mocks.
-  Image: none
+  Image: `dashboard.png` (the live dashboard)
 
 - **Step 5: Deploying on free tiers**
   The web app runs on Vercel, the API on Render and the database on Neon, all on free plans. Vercel can't pass
@@ -122,34 +125,39 @@ on a real Postgres database.
 
 **Cover image:** `room.jpg`
 
-**Images used:** `room.jpg` (cover), `welcome.jpg` (step 5).
+**Images used (all real screenshots of the live app):** `room.jpg` (cover, 1102x714), `upload.jpg` and
+`quiz.jpg` (step 3, 1102x714), `dashboard.png` (step 4, 1840x966), `welcome.jpg` (step 5).
 
-[CHECK: `room.jpg` and `dashboard.jpg` look like the design mockup, not the live app. `room.jpg` shows a
-"Long break" tab, a "Temporary room" label, video controls and sample people. `dashboard.jpg` shows
-"Temporary/Permanent" room types and "PDF, DOC, DOCX or images, up to 20 MB". The README lists long break,
-room types, video and DOC/DOCX/image uploads as not built, and caps uploads at 4 MB. `room.jpg` is the cover
-because it was requested, but swap it for a real screenshot of the live room. `dashboard.jpg` isn't used.]
-
-**Suggested extra screenshots (from the live site):** a real room with the timer and chat, the quiz phase
-after a session ends, and two browsers side by side showing the same timer.
+**Optional extra screenshot:** two browsers side by side showing the same timer.
 
 ---
 
 ## 2. PixelDerm (`public/projects/`, files `pixelderm-1.jpg` to `pixelderm-4.jpg`)
 
+> **Questions for Will (6)**
+>
+> 1. **Your part and the site role.** The site will show "Project Manager & Co-Developer". In one line, what
+>    did you build, and what did Martonie and Shana own? Draft: "I managed the project and built ___;
+>    Martonie led ___ and Shana led ___."
+> 2. **Why this topic.** Draft: "UV damage builds up slowly, so it's hard to see changes in your own skin from
+>    day to day. We wanted people to track their skin over time instead of guessing." Keep, edit or drop? Who
+>    is the app for?
+> 3. **Dermatologists.** In one line, what did they help with (for example: what to measure, how the advice is
+>    worded, testing the results)? No draft here, because the sources don't say.
+> 4. **The analysis.** OK to keep it general ("an image-processing pipeline measures spots, texture and
+>    pigmentation")? Or one line on how it works.
+> 5. **ISO/IEC 25010 result.** Who rated it, and the overall result in one line (for example "rated ___ by ___
+>    IT experts and users")? Leave it out if you'd rather not share.
+> 6. **One lesson from managing the project**, in a sentence or two, plus the hardest moment if you want one
+>    in. No draft here: it has to be your experience. If you skip it, the page ends at Results.
+
 **Facts**
 
-- Context: Thesis project (confirmed by Will 2026-10-30).
-- Dates: Sep 2025 to Jul 2026. Status: Completed.
-- Stack (as on the site): React Native, TypeScript, Android, Image Processing, ISO/IEC 25010. The site no longer
-  says "local SQLite storage".
-- Team: three people: Will, Martonie Ayaay and Shana Anikka Patio. [CHECK: team of three, from earlier notes]
-- Will's role: Project Manager and Co-Developer, plus a minor data analyst role (cleaning datasets with
-  Python).
-- [ASK WILL: Who did what? In particular, which parts of the app did you build as co-developer, and what did
-  Martonie and Shana own?]
-- Which role should the site show? Suggestion: "Project Manager & Co-Developer". It matches the resume without
-  giving the data analyst work more weight than it had. [ASK WILL: OK to use this?]
+- Context: Thesis. Dates: Sep 2025 to Jul 2026. Status: Completed.
+- Role on the site: Project Manager & Co-Developer [Q1]. Will also did a small data role: cleaning datasets
+  with Python.
+- Team of three: Will, Martonie Ayaay and Shana Anikka Patio.
+- Stack (as on the site): React Native, TypeScript, Android, Image Processing, ISO/IEC 25010.
 - Repo/demo link: still paused.
 
 **Summary**
@@ -160,238 +168,226 @@ in Python for the analysis.
 
 **Overview**
 
-[ASK WILL: Who is PixelDerm for (for example, people with a lot of sun exposure, or anyone who wants to track
-their skin), and why did your team choose UV skin damage as a thesis topic?]
-
-**The problem**
-
-UV damage builds up slowly, so it's hard to notice changes in your own skin from day to day. [CHECK: inferred
-from the app's purpose] [ASK WILL: What gap did your research point to, for example how people check sun
-damage today, or why tracking over time matters more than a single check?]
+UV damage builds up slowly, so it's hard to see changes in your own skin from day to day. We wanted people to
+track their skin over time instead of guessing. [Q2] [CHECK: inferred from the app's purpose]
 
 **The process**
 
 - **Step 1: Working with dermatologists**
-  We developed PixelDerm with clinical consultation from dermatologists. [ASK WILL:
-  What did the dermatologists help decide (what to measure, how to word advice, the limits the app should
-  state)? How many did you consult, if you're allowed to say?]
+  We developed PixelDerm with clinical consultation and validation from dermatologists. [Q3]
   Image: none
 
 - **Step 2: From photo to measurements**
   A user picks a body area to monitor, then takes a photo or chooses one from the gallery, with tips on
-  lighting and keeping the camera steady. The app measures the photo for visible spots, texture and
-  pigmentation. It also tells users with vitiligo that their results may be inaccurate. [CHECK: read from the
-  app's code and screens] [ASK WILL: How does the image-processing pipeline work, and why did your team choose
-  that approach?]
-  Image: `pixelderm-2.jpg` (capture screen), with `pixelderm-3.jpg` (processing) as an option
+  lighting and keeping the camera steady. An image-processing pipeline measures visible spots, texture and
+  pigmentation [Q4], and the app tells users with vitiligo that their results may be inaccurate.
+  Image: `pixelderm-2.jpg` (capture screen)
 
 - **Step 3: Tracking change over time**
-  Each new scan is compared with the user's baseline for that body area, so the result shows how the skin has
-  changed, not just a single score. The results screen gives a risk level, a skin score and a recommendation,
-  and suggests seeing a dermatologist when it finds a high density of spots. [CHECK: read from the code] The
-  app keeps each user's scan history, so every new scan can be compared with their baseline. [CHECK: the app
-  code on this machine sends photos to a backend server; confirm where scans are stored and processed before
-  saying more]
+  The app keeps each user's scan history and compares every new scan with their baseline for that body area,
+  so the result shows how the skin has changed, not just a single score. The results screen gives a risk
+  level, a skin score and a recommendation, and suggests seeing a dermatologist when it finds a high density
+  of spots. [CHECK: read from the app's code and screens; the app sends photos to a backend server, so don't
+  say more about where scans are stored]
   Image: `pixelderm-4.jpg`
 
-- **Step 4: Preparing the data**
-  My part on the data side was small: I cleaned datasets in Python before they were used. [ASK WILL: Which
-  datasets, what did cleaning involve, and what were they used for (tuning, testing, validation)?]
+- **Step 4: Evaluating with ISO/IEC 25010**
+  We evaluated PixelDerm against the ISO/IEC 25010 software quality model. [Q5]
   Image: none
-
-- **Step 5: Evaluating with ISO/IEC 25010**
-  We evaluated PixelDerm against the ISO/IEC 25010 software quality model. [ASK WILL: Who evaluated it (users,
-  IT experts, dermatologists), which quality characteristics did you measure, and what were the results?]
-  Image: none
-
-**Struggles**
-
-[ASK WILL: What was the hardest problem, either technical (for example, photos taken in different lighting)
-or as project manager (deadlines, splitting work in a team of three, feedback from your panel), and how did
-you get past it?]
 
 **Results**
 
-- Completed and evaluated with ISO/IEC 25010. [ASK WILL: Scores or ratings?]
-- [ASK WILL: The dermatologists' feedback, the defense result or grade, and any awards. Leave out anything you
-  don't want public.]
+PixelDerm was completed as our thesis and evaluated with ISO/IEC 25010. [Q5]
 
 **Takeaways**
 
-[ASK WILL: 2-4 lessons, especially from managing the project: planning, keeping a team on schedule, working
-with clinical experts.]
+[Q6: Will's lesson from managing the project goes here, or the section is left out]
 
 **Cover image:** `pixelderm-4.jpg` (the results screen shows what the app does at a glance)
 
-**Images used:** `pixelderm-2.jpg`, `pixelderm-3.jpg`, `pixelderm-4.jpg`. `pixelderm-1.jpg` (home screen
-with no scans) isn't used in a step; it could go in a gallery.
-**Suggested extra screenshots:** the "vs Baseline" tab, the History screen, and the Profile screen with skin
-type.
+**Images used:** `pixelderm-2.jpg`, `pixelderm-4.jpg`. `pixelderm-1.jpg` (home) and `pixelderm-3.jpg`
+(processing) are spare.
+**Optional extra screenshots:** the "vs Baseline" tab and the History screen.
 
 ---
 
 ## 3. Signal No. 5 (`public/projects/signal-no-5/`)
 
+> **Questions for Will (5)**
+>
+> 1. **Your part.** The team's architecture doc splits the backend in two. Backend A owned the events, action
+>    effects, badges, debrief findings and shared contracts; Backend B owned the prompts and prompt tests. Were
+>    you A, B, or something else? As PM, what did you run (the plan, the checkpoints, the pitch)?
+>    Draft: "I owned ___ and ran the team's plan and merge checkpoints."
+> 2. **Audience.** The site says "kids aged 10-16", but the repo docs don't name an age. Keep "kids aged 10 to
+>    16"?
+> 3. **The problem.** Draft (from the team's pitch): "Most preparedness material tells you what to do but not
+>    why it matters, and it gives every household the same advice." Keep, edit or drop? Anything from your own
+>    experience of typhoons you'd add?
+> 4. **Result.** It didn't place. Did the judges say anything worth quoting? And who is still developing it,
+>    and what are they adding? (Skip either if there's nothing to say.)
+> 5. **Takeaways.** Keep the 3 drafts below? Edit or drop any.
+
 **Facts**
 
-- Event: AppBuildersPH Local AI Hackathon 2026, theme "Localized A.I.". Remote build day Oct 9 (about 20
-  hours), demo day Oct 10 at SM Makati CyberZone.
+- Event: AppBuildersPH Local AI Hackathon 2026, theme "Localized A.I.". Built remotely on Oct 9 (about 20
+  hours), demoed Oct 10 at SM Makati CyberZone. Did not place.
 - Role: Lead Backend Engineer & Project Manager.
 - Team of four: Will, Karl Stephen Mangahas, Martonie Ayaay and Adrian Louise Sevilla.
-- Stack: TypeScript, Electron, React, Phaser 3, Qwen3-4B through llama.cpp.
-- Result: did not place. [CHECK: from earlier notes] The lead developer is still developing it.
-- [ASK WILL: The team plan split the work into two frontend and two backend/AI roles: one backend person on
-  the simulation engine, one on the local AI. Which did you do, and who did the rest?]
+- Stack: TypeScript, Phaser 3, React, Electron (Windows app), Zod, Vitest, llama.cpp running
+  Qwen3-4B-Instruct-2507.
+- Repo: github.com/stfnnnnnnn/signal-no.5 (public; the visible commits are all dated Oct 9-10, 2026). The site
+  link is on hold.
 
 **Summary**
 
-Signal No. 5 is an 8-bit typhoon preparedness RPG for kids aged 10 to 16 that runs fully offline, with a small
-language model running locally. My team of four built it in about 20 hours for the AppBuildersPH Local AI
-Hackathon 2026, where I was lead backend engineer and project manager.
+Signal No. 5 is an 8-bit typhoon preparedness RPG for Windows. Players prepare a Filipino home for a storm,
+live through it and its aftermath, and get a score, badges and a personal debrief, with dialogue written by a
+small language model running on the same laptop. My team of four built it in about 20 hours for the
+AppBuildersPH Local AI Hackathon 2026, where I was lead backend engineer and project manager.
 
 **Overview**
 
-The hackathon's theme was local AI, meaning the AI has to run on the user's own device. Our pitch was that
-every household is different, so disaster preparedness training shouldn't be the same for everyone: players
-answer a few questions about their home and then play through a typhoon shaped by those answers. [CHECK: from
-the team's planning document] [ASK WILL: Why typhoons, and why kids aged 10 to 16? The planning document aims
-at "Filipino students, young adults, and households", so confirm which audience the final game targets.]
+The hackathon's theme was local AI: the model had to run on the player's own machine, not in the cloud. Our
+idea was that every household is different, so players set up their own household and play through a typhoon
+shaped by it. We made it for kids aged 10 to 16. [Q2]
 
 **The problem**
 
 Most preparedness material tells you what to do but not why it matters, and it gives every household the same
-advice. Signal No. 5 lets players make the decisions, see the consequences, and get a checklist based on their
-own answers. [CHECK: from the planning document] [ASK WILL: Anything from your own experience of typhoons or
-school preparedness drills you'd add here?]
+advice. In Signal No. 5, players make the decisions themselves, see what happens, and get a checklist based on
+their own household. [Q3]
 
 **The process**
 
-- **Step 1: Scoping for 20 hours**
-  We limited the game to one hazard, typhoons, and one map, a single house, and reused fixed room layouts
-  instead of generating maps. The rule was a finished playable loop over a bigger unfinished game: survey,
-  storm events, choices, then a debrief with badges. [CHECK: from the planning document; confirm what made it
-  into the final build]
+- **Step 1: Picking tools the team already knew**
+  We built the game with Phaser 3, React and TypeScript, packaged as an Electron app for Windows. Godot scored
+  well in our comparison, but nobody on the team knew it, and switching languages would have meant rewriting
+  our shared contracts.
   Image: none
 
-- **Step 2: Building a deterministic simulation engine**
-  The game engine, not the AI, decides what happens. Each choice changes time, supplies and household
-  readiness, later events check those changes, and badges and scores come only from fixed rules. Events were
-  written as data files, so teammates could write content while the engine was being built. [CHECK: from the
-  planning document] [ASK WILL: Was this engine your part?]
+- **Step 2: A deterministic engine owns the rules**
+  A simulation engine owns every rule, resource, consequence and score, so the same choices always give the
+  same result. Players work through a 48-hour countdown with 19 preparation actions and 16 typhoon events,
+  then evacuation and a three-day aftermath. [Q1: if this was your part, it becomes "I built..."]
   Image: `gameplay.jpg`
 
-- **Step 3: Running a 4B model offline**
-  The game runs Qwen3-4B through llama.cpp inside an Electron app, so it works with no internet connection.
-  [ASK WILL: Why Qwen3-4B and llama.cpp? The plan started with smaller models (Qwen3 1.7B) and Ollama. How fast
-  did it respond on the demo laptop?]
+- **Step 3: Fitting a model on a 4 GB laptop GPU**
+  We benchmarked Qwen3-1.7B and Qwen3-4B on a laptop with a 4 GB GTX 1650 Ti. Both returned valid JSON in all
+  30 test runs. The 4B was slower (about 5 seconds per reply against 2.4) but wrote better dialogue, so it's the
+  one the game ships with. We ran it with llama.cpp instead of Ollama: it's a smaller install and gives direct
+  control over GPU memory.
   Image: none
 
-- **Step 4: Keeping the AI from making things up**
-  The model only writes dialogue and scene descriptions, and it can only choose from the event variants,
-  speakers and actions the engine sends it. Every reply is checked against a schema and the allowed lists,
-  then screened for things like hotline numbers, invented warnings or medical advice. If a reply fails or takes
-  too long, the game retries once and then uses text we wrote and reviewed in advance, so the player never sees
-  unchecked safety advice. [CHECK: from the planning document; confirm the final build matches] [ASK WILL: How
-  did the grounding checks work in the final version?]
+- **Step 4: Keeping the AI out of the rules**
+  The model only writes NPC dialogue and debrief wording. Every reply goes through constrained JSON decoding,
+  validation and a grounding guard that rejects anything contradicting the game, such as the home's layout or
+  the storm's timing. If a reply fails, the game uses fallback text written in advance, so it stays playable
+  even without the model.
   Image: none
 
 - **Step 5: Build day and demo day**
-  We built the game remotely on Oct 9 and demoed it on Oct 10 at SM Makati CyberZone. [ASK WILL: As project
-  manager, how did you keep four people in sync over 20 hours? The plan had merge checkpoints and a feature
-  freeze; did you use them?]
+  We built the game remotely on Oct 9 and demoed it on Oct 10 at SM Makati CyberZone. [Q1: one line on how you
+  kept four people in sync, if you want it]
   Image: `promo.mp4` (video; plays only when clicked)
 
 **Struggles**
 
-[ASK WILL: The hardest part: time pressure, model speed, hardware, or team coordination? What happened and
-how did you handle it?]
+The 4B model wrote better dialogue than the 1.7B, but it also made things up. In our benchmark review it invented facts
+the game must never state in 4 of 10 samples, and it scored 9 out of 20 on grounding against 19 for the smaller
+model.
+
+We kept the 4B for its writing and added a grounding guard: a reply that contradicts the game, like the wrong
+home layout or storm timing, is rejected and replaced with fallback text.
 
 **Results**
 
-- Built and demoed at the AppBuildersPH Local AI Hackathon 2026. Did not place. [CHECK]
-- [ASK WILL: What did the judges say?]
-- The lead developer is still developing the game. [ASK WILL: Their name, and what's being added?]
+We built and demoed a working game in about 20 hours. It didn't place. [Q4]
 
-**Takeaways**
+What's still open: the Windows build isn't code-signed, the packaged app's fully offline run hasn't been
+tested yet, and the lesson and checklist text is placeholder wording waiting for review. [CHECK: from the
+repo's "Known limitations"; keep this paragraph or drop it]
 
-[ASK WILL: 2-4 lessons, for example on keeping AI output away from game rules, or on leading a team under a
-20-hour limit.]
+**Takeaways** [Q5]
+
+- Keep the AI out of the rules. Because the engine owns every score and consequence, a bad model reply can't
+  break the game.
+- Benchmark on the real hardware. The bigger model was only worth it once we'd measured it on the 4 GB laptop
+  we'd demo on.
+- Pick tools the team already knows. In a 20-hour build, a familiar stack beat a better-scoring one.
 
 **Cover image:** `cover.jpg`
 
 **Images used:** `gameplay.jpg`, `promo.mp4`, `cover.jpg`.
-**Suggested extra screenshots:** the household survey, the debrief screen with the checklist and badges, and
-two runs with different survey answers side by side.
+**Optional extra screenshots:** the household setup screen and the debrief with badges.
 
 ---
 
 ## 4. Gabay Aralin (`public/projects/gabay-aralin/`)
 
+> **Questions for Will (5)**
+>
+> 1. **Who did what.** Draft: "Shana and I split the work: I ___, Shana ___." (The commits on Shana's repo
+>    are co-authored with an AI coding tool; your copy is a single "post-hackathon push".)
+> 2. **AI tools.** Your notes say the organizers gave you Codex, but the commits list Claude as co-author. OK
+>    to say "AI coding tools the organizers provided" without naming one?
+> 3. **Date.** The commits are all dated Oct 25, 2026. Use Oct 25?
+> 4. **Why parents.** Draft: "Many parents want to help with homework but aren't sure how to teach a topic,
+>    and the easy shortcut is giving the child the answer." Keep, edit or drop?
+> 5. **What's next.** What are you improving now? Draft: "I'm now refining ___." And keep the 2 takeaway
+>    drafts below?
+
 **Facts**
 
-- Event: UX+AI Hackathon at Zone Offices, BGC, around Oct 26, 2026. A 3-4 hour sprint. [ASK WILL: Exact date?]
-- Built with Shana Patio, using AI coding tools (Codex) provided by the organizers.
+- Event: UX+AI Hackathon at Zone Offices, BGC, Oct 25, 2026 [Q3]. A 3-4 hour sprint.
+- Built with Shana Patio, using AI coding tools the organizers provided [Q2].
 - Did not make the top contenders. Still being refined.
-- Tech stack: on hold until Will confirms (see the report).
-- [ASK WILL: What did you handle, and what did Shana handle?]
+- Tech stack: on hold until Will confirms. The prose doesn't name it.
 
 **Summary**
 
 Gabay Aralin is a mobile-first tutoring helper for parents of preschool and elementary kids. A parent snaps a
 photo of the homework, types it in, or picks a topic, and the app builds a short lesson, practice questions, a
-printable worksheet and tips for guiding their child. Shana Patio and I built the first version in a 3-4 hour
-sprint at a UX+AI hackathon.
-
-**Overview**
-
-[ASK WILL: Why parents as home tutors? Was it something you've seen at home or in your community, or a
-challenge set by the hackathon?]
+printable worksheet and tips for guiding their child. Shana Patio and I built it in a 3-4 hour sprint at a
+UX+AI hackathon.
 
 **The problem**
 
 Many parents want to help with homework but aren't sure how to teach a topic, and the easy shortcut is giving
-the child the answer. Gabay Aralin gives parents guiding questions for each homework item instead of answers.
-[CHECK: inferred from the app's design] [ASK WILL: Is this the problem you were solving, in your words?]
+the child the answer. Gabay Aralin gives parents guiding questions for each homework item instead. [Q4]
 
 **The process**
 
-- **Step 1: Framing the problem in 3-4 hours**
-  [ASK WILL: How did you and Shana pick the problem and cut the scope to fit 3-4 hours? What did you decide to
-  leave out?]
+- **Step 1: From homework guide to tutor center**
+  We started with a homework guide for parents, written in Tagalog. Within the sprint we switched the app to
+  English, added family profiles with each child's grade, and sorted saved lessons by child, grade and
+  subject. Then we rebuilt it as a home tutor center around four parts: lessons, practice, worksheets and
+  parent tips. [Q1]
   Image: none
 
 - **Step 2: Designing for parents and kids together**
-  Every topic becomes four parts: a step-by-step lesson written for the child with a note for grown-ups,
-  practice checks after each step, an end-of-module worksheet with an answer key for parents, and tips on how
-  to guide without doing the work. Wrong answers get an encouraging hint, then a second hint, and the answer
-  only appears after the third try. [CHECK: from the current README; confirm what existed at the hackathon and
-  what came after] [ASK WILL: Which UX decisions were yours?]
+  Each lesson is 3 to 5 short steps written for the child, with a note for grown-ups and a quick check after
+  every step. Wrong answers get an encouraging hint, then a second one, and the answer only appears after the
+  third try. The worksheet prints with an answer key that explains each answer for the parent.
   Image: `poster.jpg`
 
 - **Step 3: Keeping homework unsolved**
-  The parts of the app that write lessons and worksheets never see the homework itself, only the subject,
-  topic, grade and skills. A separate check solves every practice and worksheet question, drops any with a
-  wrong or ambiguous answer key, and makes sure no question copies a homework item. [CHECK: from the current
-  README; this may be refinement work done after the hackathon] [ASK WILL: How did using the organizers' AI
-  tools change how you built it?]
+  The parts that write lessons and worksheets never see the homework itself, only the subject, topic, grade
+  and skills. A separate check solves every practice and worksheet question, drops any with a wrong or
+  ambiguous answer key, and makes sure no question copies a homework item.
   Image: `demo.mp4` (video; plays only when clicked)
-
-**Struggles**
-
-[ASK WILL: What was hardest in 3-4 hours: scoping, getting the AI output reliable, or presenting?]
 
 **Results and what's next**
 
-We didn't make the top contenders, and I'm still refining the app. [ASK WILL: What feedback did you get, and
-what are you improving now? The README describes saved lessons per child, resumable progress, read-aloud and
-answer-key checks; were these added after the hackathon?]
+We didn't make the top contenders, and I'm still refining the app. [Q5]
 
-**Takeaways**
+**Takeaways** [Q5]
 
-[ASK WILL: 2-4 lessons, for example on building fast with AI tools or scoping under a hard time limit.]
+- Change direction early. We turned a homework guide into a full tutor center within the same day.
+- Check the AI's output, not just its prompt. A second pass that solves every question catches wrong answer
+  keys before a parent sees them.
 
-**Cover image:** `poster.jpg` [CHECK: or a screenshot of the lesson screen if you add one]
+**Cover image:** `poster.jpg`
 
 **Images used:** `poster.jpg`, `demo.mp4`.
-**Suggested extra screenshots:** the lesson stepper with a practice check, the printable worksheet with the
-answer key, and the parent tips screen.
+**Optional extra screenshots:** the lesson with a practice check, and the printable worksheet.

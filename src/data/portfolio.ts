@@ -9,13 +9,13 @@
  * ------------------------------------------------------------------------- */
 
 export type Site = {
-  name: string; // shown in the header and the footer (and read out as part of the hero headline)
-  role: string; // the line under the name in the header, and in About
+  name: string; // the header wordmark, the hero h1 and the footer
+  role: string; // the line under the name in the hero
   tagline: string; // the big headline in the hero
   intro: string; // short paragraph under the headline
   resume: string; // path to the PDF; the file goes in public/resume.pdf
   email: string; // used for every "Email" button
-  location: string; // shown in the footer and the About facts
+  location: string; // shown only in the footer ("Based in ...")
   social: {
     github: string; // profile or repo URL
     linkedin: string;
@@ -28,8 +28,8 @@ export type Site = {
   // The short paragraph above the Contact buttons.
   contactNote: string;
   // Optional. Path to a square photo inside public/, e.g. "/avatar.jpg" (at least 192x192px).
-  // While unset, the hero stays one column with no image at all (no placeholder, no initials).
-  // When set, the hero becomes two columns with the photo beside the headline.
+  // While unset, the hero shows no image at all (no placeholder, no initials).
+  // When set, a round photo sits on the right of the hero (beside the name on phones).
   avatar?: string;
 };
 
@@ -40,27 +40,28 @@ export const site: Site = {
   intro:
     "I'm a Computer Science student at FEU Tech who strives toward great software developed with purpose, pushed by passion.",
   resume: "/resume.pdf", // file goes in public/resume.pdf
-  lookingFor: "Software engineering or computing internship, 520 hours, available now, hybrid preferred",
-  bio: "I'm a 4th-year Computer Science student at FEU Institute of Technology, specializing in Software Engineering. Driven by curiosity and pushed by passion, I develop with purpose. I was Project Manager of our thesis, PixelDerm, built and deployed SyncSpace on my own, and helped ship two hackathon projects. I'm looking for an internship where I can build real products with a team I can learn from.",
+  lookingFor:
+    "A 520-hour internship or entry-level role in any position where I'd be a good fit for your organization. Eagerly available and looking out for opportunities.",
+  bio: "Driven by a passion to learn and understand, I'm a lifelong student at heart. That continuous loop—learning, understanding, and building—is what powers everything I do, allowing me to turn my love for learning into purposeful, impactful solutions.",
   contactNote:
     "Made it all the way down here? Let's talk. If your team has an internship opening, I'd like to hear about it. Reach me by email or LinkedIn, or download my resume below.",
   avatar: "/avatar.jpg",
   email: "wgabriel.padilla@gmail.com",
-  location: "España, Manila",
+  location: "Sampaloc, Manila",
   social: {
     github: "https://github.com/WillPads/WPadilla",
     linkedin: "https://www.linkedin.com/in/will-padilla/",
   },
 };
 
-// Header links; each href points at a section id on the page.
+// Header links, in the same order as the sections on the page (src/app/page.tsx). Each href points at a section id.
 // "About" is hidden automatically while site.bio is unset, and "Experience" while the
 // experience list below is empty.
 export const nav = [
-  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
-  { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
+  { label: "Experience", href: "#experience" },
+  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -114,10 +115,10 @@ export type SkillGroup = {
 };
 
 export const skills: SkillGroup[] = [
-  { category: "Languages", items: ["TypeScript", "Java", "Python", "C++"] },
+  { category: "Languages", items: ["TypeScript", "Java", "Python", "C++", "PHP", "HTML"] },
   { category: "Frontend", items: ["React", "Next.js", "Tailwind CSS"] },
   { category: "Backend", items: ["Node.js", "Express", "WebSockets"] },
-  { category: "Databases & Tools", items: ["PostgreSQL", "SQLite", "Prisma", "Android"] },
+  { category: "Databases & Tools", items: ["PostgreSQL", "SQLite", "Prisma", "Neon", "Render", "Figma", "Android"] },
 ];
 
 /* ----------------------------------------------------------------------------
@@ -240,8 +241,9 @@ export const featuredProjects: FeaturedProject[] = [
     context: "Personal project",
     device: "desktop",
     screenshots: [
-      { src: "/projects/syncspace/room.jpg", alt: "SyncSpace study room with a shared Pomodoro timer, the people in the room and chat" },
-      { src: "/projects/syncspace/dashboard.jpg", alt: "SyncSpace dashboard to create or join a room, upload study materials and keep notes" },
+      { src: "/projects/syncspace/room.jpg", alt: "A SyncSpace study room: the shared focus timer with host controls, the people in the room, chat, tasks, session notes and ambient sound" },
+      { src: "/projects/syncspace/dashboard.png", alt: "The SyncSpace dashboard: create or join a room, room stats, uploading materials and notes" },
+      { src: "/projects/syncspace/quiz.jpg", alt: "The quiz phase after a session: multiple-choice questions built from the uploaded photosynthesis notes" },
       { src: "/projects/syncspace/welcome.jpg", alt: "SyncSpace welcome page explaining shared study rooms" },
     ],
     caseStudy: {
@@ -249,9 +251,9 @@ export const featuredProjects: FeaturedProject[] = [
         "SyncSpace is a study space where a group shares one Pomodoro timer in a room, chats while they work, and gets a quiz built from the notes they uploaded when the session ends. I built it on my own, from the Next.js frontend to the Express and PostgreSQL backend, and deployed it on Vercel, Render and Neon.",
       cover: {
         src: "/projects/syncspace/room.jpg",
-        alt: "A SyncSpace study room: the shared Pomodoro timer on the left, the people in the room and the room chat on the right",
-        width: 1280,
-        height: 720,
+        alt: "A SyncSpace study room: the shared focus timer with host controls, the people in the room, chat, tasks, session notes and ambient sound",
+        width: 1102,
+        height: 714,
       },
       facts: [
         { label: "Duration", value: "Jun 2026 - present" },
@@ -299,12 +301,34 @@ export const featuredProjects: FeaturedProject[] = [
                 "Anyone in a room can upload PDF, TXT or Markdown notes, and a background queue extracts the text. When the host ends the session, the room becomes a quiz built from those notes.",
                 "Claude writes the questions when an API key is set. Without one, or if the call fails, a built-in generator writes fill-in-the-blank questions from the text, so the feature never depends on a paid API.",
               ],
+              images: [
+                {
+                  src: "/projects/syncspace/upload.jpg",
+                  alt: "The Session notes panel in a room, with an uploaded notes file marked Ready and the Upload notes button",
+                  width: 1102,
+                  height: 714,
+                },
+                {
+                  src: "/projects/syncspace/quiz.jpg",
+                  alt: "The quiz phase after the session: multiple-choice questions built from the uploaded notes",
+                  width: 1102,
+                  height: 714,
+                },
+              ],
             },
             {
               title: "Hardening the backend before launch",
               paragraphs: [
                 "A backend audit on Oct 22, 2026 listed what had to change before launch, and every finding was fixed and covered by tests the same day. The server moved to Express 5 so async errors can't crash it, JWTs were replaced with server-side sessions that can be revoked, and sign-in, joins and uploads got rate limits.",
                 "A row lock keeps the 10-person room cap from breaking when people join at the same time. The server now has 234 tests, all running against a real Postgres database instead of mocks.",
+              ],
+              images: [
+                {
+                  src: "/projects/syncspace/dashboard.png",
+                  alt: "The live SyncSpace dashboard: create or join a room, room stats, and uploading PDF, TXT or MD materials up to 4 MB",
+                  width: 1840,
+                  height: 966,
+                },
               ],
             },
             {
@@ -350,14 +374,14 @@ export const featuredProjects: FeaturedProject[] = [
     slug: "signal-no-5",
     title: "Signal No. 5",
     role: "Lead Backend Engineer & Project Manager",
-    tagline: "Offline 8-bit RPG that teaches typhoon preparedness, with dialogue from a locally run AI model",
+    tagline: "8-bit RPG that teaches typhoon preparedness, with dialogue from an AI model running locally on the laptop",
     description:
       "Players prepare a household for a fictional storm: manage limited resources, respond to warnings and evacuation advisories, and get through the storm and its aftermath, ending with a preparedness score and a personalised plan. I led backend development and project coordination, building a deterministic simulation engine and integrating Qwen3-4B through llama.cpp for locally generated dialogue, scene descriptions and debriefs. AI output is kept separate from the game logic, with validation, grounding checks and fallback responses. Built for kids aged 10-16 by a team of four.",
     stack: ["TypeScript", "Electron", "React", "Phaser 3", "llama.cpp", "Qwen3-4B"],
     status: "completed",
     year: "Oct 2026",
     context: "AppBuildersPH Local AI Hackathon 2026",
-    impact: "Built and demoed in a 20-hour sprint; runs fully offline on a local 4B-parameter model",
+    impact: "Built and demoed in a 20-hour sprint; the 4B-parameter AI model runs locally, with no cloud API",
     device: "desktop",
     screenshots: [
       { src: "/projects/signal-no-5/gameplay.jpg", alt: "Signal No. 5 gameplay: a pixel-art family preparing their home before the storm" },

@@ -1,4 +1,5 @@
 import { certifications } from "@/data/portfolio";
+import { subHeadingClass } from "@/components/ui/styles";
 
 // "2026-09" becomes "September 2026". Falls back to the raw text if it is not year-month.
 function formatIssued(issued: string) {
@@ -13,8 +14,8 @@ export default function Certifications() {
   if (certifications.length === 0) return null;
 
   return (
-    <div className="mt-10">
-      <h3 className="mb-3 text-sm font-medium text-foreground/65">Certifications</h3>
+    <div className="mt-14">
+      <h3 className={subHeadingClass}>Certifications</h3>
       <ul className="grid gap-x-10 md:grid-cols-2">
         {certifications.map((cert) => (
           <li

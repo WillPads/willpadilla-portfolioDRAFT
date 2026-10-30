@@ -37,7 +37,7 @@ export default function ProjectDetail({
             id="project-panel-title"
             ref={headingRef}
             tabIndex={-1}
-            className="text-2xl font-medium leading-tight tracking-tight text-foreground outline-none"
+            className="w-fit max-w-full text-2xl font-medium leading-tight tracking-tight text-foreground outline-none"
           >
             {project.title}
           </h3>

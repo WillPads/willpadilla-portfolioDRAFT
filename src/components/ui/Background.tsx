@@ -1,18 +1,19 @@
 import type { CSSProperties } from "react";
 
-// The page background: a dot grid (see .page-dots in globals.css) with four small outlined
+// The page background: a dot grid (see .page-dots in globals.css) with four outlined
 // shapes drifting very slowly over it. One fixed, clipped, click-through layer behind the
-// content. Flat 1.5px strokes at low opacity, moved with `transform` only (see .drift), and
+// content. Flat 1.5px strokes at low opacity (20% in light, 15% in dark), moved with `transform` only (see .drift), and
 // fully still under prefers-reduced-motion. Decorative, so hidden from assistive tech.
 //
 // The shapes live only in the side margins outside the content container (90% wide, max
 // 1280px), so they never pass behind text. They drift up and down, not sideways, and are
-// hidden below lg, where the margins are too narrow to hold them.
+// hidden below lg, where the margins are too narrow to hold them. Sizes are 29-42px (the square only turns 30 degrees): even rotated, the
+// biggest fits the 51px margin at 1024px wide.
 const shapes = [
-  { kind: "circle", side: "left", size: 32, top: 14, time: 90, delay: 0, y: 30, rot: 0 },
-  { kind: "square", side: "right", size: 28, top: 10, time: 110, delay: -30, y: 35, rot: 60 },
-  { kind: "plus", side: "right", size: 28, top: 62, time: 100, delay: -50, y: -30, rot: 90 },
-  { kind: "circle", side: "left", size: 22, top: 72, time: 120, delay: -70, y: -35, rot: 0 },
+  { kind: "circle", side: "left", size: 42, top: 14, time: 90, delay: 0, y: 30, rot: 0 },
+  { kind: "square", side: "right", size: 36, top: 10, time: 110, delay: -30, y: 35, rot: 30 },
+  { kind: "plus", side: "right", size: 36, top: 62, time: 100, delay: -50, y: -30, rot: 90 },
+  { kind: "circle", side: "left", size: 29, top: 72, time: 120, delay: -70, y: -35, rot: 0 },
 ] as const;
 
 // Centre of a side margin: half of (viewport - container) / 2, minus half the shape.
@@ -42,7 +43,7 @@ export default function Background() {
       {shapes.map((shape) => (
         <div
           key={`${shape.kind}-${shape.side}-${shape.top}`}
-          className="drift absolute hidden text-foreground/15 lg:block"
+          className="drift absolute hidden text-foreground/20 dark:text-foreground/15 lg:block"
           style={
             {
               [shape.side]: marginCentre(shape.size),

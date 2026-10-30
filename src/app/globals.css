@@ -13,6 +13,7 @@
   --foreground: #000000;
   --accent: #702ba6;
   --accent-foreground: #faf9f6;
+  --dot-alpha: 17%; /* dot grid strength; light needs a bit more than dark to read */
   color-scheme: light;
 }
 
@@ -21,6 +22,7 @@
   --foreground: #faf9f6;
   --accent: #c9a7f0;
   --accent-foreground: #131312;
+  --dot-alpha: 13%;
   color-scheme: dark;
 }
 
@@ -31,6 +33,7 @@
     --foreground: #faf9f6;
     --accent: #c9a7f0;
     --accent-foreground: #131312;
+    --dot-alpha: 13%;
     color-scheme: dark;
   }
 }
@@ -66,7 +69,7 @@ body {
 .page-dots {
   background-image: radial-gradient(
     circle at center,
-    color-mix(in srgb, var(--foreground) 13%, transparent) 1px,
+    color-mix(in srgb, var(--foreground) var(--dot-alpha), transparent) 1px,
     transparent 1.5px
   );
   background-size: 28px 28px;
@@ -198,6 +201,41 @@ body {
   animation: turntable-wrap-b 0.5s ease;
 }
 
+/* ---------------------------------------------------------------------------
+ * "View project" transition (browser View Transitions API, started in ProjectCarousel).
+ * The card title and the panel heading share the name `project-title`, so the title glides and scales
+ * from the card into the panel; the panel itself (`project-panel-card`) rises in. Only transform and opacity are animated: the default additive blend
+ * (plus-lighter) is switched to normal, and there is no blur, shadow or glow.
+ * ------------------------------------------------------------------------- */
+::view-transition-group(*) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+::view-transition-old(*),
+::view-transition-new(*) {
+  mix-blend-mode: normal;
+  animation-duration: 380ms;
+}
+
+/* The rest of the page does not crossfade (old text would ghost through the rising panel): the new
+ * page shows at once, and only the named title and panel move. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-new(project-panel-card) {
+  animation: panel-in 380ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
 /* Reduced motion: no rotation, scale, slide-up, drift or transition. Switching is instant. */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -207,6 +245,12 @@ body {
   .rise,
   .drift {
     animation: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 
   .turntable-slide,

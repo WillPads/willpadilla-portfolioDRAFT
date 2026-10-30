@@ -1,5 +1,15 @@
 # Progress Log
 
+## 2026-10-30 - Will's layout notes (round 3)
+
+- Section order is now Hero, Projects, Skills (Certifications inside), Experience, About, Contact; nav matches.
+- Hero: name (h1) and role directly above the tagline headline, round avatar on the right (stacked beside the name on phones).
+  Header: small mono wordmark, nav, theme toggle, mobile menu, 56px tall. Location only in the footer; About is the bio alone.
+- Section titles are text-3xl / md:text-4xl; sub-labels text-xl / md:text-2xl.
+- Background: shapes about 30% bigger, light mode shapes 20% and dots 17% (dark unchanged).
+- "View project": View Transitions API morph from card title to panel heading, panel rise, then a smooth scroll; instant under reduced motion.
+- Verified: tsc, lint and build clean; headless Chrome at 375 to 1440 in both themes, all 4 projects including after wrap-around, no media before the click, no console errors. Review screenshots refreshed (case-study-*.png not retaken).
+
 ## 2026-10-30 - Restyle (round 1 inspired by kirpenalber.com, round 2 after Will's answers)
 
 Phase 2 is restyled before review. Details and open questions: [docs/PHASE-2-REVIEW.md](docs/PHASE-2-REVIEW.md).

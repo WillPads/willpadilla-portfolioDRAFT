@@ -52,7 +52,10 @@ export default function ProjectSlide({
         isActive ? "cursor-pointer" : ""
       }`}
     >
-      <h3 className="text-xl font-medium leading-tight tracking-tight text-foreground">
+      <h3
+        id={`card-title-${project.slug}`}
+        className="w-fit max-w-full text-xl font-medium leading-tight tracking-tight text-foreground"
+      >
         {project.title}
       </h3>
 
