@@ -39,7 +39,7 @@ export const site: Site = {
     "A 520-hour internship or entry-level role in any position where I'd be a good fit for your organization. Eagerly available and looking out for opportunities.",
   bio: "Driven by curiosity and a love for learning, I'm a lifelong student at heart. I enjoy understanding how things work, building with intention, and turning that learning into thoughtful, useful work.",
   contactNote:
-    "Hi there! Still here? I'd love to have a chat :)\n\nI’d be thrilled to connect regarding internship opportunities! Reach me via email, LinkedIn, or through my resume for more info.",
+    "Hi there! Still here? Let's Talk!\n\nI'd love to connect regarding internship opportunities! Reach me via email, LinkedIn, or through my resume for more info.",
   
   avatar: "/avatar.jpg",
   email: "wgabriel.padilla@gmail.com",

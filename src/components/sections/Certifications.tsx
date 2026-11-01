@@ -87,7 +87,7 @@ function CertificationCarousel() {
   const center = count === 2 ? (active === 0 ? 0.5 : -0.5) : 0;
 
   return (
-    <div>
+    <div className="mt-14 border-t border-foreground/10 pt-8">
       <h3 className={subHeadingClass}>Certifications</h3>
       <section
         aria-roledescription="carousel"
@@ -121,9 +121,9 @@ function CertificationCarousel() {
                   data-wrap={jumped ? (turn % 2 ? "a" : "b") : undefined}
                   inert={position === "far"}
                   style={{ "--d": offset, "--c": center } as CSSProperties}
-                  className="turntable-slide group relative flex flex-col gap-3 rounded-l-lg rounded-r-[1.75rem] border border-foreground/15 bg-background p-4 hover:-translate-y-1 hover:border-foreground focus-within:-translate-y-1 focus-within:border-foreground data-[pos=active]:border-foreground motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0 sm:p-5"
+                  className="turntable-slide group relative flex flex-col gap-3 rounded-lg border border-foreground/15 bg-background p-4 hover:-translate-y-1 hover:border-foreground focus-within:-translate-y-1 focus-within:border-foreground data-[pos=active]:border-foreground motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0 sm:p-5"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-md border border-foreground/10 bg-background">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-foreground/10 bg-background">
                     {position !== "far" && (
                       <Image
                         src={certification.image}
@@ -136,7 +136,7 @@ function CertificationCarousel() {
                     )}
                     <span
                       aria-hidden="true"
-                      className="pointer-events-none absolute bottom-2 right-2 z-20 inline-flex items-center gap-1 rounded-md border border-foreground/15 bg-background/95 px-2 py-1 font-mono text-[10px] text-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none"
+                      className="pointer-events-none absolute bottom-2 right-2 z-20 inline-flex items-center gap-1 rounded-lg border border-foreground/15 bg-background/95 px-2 py-1 font-mono text-[10px] text-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none"
                     >
                       <ZoomIn aria-hidden="true" className="size-3" />
                       Enlarge
@@ -155,7 +155,7 @@ function CertificationCarousel() {
                       if (!swiped.current) setZoomedCertification(certification);
                     }}
                     title={`Enlarge ${certification.name}`}
-                    className="absolute inset-0 z-10 cursor-pointer rounded-l-lg rounded-r-[1.75rem] focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-foreground"
+                    className="absolute inset-0 z-10 cursor-pointer rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-foreground"
                   />
                 </div>
               );

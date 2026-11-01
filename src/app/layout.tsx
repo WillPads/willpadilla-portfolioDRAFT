@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Geist, Hanken_Grotesk, Inter, JetBrains_Mono, Open_Sans, Roboto } from "next/font/google";
 import Background from "@/components/ui/Background";
 import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
@@ -15,6 +15,27 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
+const geist = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const roboto = Roboto({
+  variable: "--font-android-roboto",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
+
+const openSans = Open_Sans({
+  variable: "--font-nodejs-open-sans",
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-prisma-inter",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "Will Padilla — Portfolio",
   description:
@@ -27,12 +48,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // suppressHydrationWarning: the inline script below adds data-theme before React hydrates.
+    // Dark by default (also without JavaScript). suppressHydrationWarning: the inline script
+    // below switches data-theme to "light" before React hydrates if the visitor chose light.
     <html
       lang="en"
+      data-theme="dark"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${hankenGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${hankenGrotesk.variable} ${jetbrainsMono.variable} ${geist.variable} ${roboto.variable} ${openSans.variable} ${inter.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

@@ -43,7 +43,7 @@ export default function ProjectSlide({
       style={{ "--d": offset, "--c": center } as CSSProperties}
       // Asymmetric corners: small on the left, large on the right. One flat 1px border on every
       // card; the active card, hover and keyboard focus all switch it to the solid text colour.
-      className="turntable-slide group relative flex cursor-pointer flex-col gap-3 rounded-l-lg rounded-r-[1.75rem] border border-foreground/15 bg-background p-5 hover:-translate-y-1 hover:border-foreground focus-within:-translate-y-1 focus-within:border-foreground data-[pos=active]:border-foreground motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0 md:p-6"
+      className="turntable-slide group relative flex cursor-pointer flex-col gap-3 rounded-lg border border-foreground/15 bg-background p-5 hover:-translate-y-1 hover:border-foreground focus-within:-translate-y-1 focus-within:border-foreground data-[pos=active]:border-foreground motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0 md:p-6"
     >
       <h3
         id={`card-title-${project.slug}`}
@@ -67,7 +67,7 @@ export default function ProjectSlide({
         href={caseStudyPath(project)}
         onClick={onNavigate}
         aria-label={`View ${project.title} case study`}
-        className="absolute inset-0 z-10 cursor-pointer rounded-l-lg rounded-r-[1.75rem] focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-foreground"
+        className="absolute inset-0 z-10 cursor-pointer rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-foreground"
       />
       <span
         aria-hidden="true"

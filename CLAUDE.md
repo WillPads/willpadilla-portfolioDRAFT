@@ -12,6 +12,8 @@ React, Next.js (App Router), Tailwind CSS, TypeScript, next/font (Hanken Grotesk
 LinkedIn, external link, download, email). No decorative icons, no sparkle/magic icons. Lucide 1.x has no
 brand logos, so GitHub/LinkedIn are small inline SVGs (decided 2026-10-30).
 
+In the Skills chips, use an official typeface only where one is documented and publicly available: Geist for Next.js and Roboto for Android. Other skill labels and all project stack tags keep JetBrains Mono.
+
 ## Style
 
 Inspired by (not a copy of) kirpenalber.com (decided 2026-10-30): no pixel font, no indigo or navy
@@ -25,7 +27,7 @@ light), never a different hue/gray palette, and both themes must pass WCAG AA. U
 (`text-foreground`, `bg-background`, `border-foreground/10`), never hard-coded black/white classes.
 
 One accent, royal blue: `--accent` is `#2563EB` (light) / `#93C5FD` (dark), with `--accent-foreground`
-(`#FAF9F6` / `#131312`) for text on a solid accent fill. Use it only for the primary pill button, the active-nav
+(`#FAF9F6` / `#131312`) for text on a solid accent fill. Use it only for the primary button, the active-nav
 underline, the resume link's bottom border and 10% tint, and the status dots.
 
 Layout is wide: header, sections and footer share `containerClass` in `src/components/ui/styles.ts`
@@ -39,6 +41,8 @@ the theme toggle and the mobile menu; it does not show the role. The hero opens 
 and `site.role` under it, directly above the headline, which is `site.tagline` (a styled paragraph). When
 `site.avatar` is set, a round photo sits on the right from 768px (176px, 224px from 1024px); on phones it is 64px
 beside the name and role. The location shows only in the footer; About is the bio alone.
+
+Rectangular UI surfaces, images and controls use a consistent 8px `rounded-lg` radius. Status dots remain circular.
 
 Section titles (Projects, Skills, Experience, About, Contact) are real headlines: `text-3xl md:text-4xl
 font-medium tracking-tight`, full foreground colour (`SectionHeading`). Sub-labels inside a section

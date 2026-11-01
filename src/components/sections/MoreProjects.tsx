@@ -17,7 +17,7 @@ export default function MoreProjects() {
           return (
             <li
               key={project.slug}
-              className="flex flex-col gap-3 rounded-l-lg rounded-r-[1.75rem] border border-foreground/15 p-5"
+              className="flex flex-col gap-3 rounded-lg border border-foreground/15 p-5"
             >
               <div className="flex flex-col gap-2">
                 <h4 className="text-lg font-medium leading-tight tracking-tight text-foreground">

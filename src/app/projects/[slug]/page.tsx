@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const neighbourClass =
-  "flex min-h-11 flex-col gap-1 rounded-l-lg rounded-r-[1.75rem] border border-foreground/15 p-5 text-foreground transition-[background-color,scale] duration-300 hover:scale-[1.02] hover:bg-foreground/5 focus-visible:bg-foreground/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground motion-reduce:transition-none motion-reduce:hover:scale-100";
+  "flex min-h-11 flex-col gap-1 rounded-lg border border-foreground/15 p-5 text-foreground transition-[background-color,scale] duration-300 hover:scale-[1.02] hover:bg-foreground/5 focus-visible:bg-foreground/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground motion-reduce:transition-none motion-reduce:hover:scale-100";
 
 export default async function CaseStudyPage({ params }: Props) {
   const { slug } = await params;
@@ -78,23 +78,18 @@ export default async function CaseStudyPage({ params }: Props) {
             </nav>
           )}
 
-          {slug === "signal-no-5" && (
-            <div className="mt-8 flex justify-center">
-              <Link href="/#projects" className={buttonClass}>
-                <ArrowLeft aria-hidden="true" className="size-4 shrink-0" />
-                Back to Projects
-              </Link>
-            </div>
-          )}
-
-          {!next && (
-            <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/#projects" className={buttonClass}>
+              <ArrowLeft aria-hidden="true" className="size-4 shrink-0" />
+              Back to Projects
+            </Link>
+            {!next && (
               <Link href="/" className={buttonClass}>
                 <ArrowLeft aria-hidden="true" className="size-4 shrink-0" />
                 Back to Home Page
               </Link>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </main>
       <Footer />

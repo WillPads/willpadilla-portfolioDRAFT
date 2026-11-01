@@ -38,7 +38,7 @@ export default function Experience() {
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-sm underline decoration-foreground/30 after:absolute after:inset-0 after:content-[''] underline-offset-4 hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
+                        className="rounded-lg underline decoration-foreground/30 after:absolute after:inset-0 after:content-[''] underline-offset-4 hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
                       >
                         {item.org}
                         <span className="sr-only"> (opens in a new tab)</span>
