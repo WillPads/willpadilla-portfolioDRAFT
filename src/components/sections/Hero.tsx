@@ -1,9 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import { Mail } from "lucide-react";
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { site } from "@/data/portfolio";
 import ExternalLink from "@/components/ui/ExternalLink";
-import { containerClass, pillClass, proseClass, resumeLinkClass } from "@/components/ui/styles";
+import { containerClass, copiedNoticeClass, pillClass, resumeLinkClass } from "@/components/ui/styles";
 
 // Each block slides up a few pixels, one after the other (see .rise in globals.css). They only
 // move: opacity stays at 1, so the hero is never blank.
@@ -17,6 +19,20 @@ const rise = (step: number) => ({ "--rise-delay": `${step * 90}ms` }) as CSSProp
 // the round photo sits on the right, top-aligned with the name. On phones the photo is small and sits
 // beside the name and role, and everything else runs full width underneath.
 export default function Hero() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = async () => {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(site.email);
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 1200);
+      }
+    } catch {
+      // Ignore clipboard errors: the button still acts as a safe no-op in unsupported browsers.
+    }
+  };
+
   return (
     <section
       aria-labelledby="hero-title"
@@ -25,11 +41,10 @@ export default function Hero() {
       <div style={rise(0)} className="rise col-start-1 row-start-1 min-w-0">
         <h1
           id="hero-title"
-          className="text-balance text-2xl font-medium leading-tight tracking-tight text-foreground md:text-3xl"
+          className="text-balance text-4xl font-medium leading-tight tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl"
         >
           {site.name}
         </h1>
-        <p className="mt-1.5 text-pretty text-sm leading-snug text-foreground/65 md:text-base">{site.role}</p>
       </div>
 
       {site.avatar && (
@@ -53,24 +68,33 @@ export default function Hero() {
           {site.tagline}
         </p>
 
-        {site.lookingFor && (
-          <p style={rise(2)} className="rise mt-5 font-mono text-[13px] text-foreground">
-            <span className="text-foreground/65">Looking for:</span> {site.lookingFor}
+        {site.bio && (
+          <p style={rise(2)} className="rise mt-4 max-w-[65ch] text-pretty text-[17px] leading-relaxed text-foreground/75">
+            {site.bio}
           </p>
         )}
 
-        <p
-          style={rise(3)}
-          className={`rise mt-5 text-pretty text-base leading-relaxed text-foreground/65 md:text-[17px] md:leading-relaxed ${proseClass}`}
-        >
-          {site.intro}
-        </p>
+        {site.lookingFor && (
+          <p style={rise(2.5)} className="rise mt-5 text-base leading-relaxed text-foreground/80">
+            <span className="font-mono text-xs font-medium text-foreground/65">Looking for:</span> {site.lookingFor}
+          </p>
+        )}
 
         <div style={rise(4)} className="rise mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
-          <a href={`mailto:${site.email}`} className={pillClass}>
-            <Mail aria-hidden="true" className="size-4 shrink-0" />
-            Email me
-          </a>
+          <div className="group relative">
+            <button type="button" onClick={handleCopyEmail} className={pillClass} aria-label="Copy email address">
+              <Mail aria-hidden="true" className="size-4 shrink-0" />
+              {site.email}
+            </button>
+            <span
+              role="status"
+              aria-live="polite"
+              aria-hidden={!copied}
+              className={`${copiedNoticeClass} ${copied ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100"}`}
+            >
+              {copied ? "Copied" : "Click to Copy"}
+            </span>
+          </div>
           <ExternalLink href={site.resume} className={resumeLinkClass}>
             Resume
           </ExternalLink>

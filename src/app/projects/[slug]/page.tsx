@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Header from "@/components/layout/Header";
-import SkipLink from "@/components/layout/SkipLink";
 import Footer from "@/components/layout/Footer";
 import CaseStudyArticle from "@/components/sections/CaseStudyArticle";
 import { caseStudyPath, getCaseStudyProject, getCaseStudyProjects } from "@/lib/case-studies";
@@ -44,7 +43,6 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <>
-      <SkipLink />
       <Header onHome={false} />
       <main id="main" tabIndex={-1} className="flex-1 pb-6 outline-none">
         <div className={`${containerClass} pt-6 md:pt-10`}>
@@ -78,6 +76,24 @@ export default async function CaseStudyPage({ params }: Props) {
                 </Link>
               )}
             </nav>
+          )}
+
+          {slug === "signal-no-5" && (
+            <div className="mt-8 flex justify-center">
+              <Link href="/#projects" className={buttonClass}>
+                <ArrowLeft aria-hidden="true" className="size-4 shrink-0" />
+                Back to Projects
+              </Link>
+            </div>
+          )}
+
+          {!next && (
+            <div className="mt-8 flex justify-center">
+              <Link href="/" className={buttonClass}>
+                <ArrowLeft aria-hidden="true" className="size-4 shrink-0" />
+                Back to Home Page
+              </Link>
+            </div>
           )}
         </div>
       </main>

@@ -6,7 +6,7 @@ import CaseFigure from "@/components/ui/CaseFigure";
 import { proseClass } from "@/components/ui/styles";
 
 const labelClass = "font-mono text-xs font-medium uppercase tracking-wider text-foreground/65";
-const paragraphClass = "text-[15px] leading-relaxed text-foreground/80";
+const paragraphClass = "text-base leading-relaxed text-foreground/80";
 
 // Image grid: one image is capped at 768px wide, two or more sit side by side from 640px up.
 function ImageGrid({ images, title }: { images: NonNullable<CaseSection["images"]>; title: string }) {
@@ -41,15 +41,21 @@ function Prose({ paragraphs }: { paragraphs: string[] }) {
 export default function CaseStudyArticle({ project }: { project: CaseStudyProject }) {
   const { caseStudy } = project;
   const video = project.demoVideo;
+  const isCompactCover = ["pixelderm", "syncspace", "signal-no-5", "gabay-aralin"].includes(project.slug);
+  const cropCoverToWideFrame = ["syncspace", "signal-no-5", "gabay-aralin"].includes(project.slug);
 
   return (
-    <article aria-labelledby="case-title">
+    <article aria-labelledby="case-title" data-case-study={project.slug} style={{ viewTransitionName: "project-case-study" }}>
       <header className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <p className="font-mono text-xs font-medium uppercase tracking-wider text-accent">Case study</p>
           <StatusBadge status={project.status} />
         </div>
-        <h1 id="case-title" className="text-4xl font-medium leading-[1.1] tracking-tight text-foreground md:text-6xl">
+        <h1
+          id="case-title"
+          style={{ viewTransitionName: `project-title-${project.slug}` }}
+          className="text-4xl font-medium leading-[1.1] tracking-tight text-foreground md:text-6xl"
+        >
           {project.title}
         </h1>
         <p className={`${proseClass} text-lg leading-relaxed text-foreground/80`}>{caseStudy.summary}</p>
@@ -60,8 +66,9 @@ export default function CaseStudyArticle({ project }: { project: CaseStudyProjec
           <CaseFigure
             image={caseStudy.cover}
             eager
-            sizes="(min-width: 1280px) 1152px, 90vw"
-            className="rounded-l-lg rounded-r-[1.75rem]"
+            cropToWideFrame={cropCoverToWideFrame}
+            sizes={isCompactCover ? "(min-width: 556px) 500px, 90vw" : "(min-width: 1280px) 1152px, 90vw"}
+            className={`${isCompactCover ? "max-w-[500px]" : ""} rounded-l-lg rounded-r-[1.75rem]`}
           />
         </div>
       )}
@@ -71,7 +78,7 @@ export default function CaseStudyArticle({ project }: { project: CaseStudyProjec
           {caseStudy.facts.map((fact) => (
             <div key={fact.label} className="flex flex-col gap-1">
               <dt className={labelClass}>{fact.label}</dt>
-              <dd className="text-[15px] text-foreground">{fact.value}</dd>
+              <dd className="text-base leading-relaxed text-foreground">{fact.value}</dd>
             </div>
           ))}
         </dl>

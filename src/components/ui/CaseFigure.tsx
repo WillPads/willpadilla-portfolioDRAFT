@@ -8,14 +8,24 @@ export default function CaseFigure({
   sizes,
   eager = false,
   className = "rounded-lg",
+  cropToWideFrame = false,
 }: {
   image: CaseImage;
   sizes: string;
   eager?: boolean;
   className?: string;
+  cropToWideFrame?: boolean;
 }) {
   const frame = `overflow-hidden border border-foreground/15 ${className}`;
   const loading = eager ? { preload: true } : { loading: "lazy" as const };
+
+  if (cropToWideFrame) {
+    return (
+      <div className={`relative aspect-[500/285] ${frame}`}>
+        <Image src={image.src} alt={image.alt} fill sizes={sizes} {...loading} className="object-cover" />
+      </div>
+    );
+  }
 
   if (image.width && image.height) {
     return (

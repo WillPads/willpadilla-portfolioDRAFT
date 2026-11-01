@@ -121,7 +121,7 @@ One scale, used everywhere. The badge looks the same in the carousel, the panel 
 | `status` value | Badge label | Use it when |
 | --- | --- | --- |
 | `"live"` | Live | Deployed with a public URL (also set `liveUrl`) |
-| `"completed"` | Completed | Finished, but not deployed |
+| `"prototype"` | Prototype | A working build, but not deployed |
 | `"in-development"` | In Development | Still being built |
 
 ### Optional fields
@@ -151,7 +151,7 @@ Add this block inside `featuredProjects`:
   tagline: "One line about what it is.",
   description: "Two or three sentences: the problem, how you built it, the result.",
   stack: ["Tech One", "Tech Two"],
-  status: "in-development", // "live", "completed" or "in-development"
+  status: "in-development", // "live", "prototype" or "in-development"
   year: "2026",
   context: "Course project",
   impact: "One measurable result.",
@@ -173,7 +173,7 @@ Add this block inside `moreProjects`:
   role: "Your Role",
   tagline: "One line about what it is.",
   stack: ["Tech One", "Tech Two"],
-  status: "completed",
+  status: "prototype",
   repoUrl: "https://github.com/your-username/project-name",
 },
 ```
@@ -264,7 +264,7 @@ npm run build      # builds the site the way Vercel will
 ```
 
 If `tsc` reports an error, it names the file and line. Usually it's a misspelled field or a value
-that isn't one of the allowed options (for example `status: "done"` instead of `"completed"`).
+that isn't one of the allowed options (for example `status: "done"` instead of `"prototype"`).
 
 ## Case study pages
 

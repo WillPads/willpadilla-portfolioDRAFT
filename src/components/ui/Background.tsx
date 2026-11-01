@@ -1,23 +1,28 @@
 import type { CSSProperties } from "react";
 
-// The page background: a dot grid (see .page-dots in globals.css) with four outlined
+// The page background: a dot grid (see .page-dots in globals.css) with six outlined
 // shapes drifting very slowly over it. One fixed, clipped, click-through layer behind the
-// content. Flat 1.5px strokes at low opacity (20% in light, 15% in dark), moved with `transform` only (see .drift), and
+// content. Flat 1.5px strokes at low opacity (24% in light, 19% in dark), moved with `transform` only (see .drift), and
 // fully still under prefers-reduced-motion. Decorative, so hidden from assistive tech.
 //
 // The shapes live only in the side margins outside the content container (90% wide, max
-// 1280px), so they never pass behind text. They drift up and down, not sideways, and are
-// hidden below lg, where the margins are too narrow to hold them. Sizes are 29-42px (the square only turns 30 degrees): even rotated, the
-// biggest fits the 51px margin at 1024px wide.
+// 1280px). Smaller shapes appear from md; the 42px circle waits until lg, where the margins can
+// contain it. Their slow inward drift can pass under content, but this layer stays behind all text and controls.
 const shapes = [
   { kind: "circle", side: "left", size: 42, top: 14, time: 90, delay: 0, y: 30, rot: 0 },
   { kind: "square", side: "right", size: 36, top: 10, time: 110, delay: -30, y: 35, rot: 30 },
   { kind: "plus", side: "right", size: 36, top: 62, time: 100, delay: -50, y: -30, rot: 90 },
   { kind: "circle", side: "left", size: 29, top: 72, time: 120, delay: -70, y: -35, rot: 0 },
+  { kind: "plus", side: "left", size: 20, top: 24, time: 140, delay: -15, y: 6, rot: 0 },
+  { kind: "circle", side: "right", size: 22, top: 40, time: 155, delay: -40, y: -8, rot: 0 },
 ] as const;
 
 // Centre of a side margin: half of (viewport - container) / 2, minus half the shape.
 const marginCentre = (size: number) => `calc((100vw - min(90vw, 1280px)) / 4 - ${size / 2}px)`;
+const inwardDrift = (side: (typeof shapes)[number]["side"], size: number) =>
+  side === "left"
+    ? `calc((100vw - min(90vw, 1280px)) / 4 - ${size / 2}px + 5vw)`
+    : `calc(${size / 2}px - (100vw - min(90vw, 1280px)) / 4 - 5vw)`;
 
 function Shape({ kind, size }: { kind: (typeof shapes)[number]["kind"]; size: number }) {
   return (
@@ -43,14 +48,16 @@ export default function Background() {
       {shapes.map((shape) => (
         <div
           key={`${shape.kind}-${shape.side}-${shape.top}`}
-          className="drift absolute hidden text-foreground/20 dark:text-foreground/15 lg:block"
+          className={`drift absolute hidden text-foreground/24 dark:text-foreground/19 ${
+            shape.size === 42 ? "lg:block" : "md:block"
+          } ${shape.size === 36 ? "md:max-lg:scale-75" : ""}`}
           style={
             {
               [shape.side]: marginCentre(shape.size),
               top: `${shape.top}%`,
               "--drift-time": `${shape.time}s`,
               "--drift-delay": `${shape.delay}s`,
-              "--drift-x": "0px",
+              "--drift-x": inwardDrift(shape.side, shape.size),
               "--drift-y": `${shape.y}vh`,
               "--drift-rot": `${shape.rot}deg`,
             } as CSSProperties

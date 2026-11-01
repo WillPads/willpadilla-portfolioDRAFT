@@ -28,9 +28,9 @@ export default function MoreProjects() {
                   {meta && <p className="font-mono text-[11px] text-foreground/65">{meta}</p>}
                 </div>
               </div>
-              <p className={`text-sm leading-relaxed text-foreground/80 ${proseClass}`}>{project.tagline}</p>
+              <p className={`text-base leading-relaxed text-foreground/80 ${proseClass}`}>{project.tagline}</p>
               {project.impact && (
-                <p className="text-sm leading-relaxed text-foreground">
+                <p className="text-base leading-relaxed text-foreground">
                   <span className="font-mono text-xs text-foreground/65">Impact:</span> {project.impact}
                 </p>
               )}

@@ -19,7 +19,7 @@ export default function Experience() {
           {experience.map((item) => (
             <li
               key={`${item.org}-${item.start}`}
-              className={`${rowClass} relative flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4`}
+              className={`${rowClass} relative flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6`}
             >
               <div className="flex min-w-0 items-center gap-3">
                 {item.logo && (
@@ -32,7 +32,7 @@ export default function Experience() {
                   />
                 )}
                 <div className="min-w-0">
-                  <p className="text-[15px] font-medium leading-tight text-foreground">
+                  <p className="text-base font-medium leading-tight text-foreground">
                     {item.url ? (
                       <a
                         href={item.url}
@@ -47,10 +47,10 @@ export default function Experience() {
                       item.org
                     )}
                   </p>
-                  <p className="mt-0.5 text-sm leading-snug text-foreground/65">{item.role}</p>
+                  <p className="mt-1 text-[15px] leading-relaxed text-foreground/65">{item.role}</p>
                 </div>
               </div>
-              <p className="shrink-0 font-mono text-xs text-foreground/65 sm:text-right">
+              <p className="shrink-0 font-mono text-[13px] text-foreground/65 sm:text-right">
                 {item.start}
                 <span aria-hidden="true"> - </span>
                 <span className="sr-only"> to </span>

@@ -14,17 +14,17 @@ brand logos, so GitHub/LinkedIn are small inline SVGs (decided 2026-10-30).
 
 ## Style
 
-Inspired by (not a copy of) kirpenalber.com (decided 2026-10-30): no pixel font, no royal/indigo blue, no navy
-background, and no text, image, icon, logo or code from that site.
+Inspired by (not a copy of) kirpenalber.com (decided 2026-10-30): no pixel font, no indigo or navy
+background, and no text, image, icon, logo or code from that site. The royal-blue accent is Will's own choice.
 
 Two themes, light and dark. The default follows the system setting; a sun/moon toggle in the navbar and mobile
 menu remembers the choice (`data-theme` on `<html>`, set by an inline head script so there is no flash). Light:
-background `#FAF9F6`, text black. Dark: background `#131312`, text `#FAF9F6`. All text uses the foreground
+background `#F2F4F7`, text black. Dark: background `#131312`, text `#FAF9F6`. All text uses the foreground
 colour with opacity variants for hierarchy (muted text is `text-foreground/65`, never lower: /50 fails AA in
 light), never a different hue/gray palette, and both themes must pass WCAG AA. Use the theme tokens
 (`text-foreground`, `bg-background`, `border-foreground/10`), never hard-coded black/white classes.
 
-One accent, ube purple: `--accent` is `#702BA6` (light) / `#C9A7F0` (dark), with `--accent-foreground`
+One accent, royal blue: `--accent` is `#2563EB` (light) / `#93C5FD` (dark), with `--accent-foreground`
 (`#FAF9F6` / `#131312`) for text on a solid accent fill. Use it only for the primary pill button, the active-nav
 underline, the resume link's bottom border and 10% tint, and the status dots.
 
@@ -45,9 +45,9 @@ font-medium tracking-tight`, full foreground colour (`SectionHeading`). Sub-labe
 (Certifications, More projects) are one step down: `text-xl md:text-2xl` (`subHeadingClass`).
 
 Background (`src/components/ui/Background.tsx`, `.page-dots` and `.drift` in `globals.css`): a fixed,
-click-through dot grid plus four slow outlined shapes (29 to 42px) that drift up and down in the side margins
-only, never behind text, hidden below `lg`. Light mode is slightly stronger (shapes 20%, dots 17% via
-`--dot-alpha`); dark mode uses 15% and 13%. The dots use a radial-gradient purely to draw dots: the only gradient
+click-through dot grid plus six slow outlined shapes (20 to 42px) that drift inward from the side margins,
+sometimes passing behind text and controls; the small shapes appear from `md`, the largest from `lg`. Light mode is slightly stronger (shapes 24%, dots 21% via
+`--dot-alpha`); dark mode uses 19% and 17%. The dots use a radial-gradient purely to draw dots: the only gradient
 allowed. Shapes are flat 1.5px strokes, moved with `transform` only, still under `prefers-reduced-motion`.
 
 Otherwise zero gradients, blur, glow, noise or shadows (box-shadow, drop-shadow, text-shadow). Surfaces are flat:
@@ -82,8 +82,8 @@ panel heading (a `view-transition-name` set on one element at a time), the panel
 heading. Reduced motion and browsers without the API just open the panel. Demo videos never preload or autoplay.
 Reduced motion makes turning instant.
 
-One status scale everywhere: `live` (deployed with a public URL), `completed` (finished, not deployed),
-`in-development`. PixelDerm and Signal No. 5 are Completed; Gabay Aralin is In Development. SyncSpace is Live
+One status scale everywhere: `live` (deployed with a public URL), `prototype` (a working build, not deployed),
+`in-development`. PixelDerm and Signal No. 5 are Prototype; Gabay Aralin is In Development. SyncSpace is Live
 (https://sync-space-taupe.vercel.app). A project with no `repoUrl`, `liveUrl` or `demoVideo` shows "Links
 coming soon". The PixelDerm repo/demo link is paused until Will says otherwise.
 

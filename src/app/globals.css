@@ -4,25 +4,25 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 /* Colour tokens. All text is --foreground at different opacities, never a different gray.
- * --accent is the site accent (ube purple, deeper in light and a lavender in dark): the pill
+ * --accent is the site accent (space blue, deeper in light and lighter in dark): the pill
  * button, the active-nav underline, the resume link's bottom border and the status dots.
  * --accent-foreground is the text colour that sits on a solid accent fill. These two are the
  * only accent tokens. */
 :root {
-  --background: #faf9f6;
+  --background: #f2f4f7;
   --foreground: #000000;
-  --accent: #702ba6;
+  --accent: #2563eb;
   --accent-foreground: #faf9f6;
-  --dot-alpha: 17%; /* dot grid strength; light needs a bit more than dark to read */
+  --dot-alpha: 21%; /* dot grid strength; light needs a bit more than dark to read */
   color-scheme: light;
 }
 
 [data-theme="dark"] {
   --background: #131312;
   --foreground: #faf9f6;
-  --accent: #c9a7f0;
+  --accent: #93c5fd;
   --accent-foreground: #131312;
-  --dot-alpha: 13%;
+  --dot-alpha: 17%;
   color-scheme: dark;
 }
 
@@ -31,9 +31,9 @@
   :root:not([data-theme]) {
     --background: #131312;
     --foreground: #faf9f6;
-    --accent: #c9a7f0;
+    --accent: #93c5fd;
     --accent-foreground: #131312;
-    --dot-alpha: 13%;
+    --dot-alpha: 17%;
     color-scheme: dark;
   }
 }
@@ -57,6 +57,22 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  animation: site-enter 640ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes site-enter {
+  0% {
+    opacity: 0;
+    translate: 0 16px;
+  }
+  72% {
+    opacity: 1;
+    translate: 0 -2px;
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -201,12 +217,7 @@ body {
   animation: turntable-wrap-b 0.5s ease;
 }
 
-/* ---------------------------------------------------------------------------
- * "View project" transition (browser View Transitions API, started in ProjectCarousel).
- * The card title and the panel heading share the name `project-title`, so the title glides and scales
- * from the card into the panel; the panel itself (`project-panel-card`) rises in. Only transform and opacity are animated: the default additive blend
- * (plus-lighter) is switched to normal, and there is no blur, shadow or glow.
- * ------------------------------------------------------------------------- */
+/* Card titles morph into their matching case-study headings; the article eases upward on entry. */
 ::view-transition-group(*) {
   animation-duration: 380ms;
   animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -218,21 +229,20 @@ body {
   animation-duration: 380ms;
 }
 
-/* The rest of the page does not crossfade (old text would ghost through the rising panel): the new
- * page shows at once, and only the named title and panel move. */
+/* The surrounding page stays anchored while the shared title and case-study article transition. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
 }
 
-::view-transition-new(project-panel-card) {
-  animation: panel-in 380ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+::view-transition-new(project-case-study) {
+  animation: case-study-in 360ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
-@keyframes panel-in {
+@keyframes case-study-in {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(12px);
   }
 }
 
@@ -240,6 +250,10 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  body {
+    animation: none;
   }
 
   .rise,

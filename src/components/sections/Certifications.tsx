@@ -16,16 +16,16 @@ export default function Certifications() {
   return (
     <div className="mt-14">
       <h3 className={subHeadingClass}>Certifications</h3>
-      <ul className="grid gap-x-10 md:grid-cols-2">
+      <ul className="grid gap-x-10 gap-y-2 md:grid-cols-2">
         {certifications.map((cert) => (
           <li
             key={`${cert.issuer}-${cert.name}`}
-            className="border-t border-foreground/10 py-4"
+            className="border-t border-foreground/10 py-5"
           >
-            <div className="flex min-w-0 flex-col gap-0.5">
-              <p className="text-[15px] font-medium leading-tight text-foreground">{cert.name}</p>
-              <p className="text-sm text-foreground/65">{cert.issuer}</p>
-              <p className="font-mono text-xs text-foreground/65">
+            <div className="flex min-w-0 flex-col gap-1">
+              <p className="text-base font-medium leading-tight text-foreground">{cert.name}</p>
+              <p className="text-[15px] leading-relaxed text-foreground/65">{cert.issuer}</p>
+              <p className="font-mono text-[13px] text-foreground/65">
                 {formatIssued(cert.issued)}
                 {cert.credentialId && <> / ID {cert.credentialId}</>}
               </p>

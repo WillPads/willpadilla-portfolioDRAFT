@@ -10,9 +10,7 @@
 
 export type Site = {
   name: string; // the header wordmark, the hero h1 and the footer
-  role: string; // the line under the name in the hero
   tagline: string; // the big headline in the hero
-  intro: string; // short paragraph under the headline
   resume: string; // path to the PDF; the file goes in public/resume.pdf
   email: string; // used for every "Email" button
   location: string; // shown only in the footer ("Based in ...")
@@ -34,17 +32,14 @@ export type Site = {
 };
 
 export const site: Site = {
-  name: "Will Padilla",
-  role: "Software Engineer & Computer Science Student at FEU Tech",
-  tagline: "To develop with purpose, pushed by passion",
-  intro:
-    "I'm a Computer Science student at FEU Tech who strives toward great software developed with purpose, pushed by passion.",
+  name: "What's Up? I'm Will :)",
+  tagline: "Love for Learning, pushed by purpose",
   resume: "/resume.pdf", // file goes in public/resume.pdf
   lookingFor:
     "A 520-hour internship or entry-level role in any position where I'd be a good fit for your organization. Eagerly available and looking out for opportunities.",
-  bio: "Driven by a passion to learn and understand, I'm a lifelong student at heart. That continuous loop—learning, understanding, and building—is what powers everything I do, allowing me to turn my love for learning into purposeful, impactful solutions.",
+  bio: "Driven by curiosity and a love for learning, I'm a lifelong student at heart. I enjoy understanding how things work, building with intention, and turning that learning into thoughtful, useful work.",
   contactNote:
-    "Made it all the way down here? Let's talk. If your team has an internship opening, I'd like to hear about it. Reach me by email or LinkedIn, or download my resume below.",
+    "Made it this far? I'd love to hear from you. If your team has an internship opening or a role I could be a good fit for, I'd be glad to connect. You can reach me by email or LinkedIn, or download my resume below.",
   avatar: "/avatar.jpg",
   email: "wgabriel.padilla@gmail.com",
   location: "Sampaloc, Manila",
@@ -61,7 +56,6 @@ export const nav = [
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
   { label: "Experience", href: "#experience" },
-  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -134,9 +128,9 @@ export const skills: SkillGroup[] = [
 
 // One status scale used everywhere (turntable, detail panel, "More projects" list):
 //   "live"           deployed, with a public URL (set liveUrl too)   -> badge "Live"
-//   "completed"      finished, but not deployed                      -> badge "Completed"
+//   "prototype"      a working build that is not deployed or finished  -> badge "Prototype"
 //   "in-development" still being built                               -> badge "In Development"
-export type ProjectStatus = "live" | "completed" | "in-development";
+export type ProjectStatus = "live" | "prototype" | "in-development";
 
 export type ProjectScreenshot = {
   src: string; // path inside public/, e.g. "/projects/pixelderm-2.jpg"
@@ -209,13 +203,13 @@ export const featuredProjects: FeaturedProject[] = [
   {
     slug: "pixelderm",
     title: "PixelDerm",
-    role: "Project Manager & Developer",
+    role: "Project Manager & Co-Developer",
     tagline:
       "Android-based Mobile Platform for Longitudinal Skin Damage Analysis & Monitoring",
     description:
-      "An image-processing pipeline isolates and tracks UV-induced skin damage over time, comparing each new scan with the user's baseline. The app was developed with dermatologists and evaluated under ISO/IEC 25010 software quality standards.",
-    stack: ["React Native", "TypeScript", "Android", "Image Processing", "ISO/IEC 25010"],
-    status: "completed",
+      "A mobile Android app for tracking UV-related skin damage over time by comparing new scans with a user's earlier baseline. I led the project as project manager, co-developed backend and database functions, and used Python to filter the datasets behind the image-analysis workflow. We coordinated with dermatologists to verify and validate the clinical-technical trials.",
+    stack: ["React Native", "TypeScript", "Android", "Image Processing", "Python"],
+    status: "prototype",
     year: "Sep 2025 - Jul 2026",
     context: "Thesis",
     device: "mobile",
@@ -225,17 +219,90 @@ export const featuredProjects: FeaturedProject[] = [
       { src: "/projects/pixelderm-3.jpg", alt: "PixelDerm Analysis - Image Analysis" },
       { src: "/projects/pixelderm-4.jpg", alt: "PixelDerm Analysis - Results" },
     ],
+    caseStudy: {
+      summary:
+        "PixelDerm is an Android app for tracking UV-related skin damage over time by comparing photos of the same skin area across sessions. I managed the project, helped build the app with Ms. Patio, and used Python to clean the datasets behind the image-analysis workflow. We worked with dermatologists to verify and validate the clinical-technical trials.",
+      cover: {
+        src: "/projects/PixelDerm/pixelderm poster.png",
+        alt: "PixelDerm poster showing the project title and a preview of the app on a phone",
+        width: 1024,
+        height: 768,
+      },
+      facts: [
+        { label: "Duration", value: "Sep 2025 - Jul 2026" },
+        { label: "Role", value: "Project Manager, Co-Developer & Data Analyst" },
+        { label: "Stack", value: "React Native, TypeScript, Android, Python, Image Processing" },
+      ],
+      sections: [
+        {
+          title: "Tech stack",
+          paragraphs: [
+            "Frontend: React Native 0.85 and TypeScript for the Android app.",
+            "Backend: A server receives and analyzes the photos. Its code is not in the local repository, so its technology stack is unconfirmed.",
+            "Data: Scan history is kept on the server; the app stores only a user ID on the phone using AsyncStorage.",
+            "Hosting or link: The app is not public. The repository and demo link are paused.",
+            "Tags shown on the site: React Native, TypeScript, Android, Image Processing, Python.",
+          ],
+        },
+        {
+          title: "Overview",
+          paragraphs: [
+            "In alignment with our course guidelines, PixelDerm was developed to help people track skin damage over time without relying on guesswork. In a tropical country like the Philippines, UV exposure is constant and often easy to overlook until extensive damage is done.",
+          ],
+        },
+        {
+          title: "WHY?",
+          paragraphs: [
+            "UV damage builds up slowly, so it is hard to notice changes from day to day. A person can be exposed to the sun during work, commuting, or everyday activities and still not know how that exposure is affecting their skin.",
+            "We wanted to make that process more visible and easier to monitor, especially for the average Filipino citizen who is regularly exposed to strong sunlight.",
+          ],
+        },
+        {
+          title: "WHAT?",
+          paragraphs: [
+            "I was Project Manager, Co-Developer and Data Analyst for our thesis. I planned and ran the project (sprints, timeline, check-ins, and quality checks on deliverables), helped build the app with Shana, and cleaned our datasets with Python.",
+          ],
+        },
+        {
+          title: "HOW?",
+          paragraphs: [
+            "The app and analysis workflow were developed together. We planned the sprint structure, coordinated tasks, tracked deadlines and kept the team aligned on what needed to happen next.",
+          ],
+          images: [
+            {
+              src: "/projects/pixelderm-2.jpg",
+              alt: "PixelDerm pre-capture screen for image comparison and skin tracking",
+              width: 1024,
+              height: 768,
+            },
+            {
+              src: "/projects/pixelderm-3.jpg",
+              alt: "PixelDerm image-analysis screen with an image-processing workflow",
+              width: 1024,
+              height: 768,
+            },
+          ],
+        },
+        {
+          title: "Results",
+          paragraphs: [
+            "PixelDerm was completed as a thesis project and gave the team a working app and research workflow for long-term skin damage analysis.",
+            "The project was a valuable experience in product management, app development and research-based design, and it helped sharpen how I think about building tools that combine technical work with real user needs.",
+          ],
+        },
+      ],
+    },
   },
   {
     slug: "syncspace",
     title: "SyncSpace",
     role: "Full-stack Developer",
-    tagline: "Synchronous Co-Working & Pomodoro Room App",
+    tagline: "Synchronous Co-Working Space",
     description:
       "Shared real-time rooms with synced Pomodoro timers, tasks and notes, so study groups and remote teams can focus together instead of alone. Includes role-based access, a WebSocket sync engine and a quiz pipeline built from uploaded documents. Deployed on Vercel (frontend), Render (API) and Neon (Postgres).",
     stack: ["Next.js", "TypeScript", "Express", "Prisma", "PostgreSQL", "WebSockets"],
     status: "live",
-    year: "Jun 2026 - present",
+    year: "Sep 2026 - Nov 2026",
     liveUrl: "https://sync-space-taupe.vercel.app",
     repoUrl: "https://github.com/WillPads/SyncSpace",
     context: "Personal project",
@@ -248,58 +315,73 @@ export const featuredProjects: FeaturedProject[] = [
     ],
     caseStudy: {
       summary:
-        "SyncSpace is a study space where a group shares one Pomodoro timer in a room, chats while they work, and gets a quiz built from the notes they uploaded when the session ends. I built it on my own, from the Next.js frontend to the Express and PostgreSQL backend, and deployed it on Vercel, Render and Neon.",
+        "SyncSpace is a study space where a group shares a live-running Pomodoro timer in a room, chats while they work, and can generate a quiz from the notes they uploaded when the session ends. Deployed on Vercel (frontend), Render (API) and Neon (Postgres).",
       cover: {
-        src: "/projects/syncspace/room.jpg",
-        alt: "A SyncSpace study room: the shared focus timer with host controls, the people in the room, chat, tasks, session notes and ambient sound",
-        width: 1102,
-        height: 714,
+        src: "/projects/syncspace/syncspace sample logo.png",
+        alt: "SyncSpace logo and wordmark on a dark green background",
+        width: 3175,
+        height: 4490,
       },
       facts: [
-        { label: "Duration", value: "Jun 2026 - present" },
-        { label: "Context", value: "Personal project" },
-        { label: "Role", value: "Full-stack developer (solo)" },
+        { label: "Duration", value: "Sep 2026 - Nov 2026" },
+        { label: "Role", value: "Full-stack developer" },
         { label: "Stack", value: "Next.js, TypeScript, Express, Prisma, PostgreSQL, WebSockets" },
         { label: "Hosting", value: "Vercel (web app), Render (API), Neon (database)" },
       ],
       sections: [
         {
+          title: "Tech stack",
+          paragraphs: [
+            "Frontend: Next.js, TypeScript, and plain CSS.",
+            "Backend: Express 5, TypeScript, WebSockets, Prisma, and server-side sessions. Claude generates quiz questions when an API key is configured; otherwise, a built-in generator is used. I plan to integrate a local AI model such as Ollama.",
+            "Data: PostgreSQL (Neon).",
+            "Hosting or link: Vercel (frontend), Render (API), and Neon (database). Live at https://sync-space-taupe.vercel.app. Repository: https://github.com/WillPads/SyncSpace.",
+            "Tags shown on the site: Next.js, TypeScript, Express, Prisma, PostgreSQL, WebSockets.",
+          ],
+        },
+        {
           title: "Overview",
           paragraphs: [
-            "SyncSpace started during my finals. My friends and I couldn't find a cafe or co-working space that fit our needs, our schedules and our budget. So I asked: why not study together from our own homes, on our own devices?",
-            "It was also a chance to show I can build and ship a full-stack product with the tools teams use in industry: a typed frontend, a real database, live updates, tests and a production deployment.",
+            "SyncSpace started during my finals. My friends and I couldn't find a place, cafe, or co-working space that fit our needs, our schedules and our budget. So I thought: why not study together from our own homes, on our own devices? But still, together.",
+            "With my experience, eagerness, and love for learning, it was my chance to experiment, develop and grow as a software engineer. It enabled me to build and deploy a full-stack product with modern industry tools and systems, while learning about AI-assisted development and making the architecture and production decisions myself.",
           ],
         },
         {
-          title: "The problem",
+          title: "WHY?",
           paragraphs: [
-            "Platforms like Discord already let a group meet online, but they're general-purpose, not built around focusing. Nothing in them keeps everyone working and resting on the same schedule.",
-            "I wanted one place with one goal: everyone in sync, focused on the same session. When the session ends, the group's own notes become a quick review quiz.",
+            "Platforms like Discord already let groups meet online, but they're multi-purpose and not built around focusing. They aren't tailored to keep everyone on the same page at the same time.",
+            "I wanted one place with one goal: everyone in sync and focused on the same session and lesson.",
           ],
         },
         {
-          title: "The process",
+          title: "WHAT?",
+          paragraphs: [
+            "This project pushed me to develop as a solo full-stack developer across product, frontend, backend, database, testing and deployment.",
+          ],
+        },
+        {
+          title: "HOW?",
           paragraphs: ["SyncSpace went from a rough prototype to a live site in five steps."],
           steps: [
             {
-              title: "Rebuilding the prototype on a real backend",
+              title: "Rebuilding the Prototype on a Real Backend",
               paragraphs: [
-                "My first version kept rooms in memory inside the Next.js app and polled for updates. After talking it through with peers and mentors, I took their advice and rebuilt it with a separate Express and TypeScript server, Prisma, user accounts, and host and member roles in each room.",
+                "My first version was highly conceptual, not functional. It kept rooms in memory inside the Next.js app and polled for updates. After talking it through with peers and mentors, I took their advice and rebuilt it with a separate Express and TypeScript server, Prisma, user accounts, and host and member roles in each room.",
                 "I made the architecture and product decisions myself and used AI-assisted development tools to help build it.",
               ],
             },
             {
-              title: "Letting the server own the clock",
+              title: "Letting the Server Own the Clock",
               paragraphs: [
                 "The timer only works if everyone sees the same thing, so only the server changes it. Every room change goes out over a WebSocket as a full snapshot, re-sent every second, and each browser counts down from when it received the last one. A wrong clock on someone's device can't shift their timer.",
                 "I chose versioned writes over a CRDT. There's one writer per room, and the timer is a state machine: an illegal move should be rejected, not merged.",
               ],
             },
             {
-              title: "Turning uploaded notes into a quiz",
+              title: "Turning Uploaded Notes into a Quiz",
               paragraphs: [
                 "Anyone in a room can upload PDF, TXT or Markdown notes, and a background queue extracts the text. When the host ends the session, the room becomes a quiz built from those notes.",
-                "Claude writes the questions when an API key is set. Without one, or if the call fails, a built-in generator writes fill-in-the-blank questions from the text, so the feature never depends on a paid API.",
+                "Claude writes the questions when an API key is set. Without one, or if the call fails, a built-in generator writes fill-in-the-blank questions from the text, so the feature never depends on a paid API. I plan to integrate a local AI model such as Ollama.",
               ],
               images: [
                 {
@@ -349,36 +431,44 @@ export const featuredProjects: FeaturedProject[] = [
           ],
         },
         {
-          title: "Struggles",
+          title: "Puzzled? Me too.",
           paragraphs: [
             "The hardest problem was the feature everything depends on: the shared timer. In the first backend, the once-a-second tick also saved the timer, so if the host pressed reset at the same moment, the tick could overwrite it and the reset was lost. The code that worked out the current phase also replayed phase changes in a capped loop, which could leave a negative timer after about 1,000 of them.",
-            "The fix: ticks never write to the database, every timer write carries a version number so two changes can't both apply, and the remaining time is worked out in one step from the last saved snapshot. The once-a-second updates now come from memory, with no database query per tick.",
           ],
         },
         {
-          title: "Results",
+          title: "The Missing Piece",
+          paragraphs: [
+            "The ticks never write to the database, every timer write carries a version number so two changes can't both apply, and the remaining time is worked out in one step from the last saved snapshot. The once-a-second updates now come from memory, with no database query per tick.",
+          ],
+        },
+        {
+          title: "The BIG Picture",
           paragraphs: [
             "SyncSpace is live at sync-space-taupe.vercel.app. I haven't promoted it yet; for now my friends and I use it during our study sessions.",
             "They've told me it's useful, efficient and does what they need. Behind it, the server has 234 passing tests on a real Postgres database.",
           ],
+          images: [
+            {
+              src: "/projects/syncspace/welcome.jpg",
+              alt: "SyncSpace welcome page explaining the shared study-room experience",
+              width: 800,
+              height: 670,
+            },
+          ],
         },
-      ],
-      takeaways: [
-        "Give shared state one owner. Letting the server own the timer made sync and conflicts much simpler than merging changes from every client.",
-        "Plan a fallback for every outside service. The quiz still works with no AI key, and the site tells people to wait and reload while the free server wakes up.",
-        "Test against the real database. Some problems, like Postgres returning rows in an unstable order, only show up on the real thing.",
       ],
     },
   },
   {
     slug: "signal-no-5",
     title: "Signal No. 5",
-    role: "Associate Project Manager & Backend Developer",
+    role: "Associate Project Manager, Backend Developer & Project Pitcher",
     tagline: "8-bit RPG that teaches typhoon preparedness, with dialogue from an AI model running locally on the laptop",
     description:
       "Players prepare a household for a fictional typhoon: manage limited resources, respond to warnings and evacuation advisories, and get through the storm and its aftermath, ending with a preparedness score, badges and a personal debrief. On the backend, I worked on the game details, levels and badges, game flow and debrief findings. As associate project manager, I helped lead the concept, run the team's plans and progress checkpoints, check documentation and status, and design the pitch. The team built a deterministic simulation engine and ran Qwen3-4B locally through llama.cpp for dialogue and debrief wording, with AI output kept apart from the game logic and checked by validation, grounding checks and fallback text. Built for kids aged 10-16 by a team of four.",
     stack: ["TypeScript", "Electron", "React", "Phaser 3", "llama.cpp", "Qwen3-4B"],
-    status: "completed",
+    status: "prototype",
     year: "Oct 2026",
     context: "AppBuildersPH Local AI Hackathon 2026",
     impact: "Built and demoed in a 20-hour sprint; the 4B-parameter AI model runs locally, with no cloud API",
@@ -396,37 +486,48 @@ export const featuredProjects: FeaturedProject[] = [
       summary:
         "Signal No. 5 is an 8-bit typhoon preparedness RPG for Windows, built for kids aged 10 to 16. Players prepare a Filipino home for a storm, live through it and its aftermath, and get a score, badges and a personal debrief, with dialogue written by a small AI model running on the same laptop. My team of four built it in about 20 hours for the AppBuildersPH Local AI Hackathon 2026, where I worked on the backend and was associate project manager.",
       cover: {
-        src: "/projects/signal-no-5/cover.jpg",
-        alt: "Signal No. 5 title art: a pixel-art house at night under a typhoon, with a signal tower and the line \"Storm's coming... ready or not?\"",
-        width: 682,
-        height: 381,
+        src: "/projects/signal-no-5/Signal no. 5 logo.png",
+        alt: "Signal No. 5 logo on its storm-themed background",
+        width: 2972,
+        height: 1737,
       },
       facts: [
         { label: "Duration", value: "Oct 9-10, 2026 (about 20 hours plus demo day)" },
-        { label: "Context", value: "AppBuildersPH Local AI Hackathon 2026" },
-        { label: "Role", value: "Associate Project Manager & Backend Developer" },
-        {
-          label: "Team",
-          value: "4: Karl Stephen Mangahas (lead project manager), Martonie Ayaay, Adrian Louise Sevilla and me",
-        },
+        { label: "Role", value: "Associate Project Manager, Backend Developer & Project Pitcher" },
         { label: "Stack", value: "TypeScript, Phaser 3, React, Electron, llama.cpp, Qwen3-4B" },
       ],
       sections: [
         {
-          title: "Overview",
+          title: "Tech stack",
           paragraphs: [
-            "The hackathon's theme was local AI: the model had to run on the player's own machine, not in the cloud. Our idea was that every household is different, so players set up their own household and play through a typhoon shaped by it.",
+            "Frontend: Phaser 3, React and TypeScript, packaged as an Electron desktop app for Windows.",
+            "Backend: A deterministic TypeScript simulation engine for game rules, events, badges and debrief; Qwen3-4B runs locally through llama.cpp for dialogue and debrief wording.",
+            "Data: None; the game runs on the player's laptop.",
+            "Hosting or link: Desktop app, with no hosting. There is no public repository link yet; the lead project manager is still finalizing it.",
+            "Tags shown on the site: TypeScript, Electron, React, Phaser 3, llama.cpp, Qwen3-4B.",
           ],
         },
         {
-          title: "The problem",
+          title: "Overview",
+          paragraphs: [
+            "The hackathon's theme was Local AI: the model had to run on the player's own machine, not in the cloud. Our idea was that every household is different, so players set up their own household and play through a typhoon shaped by it.",
+          ],
+        },
+        {
+          title: "WHY?",
           paragraphs: [
             "Typhoons hit the Philippines every year, yet most preparedness material is a checklist. It tells you what to do but not why, and it gives every household the same advice.",
             "Kids get the least out of that. A list can't show what happens when you pack too late or ignore an advisory. Signal No. 5 lets them practise those decisions before a real storm: they choose, watch the consequences play out, and finish with a preparedness plan for their own household.",
           ],
         },
         {
-          title: "The process",
+          title: "WHAT?",
+          paragraphs: [
+            "I was Associate Project Manager and Backend Developer. On the backend I worked on the game details, levels and badges, game flow and debrief findings. As co-project manager, I helped lead the concept, ran the team's plans and progress checkpoints, checked documentation and status, and designed the presentation and pitch. Karl Stephen Mangahas was the lead project manager.",
+          ],
+        },
+        {
+          title: "HOW?",
           paragraphs: ["We had about 20 hours to go from an idea to a playable game."],
           steps: [
             {
@@ -473,22 +574,27 @@ export const featuredProjects: FeaturedProject[] = [
           ],
         },
         {
-          title: "Struggles",
+          title: "Puzzled? Me too.",
           paragraphs: [
             "The 4B model wrote better dialogue than the 1.7B, but it also made things up. In our benchmark review it invented facts the game must never state in 4 of 10 samples, and it scored 9 out of 20 on grounding against 19 for the smaller model.",
+          ],
+        },
+        {
+          title: "The Missing Piece",
+          paragraphs: [
             "We kept the 4B for its writing and added a grounding guard: a reply that contradicts the game, like the wrong home layout or storm timing, is rejected and replaced with fallback text.",
+          ],
+        },
+        {
+          title: "The BIG Picture",
+          paragraphs: [
+            "We built and demoed a working game in about 20 hours. It didn't place. Karl Stephen Mangahas, our lead project manager, is still finalising its development.",
           ],
         },
         {
           title: "Demo",
           paragraphs: ["Our promotional video for the AppBuildersPH demo day."],
           showDemoVideo: true,
-        },
-        {
-          title: "Results",
-          paragraphs: [
-            "We built and demoed a working game in about 20 hours. It didn't place. Karl Stephen Mangahas, our lead project manager, is still finalising its development.",
-          ],
         },
       ],
     },
@@ -499,7 +605,7 @@ export const featuredProjects: FeaturedProject[] = [
     role: "Co-developer",
     tagline: "Mobile-first home tutor that helps parents teach their preschool and elementary kids",
     description:
-      "A parent snaps a photo of the homework, types it in or picks a topic, and Gabay Aralin builds a step-by-step lesson with practice checks, a printable worksheet with an answer key, and tips for guiding the child. For homework, it gives guiding questions instead of answers. My teammate Shana Anikka Patio came up with the concept and built the first version during a 3-4 hour UX+AI hackathon sprint; I helped with core functions, features, deployment and the pitch. Improvements are in the works.",
+      "A parent snaps a photo of the homework, types it in or picks a topic, and Gabay Aralin builds a step-by-step lesson with practice checks, a printable worksheet with an answer key, and tips for guiding the child. For homework, it gives guiding questions instead of answers.",
     stack: [], // TODO(Will): add the tech stack
     status: "in-development",
     year: "Oct 2026",
@@ -513,61 +619,46 @@ export const featuredProjects: FeaturedProject[] = [
     },
     caseStudy: {
       summary:
-        "Gabay Aralin is a mobile-first home tutor for parents of preschool and elementary kids. A parent snaps a photo of the homework, types it in or picks a topic, and the app builds a short lesson, practice questions, a printable worksheet and tips for guiding their child. My teammate Shana Anikka Patio came up with the idea and built the first version at a UX+AI hackathon; I helped with core functions, features, deployment and the pitch.",
+        "Gabay Aralin is a mobile-first home tutor for parents of preschool and elementary kids. A parent snaps a photo of the homework, types it in or picks a topic, and the app builds a short lesson, practice questions, a printable worksheet and tips for guiding their child. My co-developer Ms. Patio came up with the concept and built the initial version during a 4-hour UX+AI hackathon sprint; I assisted with core functions, features, deployment and the pitch. Improvements are in the works.",
       cover: {
-        src: "/projects/gabay-aralin/poster.jpg",
-        alt: "Gabay Aralin's family setup screen: \"Your free Home Tutor Center\", with steps to add each child and their grade level, and a parent profile form",
-        width: 1280,
-        height: 720,
+        src: "/projects/gabay-aralin/gabay aralin logo.jpg",
+        alt: "Gabay Aralin wordmark with a notebook and pencil illustration",
+        width: 1000,
+        height: 1000,
       },
       facts: [
         { label: "Date", value: "Oct 25, 2026 (initial hackathon submission)" },
-        { label: "Context", value: "UX+AI Hackathon, Zone Offices BGC, 3-4 hour sprint" },
         { label: "Role", value: "Co-developer" },
-        { label: "Team", value: "2: Shana Anikka Patio and me" },
       ],
       sections: [
         {
           title: "Overview",
           paragraphs: [
-            "Gabay Aralin started at a UX+AI hackathon at Zone Offices in BGC, a 3-4 hour sprint. Shana came up with the concept and built the first stages, and I helped with the core functions, features, deployment and the pitch. We submitted the first version on Oct 25, 2026, and kept working on it after the event.",
+            "Gabay Aralin started at a UX+AI hackathon at Zone Offices in BGC, a 3-4 hour sprint. My partner, Ms. Patio, came up with the concept and built the first stages, and I helped with the core functions, features and deployment.",
           ],
         },
         {
-          title: "The problem",
+          title: "WHY?",
           paragraphs: [
-            "At preschool and elementary age, a child's main teacher at home is usually a parent. Parents are the ones sitting beside their kids at homework time, but they aren't trained tutors.",
-            "That's when the hard moments happen: a parent isn't sure how to explain a topic, and the quickest way out is to hand over the answer. Gabay Aralin is built for moments like that. It helps the parent teach, with a lesson to follow, questions that guide the child, and an answer key only for the grown-up.",
+            "At preschool and elementary age, a child's secondary teacher is at home. Usually their parents. Parents sit through hours of teaching, practice and homework alongside their kids at home. These are good qualities for parents, but being a good parent does not automatically make someone a good teacher.",
+            "We've all been there: a parent struggles to explain a concept, loses patience, gets frustrated, and ultimately hits a wall. Gabay Aralin was built for these moments. It provides a map with the right steps and direction. Instead of just giving answers, it equips parents to lead with easy-to-follow lessons, child-guided questions and a parent-only answer key.",
           ],
         },
         {
-          title: "The process",
-          paragraphs: ["We had 3-4 hours to go from an idea to a working app."],
+          title: "WHAT?",
+          paragraphs: [
+            "I was a co-developer. Ms. Patio came up with the concept and built the first version with the event's sponsored Codex credits. I helped with core functions, features, deployment and the pitch.",
+          ],
+        },
+        {
+          title: "HOW?",
+          paragraphs: ["We had 3-4 hours to go from an idea to a working solution."],
           steps: [
             {
               title: "From homework guide to tutor center",
               paragraphs: [
-                "Shana built the first stages using the event's sponsored Codex API credits. The app began as a homework guide for parents, written in Tagalog.",
+                "My partner, Ms. Patio, built the first stages using the event's sponsored Codex API credits. The app began as a homework guide for parents, written in Tagalog.",
                 "By the end of the day it was in English, had family profiles with each child's grade, sorted saved lessons by child, grade and subject, and had been rebuilt as a home tutor center around four parts: lessons, practice, worksheets and parent tips.",
-              ],
-            },
-            {
-              title: "Designing for parents and kids together",
-              paragraphs: [
-                "Each lesson is 3 to 5 short steps written for the child, with a note for grown-ups and a quick check after every step. Wrong answers get an encouraging hint, then a second one, and the answer only appears after the third try.",
-                "The worksheet prints with an answer key that explains each answer for the parent.",
-              ],
-            },
-            {
-              title: "Keeping homework unsolved",
-              paragraphs: [
-                "The parts that write lessons and worksheets never see the homework itself, only the subject, topic, grade and skills. A separate check solves every practice and worksheet question, drops any with a wrong or ambiguous answer key, and makes sure no question copies a homework item.",
-              ],
-            },
-            {
-              title: "Features, deployment and the pitch",
-              paragraphs: [
-                "My part was helping build the core functions and features, deploying the app, and pitching it.",
               ],
             },
           ],
@@ -578,7 +669,7 @@ export const featuredProjects: FeaturedProject[] = [
           showDemoVideo: true,
         },
         {
-          title: "Results and what's next",
+          title: "The BIG Picture",
           paragraphs: ["We didn't make the top contenders. Improvements are in the works."],
         },
       ],

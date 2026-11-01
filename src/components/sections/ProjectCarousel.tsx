@@ -1,24 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { flushSync } from "react-dom";
+import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { FeaturedProject } from "@/data/portfolio";
 import ProjectSlide from "@/components/ui/ProjectSlide";
-import ProjectDetail from "@/components/ui/ProjectDetail";
+import { caseStudyPath } from "@/lib/case-studies";
 import { iconButtonClass } from "@/components/ui/styles";
-
-// The two view-transition names (see globals.css). They are only set while a transition runs, one element
-// at a time, so no name is ever on the page twice (a duplicate would abort the transition).
-const TITLE_VT = "project-title";
-const PANEL_VT = "project-panel-card";
-// Where the panel's top edge lands after opening, in px from the top of the viewport (below the 56px header).
-const PANEL_TOP = 88;
 
 // Swipe must travel at least this far sideways, and mostly sideways, to count.
 const SWIPE_DISTANCE = 48;
-
-type FocusTarget = "panel" | "view" | "region";
 
 // The turntable: featured projects sit on a rotating track with the active one centred.
 // - With 3 or more projects it loops: the previous project is always on the left and the next on the
@@ -26,9 +17,8 @@ type FocusTarget = "panel" | "view" | "region";
 // - Each slide's distance is the signed shortest one modulo the count. A slide that wraps to the other
 //   side jumps without a transition and fades in (see data-wrap in globals.css), so it never flies
 //   across the centre and every turn moves exactly one step.
-// - Opening a project shows a detail panel below the track. Turning to another project while the
-//   panel is open swaps the panel to that project. It stays open until closed.
-// - Media (screenshots, video) lives only in the panel, so nothing loads until a project is opened.
+// - Every project card links directly to its case study. Carousel controls still let visitors
+//   inspect the available projects before choosing one.
 // Signed shortest distance from `from` to `index` around a loop of `count`: -floor(n/2)..floor(n/2)
 // (for even counts the tie goes to the right side, so it is always the same side).
 function loopOffset(index: number, from: number, count: number) {
@@ -43,105 +33,76 @@ export default function ProjectCarousel({
 }) {
   const count = projects.length;
   const loops = count >= 3;
+  const router = useRouter();
   const [active, setActive] = useState(0);
   const [previous, setPrevious] = useState(0); // the slide that was active before the last turn
   const [turn, setTurn] = useState(0); // counts turns; its parity restarts the fade on wrapped slides
-  const [open, setOpen] = useState(false);
   const [announcement, setAnnouncement] = useState("");
 
   const regionRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const pendingFocus = useRef<FocusTarget | null>(null);
+  const pendingRegionFocus = useRef(false);
   const drag = useRef<{ x: number; y: number } | null>(null);
   const swiped = useRef(false);
-  const opening = useRef(false);
+  const navigating = useRef(false);
 
   // Moves keyboard focus once the DOM has updated (the focused button may have been replaced).
   useEffect(() => {
-    const target = pendingFocus.current;
-    pendingFocus.current = null;
-    if (target === "panel") {
-      headingRef.current?.focus({ preventScroll: true });
-      placePanel();
-    }
-    else if (target === "view")
-      document.getElementById(`view-${projects[active].slug}`)?.focus();
-    else if (target === "region") regionRef.current?.focus();
-  }, [active, open, projects]);
+    if (!pendingRegionFocus.current) return;
+    pendingRegionFocus.current = false;
+    regionRef.current?.focus();
+  }, [active]);
 
-  function goTo(index: number, focusAfter: FocusTarget | null = null) {
+  function goTo(index: number, focusRegion = false) {
     const next = loops
       ? ((index % count) + count) % count
       : Math.min(Math.max(index, 0), count - 1);
     if (next === active) return;
-    pendingFocus.current = focusAfter;
+    pendingRegionFocus.current = focusRegion;
     setPrevious(active);
     setTurn((t) => t + 1);
     setActive(next);
     setAnnouncement(`Project ${next + 1} of ${count}: ${projects[next].title}`);
   }
 
-  // Brings the panel's top edge near the top of the screen (smooth, or instant for reduced motion).
-  function placePanel() {
-    const panel = document.getElementById("project-panel");
-    if (!panel) return;
-    const delta = panel.getBoundingClientRect().top - PANEL_TOP;
-    if (Math.abs(delta) < 8) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.scrollTo({ top: window.scrollY + delta, behavior: reduce ? "instant" : "smooth" });
-  }
-
-  // Opening: the card's title morphs into the panel's heading and the panel rises in (browser View
-  // Transitions API, transform and opacity only, see globals.css); then the page glides so the panel sits
-  // near the top. Without the API, or under reduced motion, the panel simply opens (and the effect above
-  // focuses the heading and scrolls).
-  function openPanel() {
-    if (swiped.current || opening.current) return;
-    const card = document.getElementById(`card-title-${projects[active].slug}`);
-    const canMorph =
-      typeof document.startViewTransition === "function" &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!canMorph || !card) {
-      pendingFocus.current = "panel";
-      setOpen(true);
+  function navigateToCaseStudy(event: React.MouseEvent<HTMLAnchorElement>, project: FeaturedProject) {
+    if (swiped.current) {
+      event.preventDefault();
+      return;
+    }
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+    if (navigating.current) {
+      event.preventDefault();
       return;
     }
 
-    opening.current = true;
-    card.style.viewTransitionName = TITLE_VT; // the "before" picture is taken now
-    const transition = document.startViewTransition(() => {
-      card.style.viewTransitionName = "";
-      flushSync(() => setOpen(true));
-      const heading = headingRef.current;
-      const region = document.querySelector<HTMLElement>("#project-panel > [role=region]");
-      if (heading) {
-        heading.style.viewTransitionName = TITLE_VT;
-        heading.focus({ preventScroll: true });
-      }
-      if (region) region.style.viewTransitionName = PANEL_VT;
+    const canTransition =
+      typeof document.startViewTransition === "function" &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!canTransition) return;
+
+    event.preventDefault();
+    navigating.current = true;
+    const transition = document.startViewTransition(async () => {
+      await new Promise<void>((resolve) => {
+        const observer = new MutationObserver(() => {
+          if (!document.querySelector(`[data-case-study="${project.slug}"]`)) return;
+          observer.disconnect();
+          window.clearTimeout(timeout);
+          resolve();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+        const timeout = window.setTimeout(() => {
+          observer.disconnect();
+          resolve();
+        }, 4000);
+        router.push(caseStudyPath(project));
+      });
     });
     transition.finished.finally(() => {
-      card.style.viewTransitionName = "";
-      if (headingRef.current) headingRef.current.style.viewTransitionName = "";
-      const region = document.querySelector<HTMLElement>("#project-panel > [role=region]");
-      if (region) region.style.viewTransitionName = "";
-      opening.current = false;
-      placePanel();
+      navigating.current = false;
     });
-  }
-
-  function togglePanel() {
-    if (open) {
-      pendingFocus.current = "view";
-      setOpen(false);
-    } else {
-      openPanel();
-    }
-  }
-
-  function closePanel() {
-    pendingFocus.current = "view";
-    setOpen(false);
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLElement>) {
@@ -158,7 +119,7 @@ export default function ProjectCarousel({
     const onSlide =
       event.target !== event.currentTarget &&
       (event.target as HTMLElement).closest("[role=group]");
-    goTo(target, onSlide ? "region" : null);
+    goTo(target, Boolean(onSlide));
   }
 
   function onPointerDown(event: React.PointerEvent) {
@@ -178,7 +139,7 @@ export default function ProjectCarousel({
       return;
     swiped.current = true; // so the click that follows a swipe does not open or select a card
     window.setTimeout(() => (swiped.current = false), 350); // keyboard clicks later must still work
-    goTo(active + (dx < 0 ? 1 : -1), "region");
+    goTo(active + (dx < 0 ? 1 : -1), true);
   }
 
   const hasMany = count > 1;
@@ -222,10 +183,7 @@ export default function ProjectCarousel({
                   offset={offset}
                   jump={jumped ? (turn % 2 ? "a" : "b") : undefined}
                   center={center}
-                  isOpen={open && index === active}
-                  onSelect={() => !swiped.current && goTo(index, "view")}
-                  onToggle={togglePanel}
-                  onOpen={openPanel}
+                  onNavigate={(event) => navigateToCaseStudy(event, project)}
                 />
               );
             })}
@@ -263,16 +221,6 @@ export default function ProjectCarousel({
         {announcement}
       </p>
 
-      <div id="project-panel">
-        {open && (
-          <ProjectDetail
-            key={projects[active].slug}
-            project={projects[active]}
-            headingRef={headingRef}
-            onClose={closePanel}
-          />
-        )}
-      </div>
     </div>
   );
 }

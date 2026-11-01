@@ -30,6 +30,7 @@ export default function RootLayout({
     // suppressHydrationWarning: the inline script below adds data-theme before React hydrates.
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${hankenGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >

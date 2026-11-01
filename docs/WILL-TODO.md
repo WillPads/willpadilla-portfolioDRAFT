@@ -20,9 +20,9 @@ Tick items off as you go. Last updated: 2026-10-30.
 
 - [x] **Team (Winston):** Draft all 4 case studies into [CASE-STUDIES-DRAFT.md](CASE-STUDIES-DRAFT.md) (done 2026-10-30).
 - [x] **You:** SyncSpace answers and PixelDerm checks (done 2026-10-30). SyncSpace case study is on the site.
-- [ ] **You:** Replace the 2 SyncSpace mockup screenshots with real ones from the live app.
-- [ ] **You:** Review the drafts and answer the `[ASK WILL]` questions.
-- [ ] **Team:** Put the approved case studies on the site.
+- [x] **You:** Real SyncSpace screenshots (done 2026-10-30).
+- [x] **You + Team:** SyncSpace, Signal No. 5 and Gabay Aralin case studies are on the site (2026-10-30).
+- [ ] **You:** Answer the 6 PixelDerm questions (in [HANDOFF.md](HANDOFF.md)), then the team adds the last case study.
 
 > Sections 4-7 are parked until 1-3 are done. Leo will remind you then.
 
@@ -32,7 +32,7 @@ Tick items off as you go. Last updated: 2026-10-30.
 - [ ] **You:** Fix the SyncSpace project description on LinkedIn, which is cut off at "...workspace management. T".
 - [ ] **You:** Update your resume:
   - SyncSpace dates: "Jun 2026 – Present".
-  - Signal No. 5 role: "Lead Backend Engineer & Project Manager".
+  - Signal No. 5 role: "Associate Project Manager & Backend Developer".
   - Smooth the "Versed capabilities..." sentence.
   - Then download it as PDF and replace `public/resume.pdf`.
 

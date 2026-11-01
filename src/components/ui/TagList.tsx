@@ -15,7 +15,7 @@ export default function TagList({
       {items.map((item) => (
         <li
           key={item}
-          className="rounded-md bg-foreground/10 px-2 py-1 font-mono text-[11px] leading-none text-foreground/80"
+          className="rounded-md bg-foreground/10 px-2 py-1 font-mono text-xs leading-none text-foreground/80"
         >
           {item}
         </li>
