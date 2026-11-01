@@ -45,7 +45,7 @@ font-medium tracking-tight`, full foreground colour (`SectionHeading`). Sub-labe
 (Certifications, More projects) are one step down: `text-xl md:text-2xl` (`subHeadingClass`).
 
 Background (`src/components/ui/Background.tsx`, `.page-dots` and `.drift` in `globals.css`): a fixed,
-click-through dot grid plus six slow outlined shapes (20 to 42px) that drift inward from the side margins,
+click-through dot grid plus six slow outlined shapes (68 to 160px) that drift inward from the side margins,
 sometimes passing behind text and controls; the small shapes appear from `md`, the largest from `lg`. Light mode is slightly stronger (shapes 24%, dots 21% via
 `--dot-alpha`); dark mode uses 19% and 17%. The dots use a radial-gradient purely to draw dots: the only gradient
 allowed. Shapes are flat 1.5px strokes, moved with `transform` only, still under `prefers-reduced-motion`.

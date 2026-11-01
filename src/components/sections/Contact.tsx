@@ -30,7 +30,7 @@ export default function Contact() {
         <SectionHeading id="contact-title" title="Contact" />
       </Reveal>
       <Reveal delay={90}>
-        <p className={`text-pretty text-base leading-relaxed text-foreground/80 ${proseClass}`}>
+        <p className={`whitespace-pre-line text-pretty text-base leading-relaxed text-foreground/80 ${proseClass}`}>
           {site.contactNote}
         </p>
         <div className="mt-6 flex flex-col items-start gap-4">

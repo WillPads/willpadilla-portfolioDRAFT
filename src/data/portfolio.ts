@@ -39,7 +39,8 @@ export const site: Site = {
     "A 520-hour internship or entry-level role in any position where I'd be a good fit for your organization. Eagerly available and looking out for opportunities.",
   bio: "Driven by curiosity and a love for learning, I'm a lifelong student at heart. I enjoy understanding how things work, building with intention, and turning that learning into thoughtful, useful work.",
   contactNote:
-    "Made it this far? I'd love to hear from you. If your team has an internship opening or a role I could be a good fit for, I'd be glad to connect. You can reach me by email or LinkedIn, or download my resume below.",
+    "Hi there! Still here? I'd love to have a chat :)\n\nI’d be thrilled to connect regarding internship opportunities! Reach me via email, LinkedIn, or through my resume for more info.",
+  
   avatar: "/avatar.jpg",
   email: "wgabriel.padilla@gmail.com",
   location: "Sampaloc, Manila",
@@ -688,37 +689,83 @@ export type Certification = {
   name: string;
   issuer: string;
   issued: string; // year-month, e.g. "2026-09"
+  image: string; // path inside public/
+  alt: string;
   credentialId?: string;
 };
 
-// Newest first. Copied from Will's LinkedIn (2026-10-30). No verification links, by Will's choice.
-// Long LinkedIn Learning hash IDs are left out; short IDs are shown.
+// Newest first. This list reflects the certificates and memberships Will supplied on 2026-11-01.
 export const certifications: Certification[] = [
   {
-    name: "AI Overview for Project Managers",
+    name: "Generative AI Overview for Project Managers",
     issuer: "Project Management Institute",
     issued: "2026-10",
     credentialId: "336510257667",
+    image: "/Generative AI Overview for Project Managers Padilla_page-0001.jpg",
+    alt: "Project Management Institute certificate for Generative AI Overview for Project Managers, awarded to Will Padilla in October 2026",
   },
-  { name: "TypeScript Essential Training", issuer: "LinkedIn Learning", issued: "2026-08" },
-  { name: "Gemini Certified Student", issuer: "Google for Education", issued: "2026-08" },
-  { name: "SAP Certified Associate - SAP Activate Project Manager", issuer: "SAP", issued: "2026-07" },
   {
-    name: "PMI Project Management Ready",
-    issuer: "Project Management Institute",
-    issued: "2026-03",
-    credentialId: "4w7W-XMpP",
+    name: "AppBuildersPH Hackathon 2026 Certificate of Participation",
+    issuer: "AppBuildersPH",
+    issued: "Oct 9-10, 2026",
+    image: "/AppBuildersPH_page-0001.jpg",
+    alt: "AppBuildersPH certificate of participation for Will Padilla as a member of team Kram, October 9-10, 2026",
+  },
+  {
+    name: "TypeScript Essential Training",
+    issuer: "LinkedIn Learning",
+    issued: "2026-08",
+    image: "/Typescipt Essential Training_page-0001.jpg",
+    alt: "LinkedIn Learning certificate for TypeScript Essential Training completed by Will Padilla in August 2026",
+  },
+  {
+    name: "SAP Certified Associate - SAP Activate Project Manager",
+    issuer: "SAP",
+    issued: "2026-07",
+    image: "/SAP Certification_page-0001.jpg",
+    alt: "SAP certificate recognizing Will Padilla as an SAP Activate Project Manager",
+  },
+  {
+    name: "ACM Student Chapter Membership 2025-2026",
+    issuer: "FEU Tech ACM Student Chapter",
+    issued: "2025-2026",
+    image: "/ACM Membership 2025-2026.png",
+    alt: "Certificate of membership for Will Padilla in the FEU Institute of Technology ACM Student Chapter for academic year 2025-2026",
+  },
+  {
+    name: "Learning MATLAB",
+    issuer: "LinkedIn Learning",
+    issued: "2025-11",
+    image: "/Learning MatLab Certification_page-0001.jpg",
+    alt: "LinkedIn Learning certificate for Learning MATLAB completed by Will Padilla in November 2025",
   },
   {
     name: "Complete Guide to Android Development with Kotlin for Beginners",
     issuer: "LinkedIn Learning",
     issued: "2025-11",
+    image: "/Android Development Certification_page-0001.jpg",
+    alt: "LinkedIn Learning certificate for the Complete Guide to Android Development with Kotlin for Beginners, completed by Will Padilla in November 2025",
   },
-  { name: "CCNA: Introduction to Networks", issuer: "Cisco Networking Academy", issued: "2025-08" },
   {
-    name: "Information Technology Specialist Certification",
+    name: "CCNA: Introduction to Networks",
+    issuer: "Cisco Networking Academy",
+    issued: "2025-08",
+    image: "/CCNA Introduction to Networking_page-0001.jpg",
+    alt: "Cisco Networking Academy certificate for CCNA: Introduction to Networks awarded to Will Padilla in August 2025",
+  },
+  {
+    name: "Information Technology Specialist Certification - Python",
     issuer: "Credly by Pearson",
     issued: "2025-07",
     credentialId: "wnTGK-48J9",
+    image: "/Python Certification_page-0001.jpg",
+    alt: "Information Technology Specialist certification for Python awarded to Will Padilla in July 2025",
+  },
+  {
+    name: "JPCS Student Chapter Membership 2024-2025",
+    issuer: "Junior Philippine Computer Society - FEU Tech",
+    issued: "2024-2025",
+    image: "/JPCS Membership 2024-2025_page-0001.jpg",
+    alt: "Certificate of membership for Will Padilla in the Junior Philippine Computer Society FEU Tech chapter for academic year 2024-2025",
   },
 ];

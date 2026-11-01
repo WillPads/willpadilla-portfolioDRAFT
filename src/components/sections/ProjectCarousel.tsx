@@ -84,7 +84,10 @@ export default function ProjectCarousel({
 
     event.preventDefault();
     navigating.current = true;
+    const card = document.getElementById(`project-card-${project.slug}`);
+    if (card) card.style.viewTransitionName = "project-card";
     const transition = document.startViewTransition(async () => {
+      if (card) card.style.viewTransitionName = "";
       await new Promise<void>((resolve) => {
         const observer = new MutationObserver(() => {
           if (!document.querySelector(`[data-case-study="${project.slug}"]`)) return;
@@ -101,6 +104,7 @@ export default function ProjectCarousel({
       });
     });
     transition.finished.finally(() => {
+      if (card) card.style.viewTransitionName = "";
       navigating.current = false;
     });
   }

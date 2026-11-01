@@ -150,7 +150,8 @@ body {
   transition:
     transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
     opacity 0.5s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease,
+    translate 180ms ease-out;
 }
 
 @media (min-width: 768px) {
@@ -217,7 +218,7 @@ body {
   animation: turntable-wrap-b 0.5s ease;
 }
 
-/* Card titles morph into their matching case-study headings; the article eases upward on entry. */
+/* A selected project card exits as the case-study article enters; keep the rest of the page anchored. */
 ::view-transition-group(*) {
   animation-duration: 380ms;
   animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -229,21 +230,63 @@ body {
   animation-duration: 380ms;
 }
 
-/* The surrounding page stays anchored while the shared title and case-study article transition. */
+/* The surrounding page stays anchored while the selected card and case-study article transition. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
 }
 
+::view-transition-old(project-card) {
+  animation: project-card-out 260ms ease-in both;
+}
+
 ::view-transition-new(project-case-study) {
-  animation: case-study-in 360ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: case-study-in 400ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes project-card-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.99);
+  }
 }
 
 @keyframes case-study-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(8px) scale(0.995);
   }
+}
+
+.certificate-zoom-dialog {
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  transition:
+    opacity 280ms ease-out,
+    transform 280ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    display 280ms allow-discrete,
+    overlay 280ms allow-discrete;
+}
+
+.certificate-zoom-dialog[open] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@starting-style {
+  .certificate-zoom-dialog[open] {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+
+.certificate-zoom-dialog::backdrop {
+  background-color: transparent;
+  transition: background-color 280ms ease-out;
+}
+
+.certificate-zoom-dialog[open]::backdrop {
+  background-color: rgb(0 0 0 / 75%);
 }
 
 /* Reduced motion: no rotation, scale, slide-up, drift or transition. Switching is instant. */
@@ -254,6 +297,11 @@ body {
 
   body {
     animation: none;
+  }
+
+  .certificate-zoom-dialog,
+  .certificate-zoom-dialog::backdrop {
+    transition: none;
   }
 
   .rise,

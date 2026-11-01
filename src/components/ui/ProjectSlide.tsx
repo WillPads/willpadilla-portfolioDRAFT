@@ -32,6 +32,7 @@ export default function ProjectSlide({
 
   return (
     <div
+      id={`project-card-${project.slug}`}
       role="group"
       aria-roledescription="slide"
       aria-label={`${index + 1} of ${count}`}
@@ -42,11 +43,10 @@ export default function ProjectSlide({
       style={{ "--d": offset, "--c": center } as CSSProperties}
       // Asymmetric corners: small on the left, large on the right. One flat 1px border on every
       // card; the active card, hover and keyboard focus all switch it to the solid text colour.
-      className="turntable-slide group relative flex cursor-pointer flex-col gap-3 rounded-l-lg rounded-r-[1.75rem] border border-foreground/15 bg-background p-5 hover:border-foreground focus-within:border-foreground data-[pos=active]:border-foreground md:p-6"
+      className="turntable-slide group relative flex cursor-pointer flex-col gap-3 rounded-l-lg rounded-r-[1.75rem] border border-foreground/15 bg-background p-5 hover:-translate-y-1 hover:border-foreground focus-within:-translate-y-1 focus-within:border-foreground data-[pos=active]:border-foreground motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0 md:p-6"
     >
       <h3
         id={`card-title-${project.slug}`}
-        style={{ viewTransitionName: `project-title-${project.slug}` }}
         className="w-fit max-w-full text-xl font-medium leading-tight tracking-tight text-foreground"
       >
         {project.title}

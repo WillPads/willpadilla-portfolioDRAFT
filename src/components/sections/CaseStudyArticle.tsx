@@ -53,7 +53,6 @@ export default function CaseStudyArticle({ project }: { project: CaseStudyProjec
         </div>
         <h1
           id="case-title"
-          style={{ viewTransitionName: `project-title-${project.slug}` }}
           className="text-4xl font-medium leading-[1.1] tracking-tight text-foreground md:text-6xl"
         >
           {project.title}
