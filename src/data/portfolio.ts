@@ -134,7 +134,7 @@ export const skills: SkillGroup[] = [
 export type ProjectStatus = "live" | "prototype" | "in-development";
 
 export type ProjectScreenshot = {
-  src: string; // path inside public/, e.g. "/projects/pixelderm-2.jpg"
+  src: string; // path inside public/, e.g. "/projects/PixelDerm/pixelderm-2.jpg"
   alt: string; // describes the screen for people who cannot see it
 };
 
@@ -192,6 +192,7 @@ type ProjectBase = {
 export type FeaturedProject = ProjectBase & {
   description: string; // required for featured projects
   device: "mobile" | "desktop"; // shape of the screenshot frames
+  cardImage?: { src: string }; // logo shown faintly behind the turntable card (decorative)
   screenshots: ProjectScreenshot[]; // use [] when there are none yet
   demoVideo?: ProjectVideo; // shown in the detail panel; never autoplays
   caseStudy?: CaseStudy; // when set, the project gets a page at /projects/<slug>
@@ -214,11 +215,12 @@ export const featuredProjects: FeaturedProject[] = [
     year: "Sep 2025 - Jul 2026",
     context: "Thesis",
     device: "mobile",
+    cardImage: { src: "/projects/PixelDerm/pixelderm-logo.png" },
     screenshots: [
-      { src: "/projects/pixelderm-1.jpg", alt: "PixelDerm Homepage" },
-      { src: "/projects/pixelderm-2.jpg", alt: "PixelDerm Pre-Capture screen" },
-      { src: "/projects/pixelderm-3.jpg", alt: "PixelDerm Analysis - Image Analysis" },
-      { src: "/projects/pixelderm-4.jpg", alt: "PixelDerm Analysis - Results" },
+      { src: "/projects/PixelDerm/pixelderm-1.jpg", alt: "PixelDerm Homepage" },
+      { src: "/projects/PixelDerm/pixelderm-2.jpg", alt: "PixelDerm Pre-Capture screen" },
+      { src: "/projects/PixelDerm/pixelderm-3.jpg", alt: "PixelDerm Analysis - Image Analysis" },
+      { src: "/projects/PixelDerm/pixelderm-4.jpg", alt: "PixelDerm Analysis - Results" },
     ],
     caseStudy: {
       summary:
@@ -271,16 +273,16 @@ export const featuredProjects: FeaturedProject[] = [
           ],
           images: [
             {
-              src: "/projects/pixelderm-2.jpg",
+              src: "/projects/PixelDerm/pixelderm-2.jpg",
               alt: "PixelDerm pre-capture screen for image comparison and skin tracking",
-              width: 1024,
-              height: 768,
+              width: 956,
+              height: 2046,
             },
             {
-              src: "/projects/pixelderm-3.jpg",
+              src: "/projects/PixelDerm/pixelderm-3.jpg",
               alt: "PixelDerm image-analysis screen with an image-processing workflow",
-              width: 1024,
-              height: 768,
+              width: 956,
+              height: 2046,
             },
           ],
         },
@@ -289,6 +291,10 @@ export const featuredProjects: FeaturedProject[] = [
           paragraphs: [
             "PixelDerm was completed as a thesis project and gave the team a working app and research workflow for long-term skin damage analysis.",
             "The project was a valuable experience in product management, app development and research-based design, and it helped sharpen how I think about building tools that combine technical work with real user needs.",
+          ],
+          images: [
+            { src: "/projects/PixelDerm/pixelderm-1.jpg", alt: "PixelDerm Homepage", width: 956, height: 2046 },
+            { src: "/projects/PixelDerm/pixelderm-4.jpg", alt: "PixelDerm Analysis - Results", width: 656, height: 2048 },
           ],
         },
       ],
@@ -308,6 +314,7 @@ export const featuredProjects: FeaturedProject[] = [
     repoUrl: "https://github.com/WillPads/SyncSpace",
     context: "Personal project",
     device: "desktop",
+    cardImage: { src: "/projects/syncspace/syncspace sample logo.png" },
     screenshots: [
       { src: "/projects/syncspace/room.jpg", alt: "A SyncSpace study room: the shared focus timer with host controls, the people in the room, chat, tasks, session notes and ambient sound" },
       { src: "/projects/syncspace/dashboard.png", alt: "The SyncSpace dashboard: create or join a room, room stats, uploading materials and notes" },
@@ -346,6 +353,14 @@ export const featuredProjects: FeaturedProject[] = [
             "SyncSpace started during my finals. My friends and I couldn't find a place, cafe, or co-working space that fit our needs, our schedules and our budget. So I thought: why not study together from our own homes, on our own devices? But still, together.",
             "With my experience, eagerness, and love for learning, it was my chance to experiment, develop and grow as a software engineer. It enabled me to build and deploy a full-stack product with modern industry tools and systems, while learning about AI-assisted development and making the architecture and production decisions myself.",
           ],
+          images: [
+            {
+              src: "/projects/syncspace/welcome.jpg",
+              alt: "The SyncSpace welcome page: everyone in a room shares one Pomodoro timer, chats, and takes a quiz built from uploaded notes",
+              width: 800,
+              height: 670,
+            },
+          ],
         },
         {
           title: "WHY?",
@@ -377,6 +392,14 @@ export const featuredProjects: FeaturedProject[] = [
                 "The timer only works if everyone sees the same thing, so only the server changes it. Every room change goes out over a WebSocket as a full snapshot, re-sent every second, and each browser counts down from when it received the last one. A wrong clock on someone's device can't shift their timer.",
                 "I chose versioned writes over a CRDT. There's one writer per room, and the timer is a state machine: an illegal move should be rejected, not merged.",
               ],
+              images: [
+                {
+                  src: "/projects/syncspace/room.jpg",
+                  alt: "A SyncSpace study room: the shared focus timer with Pause for all, Skip to break and End session host controls, a Synced status, the people in the room, chat, tasks and session notes",
+                  width: 1102,
+                  height: 714,
+                },
+              ],
             },
             {
               title: "Turning Uploaded Notes into a Quiz",
@@ -405,28 +428,12 @@ export const featuredProjects: FeaturedProject[] = [
                 "A backend audit on Oct 22, 2026 listed what had to change before launch, and every finding was fixed and covered by tests the same day. The server moved to Express 5 so async errors can't crash it, JWTs were replaced with server-side sessions that can be revoked, and sign-in, joins and uploads got rate limits.",
                 "A row lock keeps the 10-person room cap from breaking when people join at the same time. The server now has 234 tests, all running against a real Postgres database instead of mocks.",
               ],
-              images: [
-                {
-                  src: "/projects/syncspace/dashboard.png",
-                  alt: "The live SyncSpace dashboard: create or join a room, room stats, and uploading PDF, TXT or MD materials up to 4 MB",
-                  width: 1840,
-                  height: 966,
-                },
-              ],
             },
             {
               title: "Deploying on free tiers",
               paragraphs: [
                 "The web app runs on Vercel, the API on Render and the database on Neon, all on free plans. Vercel can't pass WebSocket connections through, so the browser first gets a single-use ticket that expires in 30 seconds, then connects straight to the server.",
                 "All traffic reached the server through Vercel, so every visitor looked like the same IP address. The sign-in limits now count the real visitor from the forwarded headers.",
-              ],
-              images: [
-                {
-                  src: "/projects/syncspace/welcome.jpg",
-                  alt: "The live SyncSpace welcome page: everyone in a room shares one Pomodoro timer, chats, and takes a quiz built from uploaded notes",
-                  width: 800,
-                  height: 670,
-                },
               ],
             },
           ],
@@ -451,10 +458,10 @@ export const featuredProjects: FeaturedProject[] = [
           ],
           images: [
             {
-              src: "/projects/syncspace/welcome.jpg",
-              alt: "SyncSpace welcome page explaining the shared study-room experience",
-              width: 800,
-              height: 670,
+              src: "/projects/syncspace/dashboard.png",
+              alt: "The live SyncSpace dashboard: create or join a room, room stats, and uploading PDF, TXT or MD materials up to 4 MB",
+              width: 1840,
+              height: 966,
             },
           ],
         },
@@ -474,6 +481,7 @@ export const featuredProjects: FeaturedProject[] = [
     context: "AppBuildersPH Local AI Hackathon 2026",
     impact: "Built and demoed in a 20-hour sprint; the 4B-parameter AI model runs locally, with no cloud API",
     device: "desktop",
+    cardImage: { src: "/projects/signal-no-5/Signal no. 5 logo.png" },
     screenshots: [
       { src: "/projects/signal-no-5/gameplay.jpg", alt: "Signal No. 5 gameplay: a pixel-art family preparing their home before the storm" },
       { src: "/projects/signal-no-5/cover.jpg", alt: "Signal No. 5 title art: Storm's coming, ready or not?" },
@@ -612,6 +620,7 @@ export const featuredProjects: FeaturedProject[] = [
     year: "Oct 2026",
     context: "UX+AI Hackathon, 3-4 hour sprint",
     device: "mobile",
+    cardImage: { src: "/projects/gabay-aralin/gabay aralin logo.jpg" },
     screenshots: [],
     demoVideo: {
       src: "/projects/gabay-aralin/demo.mp4",

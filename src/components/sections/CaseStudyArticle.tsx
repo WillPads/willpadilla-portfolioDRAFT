@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { CaseSection } from "@/data/portfolio";
 import type { CaseStudyProject } from "@/lib/case-studies";
 import StatusBadge from "@/components/ui/StatusBadge";
@@ -11,8 +12,28 @@ const stepHeadingClass = "mb-3 font-mono text-base font-medium leading-tight tex
 const paragraphClass = "text-base leading-relaxed text-foreground/80";
 
 // Image grid: one image is capped at 768px wide, two or more sit side by side from 640px up.
+// Portrait images (phone screenshots) instead share one height, 340px on phones and 520px
+// from 640px up, so a tall capture never stretches to the full column width.
 function ImageGrid({ images, title }: { images: NonNullable<CaseSection["images"]>; title: string }) {
   const many = images.length > 1;
+  const portrait = images.every((image) => image.width && image.height && image.height > image.width);
+
+  if (portrait) {
+    return (
+      <ul aria-label={`${title} images`} className="mt-6 flex flex-wrap gap-4">
+        {images.map((image) => (
+          <li
+            key={image.src}
+            style={{ "--ratio": (image.width ?? 1) / (image.height ?? 1) } as CSSProperties}
+            className="w-[calc(var(--ratio)*340px)] max-w-full sm:w-[calc(var(--ratio)*520px)]"
+          >
+            <CaseFigure image={image} sizes="(min-width: 640px) 250px, 160px" />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <ul aria-label={`${title} images`} className={`mt-6 grid gap-4 ${many ? "sm:grid-cols-2" : "max-w-3xl"}`}>
       {images.map((image) => (

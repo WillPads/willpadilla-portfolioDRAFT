@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { FeaturedProject } from "@/data/portfolio";
@@ -45,6 +46,22 @@ export default function ProjectSlide({
       // card; the active card, hover and keyboard focus all switch it to the solid text colour.
       className="turntable-slide group relative flex cursor-pointer flex-col gap-3 rounded-lg border border-foreground/15 bg-background p-5 hover:-translate-y-1 hover:border-foreground focus-within:-translate-y-1 focus-within:border-foreground data-[pos=active]:border-foreground motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0 md:p-6"
     >
+      {project.cardImage && (
+        // Decorative logo, faint behind the text; it dissolves while the card is hovered or focused.
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-lg opacity-[0.14] transition-opacity duration-300 group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none dark:opacity-[0.12]"
+        >
+          <Image
+            src={project.cardImage.src}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 28rem, (min-width: 768px) 46vw, 80vw"
+            className="object-cover"
+          />
+        </div>
+      )}
+
       <h3
         id={`card-title-${project.slug}`}
         className="w-fit max-w-full text-xl font-medium leading-tight tracking-tight text-foreground"
