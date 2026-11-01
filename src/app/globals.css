@@ -1,20 +1,335 @@
 @import "tailwindcss";
 
+/* Dark variant follows the data-theme attribute that the inline script in layout.tsx sets. */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Colour tokens. All text is --foreground at different opacities, never a different gray.
+ * --accent is the site accent (space blue, deeper in light and lighter in dark): the pill
+ * button, the active-nav underline, the resume link's bottom border and the status dots.
+ * --accent-foreground is the text colour that sits on a solid accent fill. These two are the
+ * only accent tokens. */
 :root {
-  --background: #faf9f6;
+  --background: #f2f4f7;
   --foreground: #000000;
+  --accent: #2563eb;
+  --accent-foreground: #faf9f6;
+  --dot-alpha: 21%; /* dot grid strength; light needs a bit more than dark to read */
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --background: #131312;
+  --foreground: #faf9f6;
+  --accent: #93c5fd;
+  --accent-foreground: #131312;
+  --dot-alpha: 17%;
+  color-scheme: dark;
+}
+
+/* No-JavaScript fallback: follow the system until the script has set data-theme. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --background: #131312;
+    --foreground: #faf9f6;
+    --accent: #93c5fd;
+    --accent-foreground: #131312;
+    --dot-alpha: 17%;
+    color-scheme: dark;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-heading: var(--font-space-grotesk);
-  --font-body: var(--font-jetbrains-mono);
-  --font-button: var(--font-space-mono);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  /* Two fonts: a grotesk sans for everything, a mono for nav, dates, tags, labels and buttons. */
+  --font-sans: var(--font-hanken-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* keeps anchored headings clear of the sticky header */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body), ui-monospace, monospace;
+  font-family: var(--font-sans);
+  animation: site-enter 640ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes site-enter {
+  0% {
+    opacity: 0;
+    translate: 0 16px;
+  }
+  72% {
+    opacity: 1;
+    translate: 0 -2px;
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Background: a dot grid with a few slow drifting shapes. Both sit in one fixed, clipped,
+ * click-through layer behind the page (see BackgroundDots in layout.tsx), in both themes.
+ * The dots use radial-gradient purely to draw a 1px circle; that is the one place a gradient
+ * is allowed, and it never blends two colours. Everything is a faint share of the text colour,
+ * so it does not touch text contrast.
+ * ------------------------------------------------------------------------- */
+.page-dots {
+  background-image: radial-gradient(
+    circle at center,
+    color-mix(in srgb, var(--foreground) var(--dot-alpha), transparent) 1px,
+    transparent 1.5px
+  );
+  background-size: 28px 28px;
+}
+
+/* Shapes: flat 1.5px outlines only. They move with `transform` alone, over a minute or more
+ * per loop, back and forth so they never jump. Reduced motion freezes them in place. */
+.drift {
+  animation: drift var(--drift-time, 80s) ease-in-out var(--drift-delay, 0s) infinite alternate;
+}
+
+@keyframes drift {
+  from {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate(var(--drift-x, 6vw), var(--drift-y, 8vh)) rotate(var(--drift-rot, 40deg));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Entrance for the hero: a small slide-up, staggered with --rise-delay. It only moves the
+ * block (opacity stays 1), so the hero is never blank, even for a moment.
+ * ------------------------------------------------------------------------- */
+@keyframes rise {
+  from {
+    translate: 0 10px;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+.rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--rise-delay, 0ms) backwards;
+}
+
+/* ---------------------------------------------------------------------------
+ * Turntable carousel (Tailwind cannot express the per-slide calc() transform).
+ * Each slide sets --d = its distance from the active slide (0, 1, -1, 2 ...), --c = the middle of
+ * the visible group in the same units, and data-pos = "active" | "near" | "far".
+ * No blur, shadow or glow: translate, scale, rotate and opacity only.
+ * On wide screens --balance is 1: with exactly two projects, --c keeps the pair centred
+ * (--c = +-0.5), so the active card never sits next to an empty half of the track.
+ * With three or more, --c is 0 and the active card is centred.
+ * ------------------------------------------------------------------------- */
+.turntable {
+  perspective: 1400px;
+}
+
+.turntable-slide {
+  --step: 96%; /* how far each step moves, as a share of the slide's own width */
+  --rot: -12deg; /* neighbours turn slightly toward the centre */
+  --sc: 1;
+  --c: 0;
+  --balance: 0;
+  grid-area: 1 / 1;
+  justify-self: center;
+  width: min(80%, 30rem);
+  transform: translateX(calc((var(--d) - var(--c) * var(--balance)) * var(--step)))
+    rotateY(calc(var(--d) * var(--rot))) scale(var(--sc));
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.5s ease,
+    border-color 0.3s ease,
+    translate 180ms ease-out;
+}
+
+@media (min-width: 768px) {
+  .turntable-slide {
+    --step: 108%;
+    --rot: -8deg;
+    --balance: 1;
+    width: min(46%, 30rem);
+  }
+}
+
+/* From lg up the cards are narrow enough that both neighbours sit fully inside the track. Card text is
+ * left-aligned, so the left neighbour (whose outer edge is its left edge) used to lose its title to the
+ * clip while the right one kept it. Width 33% and step 100% leave the neighbours' outer edges inside
+ * the track at 1024-1440, including the perspective growth of the near edge. */
+@media (min-width: 1024px) {
+  .turntable-slide {
+    --step: 100%;
+    --rot: -6deg;
+    width: min(33%, 28rem);
+  }
+}
+
+.turntable-slide[data-pos="active"] {
+  opacity: 1;
+}
+
+.turntable-slide[data-pos="near"] {
+  --sc: 0.88;
+  opacity: 0.9;
+}
+
+.turntable-slide[data-pos="far"] {
+  --sc: 0.88;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Loop mode: a slide that wrapped to the other side (data-wrap = a | b, alternating each turn so the
+ * animation restarts) jumps there without a transition and fades in, instead of flying across the
+ * centre. If it lands out of sight (far) it simply disappears. */
+@keyframes turntable-wrap-a {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes turntable-wrap-b {
+  from {
+    opacity: 0;
+  }
+}
+
+.turntable-slide[data-wrap] {
+  transition: none;
+}
+
+.turntable-slide[data-wrap="a"]:not([data-pos="far"]) {
+  animation: turntable-wrap-a 0.5s ease;
+}
+
+.turntable-slide[data-wrap="b"]:not([data-pos="far"]) {
+  animation: turntable-wrap-b 0.5s ease;
+}
+
+/* A selected project card exits as the case-study article enters; keep the rest of the page anchored. */
+::view-transition-group(*) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+::view-transition-old(*),
+::view-transition-new(*) {
+  mix-blend-mode: normal;
+  animation-duration: 380ms;
+}
+
+/* The surrounding page stays anchored while the selected card and case-study article transition. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(project-card) {
+  animation: project-card-out 260ms ease-in both;
+}
+
+::view-transition-new(project-case-study) {
+  animation: case-study-in 400ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes project-card-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.99);
+  }
+}
+
+@keyframes case-study-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+  }
+}
+
+.certificate-zoom-dialog {
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  transition:
+    opacity 280ms ease-out,
+    transform 280ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    display 280ms allow-discrete,
+    overlay 280ms allow-discrete;
+}
+
+.certificate-zoom-dialog[open] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@starting-style {
+  .certificate-zoom-dialog[open] {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+
+.certificate-zoom-dialog::backdrop {
+  background-color: transparent;
+  transition: background-color 280ms ease-out;
+}
+
+.certificate-zoom-dialog[open]::backdrop {
+  background-color: rgb(0 0 0 / 75%);
+}
+
+/* Reduced motion: no rotation, scale, slide-up, drift or transition. Switching is instant. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    animation: none;
+  }
+
+  .certificate-zoom-dialog,
+  .certificate-zoom-dialog::backdrop {
+    transition: none;
+  }
+
+  .rise,
+  .drift {
+    animation: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  .turntable-slide,
+  .turntable-slide[data-pos="near"],
+  .turntable-slide[data-pos="far"],
+  .turntable-slide[data-wrap] {
+    animation: none;
+    --rot: 0deg;
+    --sc: 1;
+    --step: 104%;
+    transition: none;
+  }
+
+  /* Without the scale-down the neighbours are full size, so the cards are a little narrower. */
+  @media (min-width: 1024px) {
+    .turntable-slide {
+      width: min(31%, 28rem);
+    }
+  }
 }

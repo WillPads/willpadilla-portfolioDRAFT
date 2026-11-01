@@ -1,28 +1,28 @@
-import Link from "next/link";
-import { nav, site } from "@/data/portfolio";
+import { site } from "@/data/portfolio";
+import { getVisibleNav } from "@/lib/nav";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import MobileMenu from "@/components/layout/MobileMenu";
+import NavLinks from "@/components/layout/NavLinks";
+import { containerClass } from "@/components/ui/styles";
 
-export default function Header() {
+// `onHome` is false on sub-pages such as a case study: section links then point at "/#section"
+// and the wordmark goes to the top of the home page.
+export default function Header({ onHome = true }: { onHome?: boolean }) {
+  const prefix = onHome ? "" : "/";
+  const items = getVisibleNav().map((item) => ({ ...item, href: `${prefix}${item.href}` }));
+
   return (
-    <header className="sticky top-0 z-50 border-b border-black/10 bg-background">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
-        <Link
-          href="#"
-          className="py-3 font-button text-sm font-bold uppercase tracking-widest text-black"
-        >
-          <span className="sm:hidden">WP</span>
-          <span className="hidden sm:inline">{site.name}</span>
-        </Link>
-        <nav className="flex items-center gap-0 font-button text-[11px] uppercase tracking-wider text-black/70 sm:gap-1 sm:text-xs sm:tracking-widest">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-full px-2.5 py-3 sm:px-3 transition-all duration-300 hover:scale-105 hover:bg-black/5 hover:text-black"
-            >
-              {item.label}
-            </Link>
-          ))}
+    <header className="sticky top-0 z-50 border-b border-foreground/10 bg-background">
+      <div className={`${containerClass} flex min-h-14 items-center justify-between gap-3`}>
+        <nav aria-label="Main" className="hidden shrink-0 items-center gap-0.5 md:flex">
+          <NavLinks items={items} />
         </nav>
+
+        <div className="ml-auto hidden items-center gap-2 md:flex">
+          <ThemeToggle />
+        </div>
+
+        <MobileMenu items={items} resume={site.resume} />
       </div>
     </header>
   );

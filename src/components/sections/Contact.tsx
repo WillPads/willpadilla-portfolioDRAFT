@@ -1,22 +1,66 @@
+"use client";
+
+import { Mail } from "lucide-react";
+import { useState } from "react";
 import { site } from "@/data/portfolio";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
+import ExternalLink from "@/components/ui/ExternalLink";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
+import { buttonClass, containerClass, copiedNoticeClass, pillWrapClass, proseClass, sectionGapClass } from "@/components/ui/styles";
 
 export default function Contact() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = async () => {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(site.email);
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 1200);
+      }
+    } catch {
+      // Ignore clipboard errors: the button remains safe and non-breaking in unsupported browsers.
+    }
+  };
+
   return (
-    <section id="contact">
-      <Reveal className="mx-auto w-full max-w-5xl px-6 py-28">
-        <SectionHeading eyebrow="Contact" title="Let's work together" />
-        <div className="flex flex-col items-start gap-8 border border-black/10 p-6 sm:p-10 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-md font-body text-lg leading-relaxed text-black/70">
-            Have a project in mind or just want to say hi? My inbox is open.
-          </p>
-          <a
-            href={`mailto:${site.email}`}
-            className="border border-black bg-black px-8 py-4 font-button text-sm font-bold uppercase tracking-widest text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_30px_rgba(0,0,0,0.25)]"
-          >
-            {site.email} ↗
-          </a>
+    <section id="contact" aria-labelledby="contact-title" className={`${containerClass} ${sectionGapClass}`}>
+      <Reveal>
+        <SectionHeading id="contact-title" title="Contact" />
+      </Reveal>
+      <Reveal delay={90}>
+        <p className={`whitespace-pre-line text-pretty text-base leading-relaxed text-foreground/80 ${proseClass}`}>
+          {site.contactNote}
+        </p>
+        <div className="mt-6 flex flex-col items-start gap-4">
+          <div className="group relative">
+            <button type="button" onClick={handleCopyEmail} className={pillWrapClass} aria-label="Copy email address">
+              <Mail aria-hidden="true" className="size-4 shrink-0" />
+              <span className="min-w-0">{site.email}</span>
+            </button>
+            <span
+              role="status"
+              aria-live="polite"
+              aria-hidden={!copied}
+              className={`${copiedNoticeClass} ${copied ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100"}`}
+            >
+              {copied ? "Copied" : "Click to Copy"}
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <ExternalLink href={site.social.github} arrow={false} className={buttonClass}>
+              <GithubIcon />
+              GitHub
+            </ExternalLink>
+            <ExternalLink href={site.social.linkedin} arrow={false} className={buttonClass}>
+              <LinkedinIcon />
+              LinkedIn
+            </ExternalLink>
+            <ExternalLink href={site.resume} className={buttonClass}>
+              Resume
+            </ExternalLink>
+          </div>
         </div>
       </Reveal>
     </section>
