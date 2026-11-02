@@ -316,11 +316,16 @@ export const featuredProjects: FeaturedProject[] = [
     device: "desktop",
     cardImage: { src: "/projects/syncspace/syncspace sample logo.png" },
     screenshots: [
-      { src: "/projects/syncspace/room.jpg", alt: "A SyncSpace study room: the shared focus timer with host controls, the people in the room, chat, tasks, session notes and ambient sound" },
-      { src: "/projects/syncspace/dashboard.png", alt: "The SyncSpace dashboard: create or join a room, room stats, uploading materials and notes" },
-      { src: "/projects/syncspace/quiz.jpg", alt: "The quiz phase after a session: multiple-choice questions built from the uploaded photosynthesis notes" },
-      { src: "/projects/syncspace/welcome.jpg", alt: "SyncSpace welcome page explaining shared study rooms" },
+      { src: "/projects/syncspace/room-hd.jpg", alt: "A SyncSpace study room during a focus session: the shared timer with host controls, the people in the room, tasks, session notes and ambient sound" },
+      { src: "/projects/syncspace/dashboard-hd.jpg", alt: "The SyncSpace dashboard: create or join a room, room stats, uploading materials and notes" },
+      { src: "/projects/syncspace/quiz-results-hd.jpg", alt: "A finished SyncSpace quiz built from uploaded photosynthesis notes, scored 5 out of 5 correct" },
+      { src: "/projects/syncspace/welcome-hd.jpg", alt: "SyncSpace welcome page explaining shared study rooms" },
     ],
+    demoVideo: {
+      src: "/projects/syncspace/demo.mp4",
+      poster: "/projects/syncspace/demo-poster.jpg",
+      caption: "Walkthrough on the live site: create a room, start a session, upload notes, then take the quiz",
+    },
     caseStudy: {
       summary:
         "SyncSpace is a study space where a group shares a live-running Pomodoro timer in a room, chats while they work, and can generate a quiz from the notes they uploaded when the session ends. Deployed on Vercel (frontend), Render (API) and Neon (Postgres).",
@@ -355,10 +360,10 @@ export const featuredProjects: FeaturedProject[] = [
           ],
           images: [
             {
-              src: "/projects/syncspace/welcome.jpg",
+              src: "/projects/syncspace/welcome-hd.jpg",
               alt: "The SyncSpace welcome page: everyone in a room shares one Pomodoro timer, chats, and takes a quiz built from uploaded notes",
-              width: 800,
-              height: 670,
+              width: 2880,
+              height: 1800,
             },
           ],
         },
@@ -377,64 +382,28 @@ export const featuredProjects: FeaturedProject[] = [
         },
         {
           title: "HOW?",
-          paragraphs: ["SyncSpace went from a rough prototype to a live site in five steps."],
-          steps: [
+          paragraphs: [
+            "I rebuilt my first in-memory prototype on a separate Express and TypeScript server with Prisma, user accounts, and host and member roles. The server owns the shared timer: every change goes out over WebSockets as a full snapshot, so everyone in the room sees the same countdown.",
+            "Uploaded notes become a quiz when the host ends the session. Before launch, every finding from a backend audit was fixed and covered by tests, and the app went live on Vercel, Render and Neon free plans.",
+          ],
+          images: [
             {
-              title: "Rebuilding the Prototype on a Real Backend",
-              paragraphs: [
-                "My first version was highly conceptual, not functional. It kept rooms in memory inside the Next.js app and polled for updates. After talking it through with peers and mentors, I took their advice and rebuilt it with a separate Express and TypeScript server, Prisma, user accounts, and host and member roles in each room.",
-                "I made the architecture and product decisions myself and used AI-assisted development tools to help build it.",
-              ],
+              src: "/projects/syncspace/room-hd.jpg",
+              alt: "A SyncSpace study room during a focus session: the shared timer at 24:51 with Pause for all, Skip to break and End session host controls, a Synced status, tasks, and uploaded notes marked Ready",
+              width: 2880,
+              height: 2120,
             },
             {
-              title: "Letting the Server Own the Clock",
-              paragraphs: [
-                "The timer only works if everyone sees the same thing, so only the server changes it. Every room change goes out over a WebSocket as a full snapshot, re-sent every second, and each browser counts down from when it received the last one. A wrong clock on someone's device can't shift their timer.",
-                "I chose versioned writes over a CRDT. There's one writer per room, and the timer is a state machine: an illegal move should be rejected, not merged.",
-              ],
-              images: [
-                {
-                  src: "/projects/syncspace/room.jpg",
-                  alt: "A SyncSpace study room: the shared focus timer with Pause for all, Skip to break and End session host controls, a Synced status, the people in the room, chat, tasks and session notes",
-                  width: 1102,
-                  height: 714,
-                },
-              ],
+              src: "/projects/syncspace/quiz-hd.jpg",
+              alt: "The quiz phase after the session: fill-in-the-blank questions built from the uploaded photosynthesis notes",
+              width: 2880,
+              height: 2120,
             },
             {
-              title: "Turning Uploaded Notes into a Quiz",
-              paragraphs: [
-                "Anyone in a room can upload PDF, TXT or Markdown notes, and a background queue extracts the text. When the host ends the session, the room becomes a quiz built from those notes.",
-                "Claude writes the questions when an API key is set. Without one, or if the call fails, a built-in generator writes fill-in-the-blank questions from the text, so the feature never depends on a paid API. I plan to integrate a local AI model such as Ollama.",
-              ],
-              images: [
-                {
-                  src: "/projects/syncspace/upload.jpg",
-                  alt: "The Session notes panel in a room, with an uploaded notes file marked Ready and the Upload notes button",
-                  width: 1102,
-                  height: 714,
-                },
-                {
-                  src: "/projects/syncspace/quiz.jpg",
-                  alt: "The quiz phase after the session: multiple-choice questions built from the uploaded notes",
-                  width: 1102,
-                  height: 714,
-                },
-              ],
-            },
-            {
-              title: "Hardening the backend before launch",
-              paragraphs: [
-                "A backend audit on Oct 22, 2026 listed what had to change before launch, and every finding was fixed and covered by tests the same day. The server moved to Express 5 so async errors can't crash it, JWTs were replaced with server-side sessions that can be revoked, and sign-in, joins and uploads got rate limits.",
-                "A row lock keeps the 10-person room cap from breaking when people join at the same time. The server now has 234 tests, all running against a real Postgres database instead of mocks.",
-              ],
-            },
-            {
-              title: "Deploying on free tiers",
-              paragraphs: [
-                "The web app runs on Vercel, the API on Render and the database on Neon, all on free plans. Vercel can't pass WebSocket connections through, so the browser first gets a single-use ticket that expires in 30 seconds, then connects straight to the server.",
-                "All traffic reached the server through Vercel, so every visitor looked like the same IP address. The sign-in limits now count the real visitor from the forwarded headers.",
-              ],
+              src: "/projects/syncspace/quiz-results-hd.jpg",
+              alt: "The submitted quiz scored 5 out of 5 correct, with each correct answer marked",
+              width: 2880,
+              height: 2120,
             },
           ],
         },
@@ -458,12 +427,17 @@ export const featuredProjects: FeaturedProject[] = [
           ],
           images: [
             {
-              src: "/projects/syncspace/dashboard.png",
+              src: "/projects/syncspace/dashboard-hd.jpg",
               alt: "The live SyncSpace dashboard: create or join a room, room stats, and uploading PDF, TXT or MD materials up to 4 MB",
-              width: 1840,
-              height: 966,
+              width: 2880,
+              height: 1800,
             },
           ],
+        },
+        {
+          title: "Demo",
+          paragraphs: ["A walkthrough on the live site."],
+          showDemoVideo: true,
         },
       ],
     },
@@ -537,48 +511,16 @@ export const featuredProjects: FeaturedProject[] = [
         },
         {
           title: "HOW?",
-          paragraphs: ["We had about 20 hours to go from an idea to a playable game."],
-          steps: [
+          paragraphs: [
+            "We had about 20 hours to go from an idea to a playable game. We built it with Phaser 3, React and TypeScript as a Windows Electron app, on a deterministic simulation engine that owns every rule and score. My part of the backend was the game details, levels and badges, the game flow and the debrief.",
+            "The AI, Qwen3-4B running offline through llama.cpp on a 4 GB laptop GPU, only writes NPC dialogue and debrief wording. Every reply is validated, and fallback text written in advance keeps the game playable without it.",
+          ],
+          images: [
             {
-              title: "Picking tools the team already knew",
-              paragraphs: [
-                "We built the game with Phaser 3, React and TypeScript, packaged as an Electron app for Windows. Godot scored well in our comparison, but nobody on the team knew it, and switching languages would have meant rewriting our shared contracts.",
-              ],
-            },
-            {
-              title: "Designing the game flow, levels and badges",
-              paragraphs: [
-                "A deterministic simulation engine owns every rule, resource, consequence and score, so the same choices always give the same result. My part of the backend was what runs on it: the game details, levels and badges, the game flow, and the debrief findings that tell players what they did well and what they missed.",
-                "Players work through a 48-hour countdown with 19 preparation actions and 16 typhoon events, then evacuation and a three-day aftermath.",
-              ],
-              images: [
-                {
-                  src: "/projects/signal-no-5/gameplay.jpg",
-                  alt: "Signal No. 5 gameplay: a top-down pixel-art house where the family prepares, with the phase, go-bag status and checklist at the top",
-                  width: 1280,
-                  height: 713,
-                },
-              ],
-            },
-            {
-              title: "Fitting a model on a 4 GB laptop GPU",
-              paragraphs: [
-                "We benchmarked Qwen3-1.7B and Qwen3-4B on a laptop with a 4 GB GTX 1650 Ti. Both returned valid JSON in all 30 test runs. The 4B was slower (about 5 seconds per reply against 2.4) but wrote better dialogue, so it's the one the game ships with.",
-                "We ran it with llama.cpp instead of Ollama: it's a smaller install and gives direct control over GPU memory.",
-              ],
-            },
-            {
-              title: "Keeping the AI out of the rules",
-              paragraphs: [
-                "The model only writes NPC dialogue and debrief wording. Every reply goes through constrained JSON decoding, validation and a grounding guard that rejects anything contradicting the game, such as the home's layout or the storm's timing.",
-                "If a reply fails, the game uses fallback text written in advance, so it stays playable even without the model.",
-              ],
-            },
-            {
-              title: "Build day and demo day",
-              paragraphs: [
-                "We built the game remotely on Oct 9 and demoed it on Oct 10 at SM Makati CyberZone. Alongside the build, I helped run our plans and progress checkpoints, checked the documentation and status, and designed the presentation and the reasoning behind our pitch.",
-              ],
+              src: "/projects/signal-no-5/gameplay.jpg",
+              alt: "Signal No. 5 gameplay: a top-down pixel-art house where the family prepares, with the phase, go-bag status and checklist at the top",
+              width: 1280,
+              height: 713,
             },
           ],
         },
@@ -662,15 +604,8 @@ export const featuredProjects: FeaturedProject[] = [
         },
         {
           title: "HOW?",
-          paragraphs: ["We had 3-4 hours to go from an idea to a working solution."],
-          steps: [
-            {
-              title: "From homework guide to tutor center",
-              paragraphs: [
-                "My partner, Ms. Patio, built the first stages using the event's sponsored Codex API credits. The app began as a homework guide for parents, written in Tagalog.",
-                "By the end of the day it was in English, had family profiles with each child's grade, sorted saved lessons by child, grade and subject, and had been rebuilt as a home tutor center around four parts: lessons, practice, worksheets and parent tips.",
-              ],
-            },
+          paragraphs: [
+            "We had 3-4 hours. Ms. Patio built the first version, a Tagalog homework guide for parents, with the event's sponsored Codex credits. By the end of the day it was in English, had family profiles by grade, and had become a home tutor center with lessons, practice, worksheets and parent tips.",
           ],
         },
         {
