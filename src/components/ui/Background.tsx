@@ -48,7 +48,7 @@ export default function Background() {
       {shapes.map((shape) => (
         <div
           key={`${shape.kind}-${shape.side}-${shape.top}`}
-          className={`drift absolute hidden text-foreground/24 dark:text-foreground/19 ${
+          className={`drift absolute hidden text-foreground/19 ${
             shape.size === 160 ? "lg:block" : "md:block"
           } ${shape.size === 112 ? "md:max-lg:scale-[0.65]" : ""}`}
           style={

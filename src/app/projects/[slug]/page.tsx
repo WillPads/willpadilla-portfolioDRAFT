@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = getCaseStudyProject(slug);
   if (!project) return {};
   return {
-    title: `${project.title} case study | Will Padilla`,
+    title: `${project.title} project report | Will Padilla`,
     description: project.caseStudy.summary,
   };
 }

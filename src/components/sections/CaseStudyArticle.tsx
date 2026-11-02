@@ -71,7 +71,7 @@ export default function CaseStudyArticle({ project }: { project: CaseStudyProjec
     <article aria-labelledby="case-title" data-case-study={project.slug} style={{ viewTransitionName: "project-case-study" }}>
       <header className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-          <p className="font-mono text-xs font-medium uppercase tracking-wider text-accent">Case study</p>
+          <p className="font-mono text-xs font-medium uppercase tracking-wider text-accent">Project Report</p>
           <StatusBadge status={project.status} />
         </div>
         <h1

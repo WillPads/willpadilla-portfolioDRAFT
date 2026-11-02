@@ -1,6 +1,5 @@
 import { site } from "@/data/portfolio";
 import { getVisibleNav } from "@/lib/nav";
-import ThemeToggle from "@/components/ui/ThemeToggle";
 import MobileMenu from "@/components/layout/MobileMenu";
 import NavLinks from "@/components/layout/NavLinks";
 import { containerClass } from "@/components/ui/styles";
@@ -17,10 +16,6 @@ export default function Header({ onHome = true }: { onHome?: boolean }) {
         <nav aria-label="Main" className="hidden shrink-0 items-center gap-0.5 md:flex">
           <NavLinks items={items} />
         </nav>
-
-        <div className="ml-auto hidden items-center gap-2 md:flex">
-          <ThemeToggle />
-        </div>
 
         <MobileMenu items={items} resume={site.resume} />
       </div>

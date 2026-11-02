@@ -48,9 +48,11 @@ export default function ProjectSlide({
     >
       {project.cardImage && (
         // Decorative logo, faint behind the text; it dissolves while the card is hovered or focused.
+        // Touch screens can't hover, so there it dissolves once the card settles in the centre and
+        // comes back when the card moves aside.
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-lg opacity-[0.14] transition-opacity duration-300 group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none dark:opacity-[0.12]"
+          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-lg opacity-[0.12] transition-opacity duration-300 group-hover:opacity-0 group-focus-within:opacity-0 pointer-coarse:duration-700 pointer-coarse:group-data-[pos=active]:opacity-0 pointer-coarse:group-data-[pos=active]:delay-500 motion-reduce:transition-none"
         >
           <Image
             src={project.cardImage.src}
@@ -83,16 +85,21 @@ export default function ProjectSlide({
       <Link
         href={caseStudyPath(project)}
         onClick={onNavigate}
-        aria-label={`View ${project.title} case study`}
+        aria-label={`View ${project.title} project report`}
         className="absolute inset-0 z-10 cursor-pointer rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-foreground"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute right-4 top-4 z-20 inline-flex translate-y-1 items-center gap-1.5 rounded-lg border border-foreground/15 bg-background px-2.5 py-1.5 font-mono text-[11px] text-foreground opacity-0 transition-[opacity,translate] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 motion-reduce:transition-none"
       >
-        View Project
-        <ArrowUpRight aria-hidden="true" className="size-3.5" />
-      </span>
+        {/* Outer span: appears when the card is hovered or focused. Inner span: inverted pill that
+            floats up a little more when the cursor is on it. */}
+        <span
+          aria-hidden="true"
+          className="absolute right-4 top-4 translate-y-1 opacity-0 transition-[opacity,translate] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 motion-reduce:transition-none"
+        >
+          <span className="inline-flex items-center gap-1.5 rounded-lg bg-foreground px-2.5 py-1.5 font-mono text-[11px] font-medium text-background transition-[translate] duration-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+            View Project
+            <ArrowUpRight aria-hidden="true" className="size-3.5" />
+          </span>
+        </span>
+      </Link>
     </div>
   );
 }

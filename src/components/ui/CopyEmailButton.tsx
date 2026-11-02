@@ -4,20 +4,19 @@ import { useRef, useState, type ReactNode } from "react";
 import { site } from "@/data/portfolio";
 import { copiedNoticeClass } from "@/components/ui/styles";
 
-// How long a touch must be held to count as a long tap.
-const LONG_TAP_MS = 450;
+// Two taps closer together than this count as a double tap.
+const DOUBLE_TAP_MS = 400;
 
 type Notice = "idle" | "hint" | "copied";
 
 // Copies the email address. Mouse and keyboard: click to copy ("Click to Copy" shows on
-// hover/focus). Touch screens can't hover, so a short tap shows "Long Tap to Copy" and a
-// long tap copies. The copy runs on release, because browsers only allow clipboard writes
-// during the release of a touch, not while it is held.
+// hover/focus). Touch screens can't hover, so the first tap shows "Double Tap to Copy" and a
+// second tap right after it copies. `touch-manipulation` stops the double tap from zooming the page.
 export default function CopyEmailButton({ className, children }: { className: string; children: ReactNode }) {
   const [notice, setNotice] = useState<Notice>("idle");
   const [touch, setTouch] = useState(false);
-  const pressStart = useRef<number | null>(null);
-  const skipClick = useRef(false);
+  const lastTouch = useRef<number | null>(null);
+  const viaTouch = useRef(false);
   const hideTimer = useRef<number | undefined>(undefined);
 
   const show = (next: Notice, ms: number) => {
@@ -42,35 +41,26 @@ export default function CopyEmailButton({ className, children }: { className: st
       <button
         type="button"
         aria-label="Copy email address"
-        className={`${className} select-none [-webkit-touch-callout:none]`}
+        className={`${className} touch-manipulation select-none`}
         onPointerDown={(event) => {
-          const isTouch = event.pointerType !== "mouse";
-          setTouch(isTouch);
-          if (!isTouch) return;
-          pressStart.current = Date.now();
-          skipClick.current = true;
-          show("hint", 1600);
-        }}
-        onPointerUp={() => {
-          if (pressStart.current === null) return;
-          const held = Date.now() - pressStart.current;
-          pressStart.current = null;
-          if (held >= LONG_TAP_MS) void copy();
-        }}
-        onPointerCancel={() => {
-          pressStart.current = null;
-        }}
-        // Stop the phone's own long-press menu from opening over the button.
-        onContextMenu={(event) => {
-          if (touch) event.preventDefault();
+          viaTouch.current = event.pointerType !== "mouse";
+          setTouch(viaTouch.current);
         }}
         onClick={() => {
-          // A touch already ran its tap or long tap above; keyboard and mouse copy here.
-          if (skipClick.current) {
-            skipClick.current = false;
+          // Keyboard and mouse copy straight away.
+          if (!viaTouch.current) {
+            void copy();
             return;
           }
-          void copy();
+          viaTouch.current = false;
+          const now = Date.now();
+          if (lastTouch.current !== null && now - lastTouch.current < DOUBLE_TAP_MS) {
+            lastTouch.current = null;
+            void copy();
+          } else {
+            lastTouch.current = now;
+            show("hint", 1800);
+          }
         }}
       >
         {children}
@@ -81,7 +71,7 @@ export default function CopyEmailButton({ className, children }: { className: st
         aria-hidden={notice !== "copied"}
         className={`${copiedNoticeClass} ${notice === "idle" ? "translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100" : "translate-y-0 opacity-100"}`}
       >
-        {notice === "copied" ? "Copied" : touch ? "Long Tap to Copy" : "Click to Copy"}
+        {notice === "copied" ? "Copied" : touch ? "Double Tap to Copy" : "Click to Copy"}
       </span>
     </div>
   );

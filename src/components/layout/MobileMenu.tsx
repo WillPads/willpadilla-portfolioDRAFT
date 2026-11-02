@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import ExternalLink from "@/components/ui/ExternalLink";
-import ThemeToggle from "@/components/ui/ThemeToggle";
 import { containerClass, iconButtonClass, resumeLinkClass } from "@/components/ui/styles";
 
 type NavItem = { label: string; href: string };
@@ -82,11 +81,10 @@ export default function MobileMenu({ items, resume }: { items: NavItem[]; resume
               {item.label}
             </a>
           ))}
-          <div className="mt-2 flex items-center justify-between gap-3 px-3">
+          <div className="mt-2 px-3">
             <ExternalLink href={resume} className={resumeLinkClass}>
               Resume
             </ExternalLink>
-            <ThemeToggle />
           </div>
         </nav>
       </div>

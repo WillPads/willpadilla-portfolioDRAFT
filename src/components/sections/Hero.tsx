@@ -1,11 +1,10 @@
-"use client";
-
 import Image from "next/image";
 import { Mail } from "lucide-react";
-import { useState, type CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import { site } from "@/data/portfolio";
 import ExternalLink from "@/components/ui/ExternalLink";
-import { containerClass, copiedNoticeClass, pillClass, resumeLinkClass } from "@/components/ui/styles";
+import CopyEmailButton from "@/components/ui/CopyEmailButton";
+import { containerClass, pillClass, resumeLinkClass } from "@/components/ui/styles";
 
 // Each block slides up a few pixels, one after the other (see .rise in globals.css). They only
 // move: opacity stays at 1, so the hero is never blank.
@@ -19,20 +18,6 @@ const rise = (step: number) => ({ "--rise-delay": `${step * 90}ms` }) as CSSProp
 // the round photo sits on the right, top-aligned with the name. On phones the photo is small and sits
 // beside the name and role, and everything else runs full width underneath.
 export default function Hero() {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyEmail = async () => {
-    try {
-      if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(site.email);
-        setCopied(true);
-        window.setTimeout(() => setCopied(false), 1200);
-      }
-    } catch {
-      // Ignore clipboard errors: the button still acts as a safe no-op in unsupported browsers.
-    }
-  };
-
   return (
     <section
       aria-labelledby="hero-title"
@@ -80,21 +65,11 @@ export default function Hero() {
           </p>
         )}
 
-        <div style={rise(4)} className="rise mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
-          <div className="group relative">
-            <button type="button" onClick={handleCopyEmail} className={pillClass} aria-label="Copy email address">
-              <Mail aria-hidden="true" className="size-4 shrink-0" />
-              {site.email}
-            </button>
-            <span
-              role="status"
-              aria-live="polite"
-              aria-hidden={!copied}
-              className={`${copiedNoticeClass} ${copied ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100"}`}
-            >
-              {copied ? "Copied" : "Click to Copy"}
-            </span>
-          </div>
+        <div style={rise(4)} className="rise mt-12 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <CopyEmailButton className={pillClass}>
+            <Mail aria-hidden="true" className="size-4 shrink-0" />
+            {site.email}
+          </CopyEmailButton>
           <ExternalLink href={site.resume} className={resumeLinkClass}>
             Resume
           </ExternalLink>

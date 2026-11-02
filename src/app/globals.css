@@ -1,28 +1,15 @@
 @import "tailwindcss";
 
-/* Dark variant follows the data-theme attribute that the inline script in layout.tsx sets. */
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
-/* Colour tokens. All text is --foreground at different opacities, never a different gray.
- * --accent is the site accent (space blue, deeper in light and lighter in dark): the pill
- * button, the active-nav underline, the resume link's bottom border and the status dots.
- * --accent-foreground is the text colour that sits on a solid accent fill. These two are the
- * only accent tokens. */
+/* Colour tokens. The site is dark only. All text is --foreground at different opacities, never a
+ * different gray. --accent is the site accent (light space blue): the pill button, the active-nav
+ * underline, the resume link's bottom border and the status dots. --accent-foreground is the text
+ * colour that sits on a solid accent fill. These two are the only accent tokens. */
 :root {
-  --background: #f2f4f7;
-  --foreground: #000000;
-  --accent: #2563eb;
-  --accent-foreground: #faf9f6;
-  --dot-alpha: 21%; /* dot grid strength; light needs a bit more than dark to read */
-  color-scheme: light;
-}
-
-[data-theme="dark"] {
   --background: #131312;
   --foreground: #faf9f6;
   --accent: #93c5fd;
   --accent-foreground: #131312;
-  --dot-alpha: 17%;
+  --dot-alpha: 17%; /* dot grid strength */
   color-scheme: dark;
 }
 
