@@ -52,7 +52,7 @@ export const iconButtonClass = `inline-flex size-11 shrink-0 items-center justif
 export const iconLinkClass = `inline-flex size-11 shrink-0 items-center justify-center rounded-lg text-foreground/65 hover:bg-foreground/5 hover:text-foreground focus-visible:bg-foreground/5 focus-visible:text-foreground ${motion} ${focusRing}`;
 
 export const copiedNoticeClass =
-  "pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-foreground px-2 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-background transition-[opacity,translate] duration-700 ease-out motion-reduce:transition-none";
+  "pointer-events-none absolute -top-9 right-0 whitespace-nowrap md:right-auto md:left-1/2 md:-translate-x-1/2 rounded-lg bg-foreground px-2 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-background transition-[opacity,translate] duration-700 ease-out motion-reduce:transition-none";
 
 // Sub-heading inside a section (an h3 such as "Certifications" or "More projects"): one step below the
 // section title (text-3xl / md:text-4xl, see SectionHeading).

@@ -44,7 +44,7 @@ export default function ProjectSlide({
       style={{ "--d": offset, "--c": center } as CSSProperties}
       // Asymmetric corners: small on the left, large on the right. One flat 1px border on every
       // card; the active card, hover and keyboard focus all switch it to the solid text colour.
-      className="turntable-slide group relative flex cursor-pointer flex-col gap-3 rounded-lg border border-foreground/15 bg-background p-5 hover:-translate-y-1 hover:border-foreground focus-within:-translate-y-1 focus-within:border-foreground data-[pos=active]:border-foreground motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0 md:p-6"
+      className="turntable-slide group relative flex cursor-pointer flex-col gap-3 rounded-lg border border-foreground/15 bg-background p-5 pb-16 hover:-translate-y-1 hover:border-foreground focus-within:-translate-y-1 focus-within:border-foreground data-[pos=active]:border-foreground motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0 md:p-6 md:pb-[4.5rem]"
     >
       {project.cardImage && (
         // Decorative logo, faint behind the text; it dissolves while the card is hovered or focused.
@@ -76,26 +76,30 @@ export default function ProjectSlide({
         {meta && <p className="font-mono text-[11px] text-foreground/65">{meta}</p>}
       </div>
 
-      <p className="text-[15px] leading-relaxed text-foreground/65">{project.role}</p>
-
       <p className="text-base leading-relaxed text-foreground/80">{project.tagline}</p>
 
       <TagList items={project.stack} label={`${project.title} tech stack`} className="mt-1" />
 
+      <div className="mt-1 border-t border-foreground/15 pt-3">
+        <p className="text-[15px] font-medium leading-snug text-foreground">{project.role}</p>
+        {project.contribution && (
+          <p className="mt-1 text-[15px] leading-relaxed text-foreground/80">{project.contribution}</p>
+        )}
+      </div>
+
       <Link
         href={caseStudyPath(project)}
         onClick={onNavigate}
-        aria-label={`View ${project.title} project report`}
+        aria-label={`View ${project.title} project details`}
         className="absolute inset-0 z-10 cursor-pointer rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-foreground"
       >
-        {/* Outer span: appears when the card is hovered or focused. Inner span: inverted pill that
-            floats up a little more when the cursor is on it. */}
+        {/* Always visible, in the space the card reserves at its bottom; floats up when the cursor is on it. */}
         <span
           aria-hidden="true"
-          className="absolute right-4 top-4 translate-y-1 opacity-0 transition-[opacity,translate] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 motion-reduce:transition-none"
+          className="absolute bottom-4 left-5 md:bottom-5 md:left-6"
         >
           <span className="inline-flex items-center gap-1.5 rounded-lg bg-foreground px-2.5 py-1.5 font-mono text-[11px] font-medium text-background transition-[translate] duration-200 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-            View Project
+            View Project Details
             <ArrowUpRight aria-hidden="true" className="size-3.5" />
           </span>
         </span>

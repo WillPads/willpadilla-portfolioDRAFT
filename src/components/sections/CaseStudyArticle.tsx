@@ -83,6 +83,21 @@ export default function CaseStudyArticle({ project }: { project: CaseStudyProjec
         <p className={`${proseClass} text-lg leading-relaxed text-foreground/80`}>{caseStudy.summary}</p>
       </header>
 
+      {caseStudy.myRole.length > 0 && (
+        <section aria-labelledby="case-my-role" className="mt-8">
+          <h2 id="case-my-role" className={sectionHeadingClass}>
+            My Role
+          </h2>
+          <ul className={`${proseClass} flex list-disc flex-col gap-3 pl-5 marker:text-accent`}>
+            {caseStudy.myRole.map((item) => (
+              <li key={item} className={paragraphClass}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {caseStudy.cover && (
         <div className="mt-10">
           <CaseFigure

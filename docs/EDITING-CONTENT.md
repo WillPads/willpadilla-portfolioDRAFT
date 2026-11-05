@@ -220,13 +220,14 @@ demoVideo: {
 ## Add experience
 
 Add an entry inside the `experience` list, newest first. The Experience section and its nav link appear once
-the list has one entry. `url` (makes the organisation a link) and `logo` (a square image in `public/`) are optional.
+the list has one entry. `summary` (1-2 sentences, shown under the role), `url` (makes the organisation a link) and `logo` (a square image in `public/`) are optional.
 
 ```ts
 export const experience: Experience[] = [
   {
     org: "Organisation Name",
     role: "Your Role",
+    summary: "[1-2 sentences on what you did.]", // optional, shown under the role
     start: "Jun 2026",
     end: "Present", // or e.g. "Aug 2026"
     url: "https://example.com", // optional
@@ -280,6 +281,7 @@ words; leave out any optional field you have nothing for, and the page skips it)
 ```ts
 caseStudy: {
   summary: "[One paragraph: what the project is and what it achieved.]",
+  myRole: ["[What you personally did.]", "[Another bullet.]"],   // 3-5 bullets, shown under the summary
   cover: {                                   // optional: wide image under the title
     src: "/projects/project-name/cover.jpg",
     alt: "[Describe the image for people who cannot see it]",
@@ -328,6 +330,7 @@ caseStudy: {
 Field reference:
 
 - `summary` (required): the paragraph under the title. It is also the page's description for search results.
+- `myRole` (required): 3-5 bullets on what Will personally did, shown as a "My Role" block under the summary.
 - `cover` (optional): one image shown full width under the header.
 - `facts` (required, can be `[]`): label and value pairs. Use any labels you like.
 - `sections` (required): each has a `title` and `paragraphs` (required), plus optional `images`, `steps` and

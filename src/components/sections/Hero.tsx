@@ -3,8 +3,8 @@ import { Mail } from "lucide-react";
 import type { CSSProperties } from "react";
 import { site } from "@/data/portfolio";
 import ExternalLink from "@/components/ui/ExternalLink";
-import CopyEmailButton from "@/components/ui/CopyEmailButton";
-import { containerClass, pillClass, resumeLinkClass } from "@/components/ui/styles";
+import EmailActions from "@/components/ui/EmailActions";
+import { containerClass, iconButtonClass, pillWrapClass, resumeLinkClass } from "@/components/ui/styles";
 
 // Each block slides up a few pixels, one after the other (see .rise in globals.css). They only
 // move: opacity stays at 1, so the hero is never blank.
@@ -12,23 +12,32 @@ const rise = (step: number) => ({ "--rise-delay": `${step * 90}ms` }) as CSSProp
 
 // The hero is never wrapped in <Reveal>: it must be visible the moment the page loads.
 // Reading order and semantics: h1 = the name (what the page is about, and what search results show),
-// the role under it, then the tagline as the big headline. The tagline is a <p>, not a heading, so the
+// the role under it, then the tagline as a quiet line under the big heading. The tagline is a <p>, not a heading, so the
 // document outline stays h1 (name) then one h2 per section.
 // Layout: a two-column grid from md. The text sits in the left column and, when site.avatar is set,
 // the round photo sits on the right, top-aligned with the name. On phones the photo is small and sits
 // beside the name and role, and everything else runs full width underneath.
 export default function Hero() {
+  // site.nameEmphasis, when it appears in site.name, is set in italic accent colour.
+  const at = site.nameEmphasis ? site.name.indexOf(site.nameEmphasis) : -1;
+  const before = at < 0 ? site.name : site.name.slice(0, at);
+  const emphasis = at < 0 ? "" : site.nameEmphasis;
+  const after = at < 0 ? "" : site.name.slice(at + (site.nameEmphasis?.length ?? 0));
+
   return (
     <section
       aria-labelledby="hero-title"
       className={`${containerClass} grid grid-cols-[minmax(0,1fr)_auto] gap-x-5 pt-8 md:gap-x-12 md:pt-14 lg:gap-x-20`}
     >
-      <div style={rise(0)} className="rise col-start-1 row-start-1 min-w-0">
+      <div className="col-start-1 row-start-1 min-w-0">
         <h1
           id="hero-title"
-          className="text-balance text-4xl font-medium leading-tight tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl"
+          style={rise(0)}
+          className="rise text-balance text-[clamp(1.75rem,8.5vw,2.5rem)] font-semibold leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl"
         >
-          {site.name}
+          {before}
+          {emphasis && <em className="text-accent">{emphasis}</em>}
+          {after}
         </h1>
       </div>
 
@@ -48,7 +57,7 @@ export default function Hero() {
       <div className="col-span-2 col-start-1 row-start-2 min-w-0 md:col-span-1">
         <p
           style={rise(1)}
-          className="rise mt-8 max-w-[22ch] text-balance text-[1.75rem] font-medium leading-[1.15] tracking-tight text-foreground sm:text-4xl md:mt-10 md:text-5xl lg:text-6xl lg:leading-[1.1]"
+          className="rise mt-5 text-pretty font-mono text-sm leading-relaxed text-foreground/70 md:mt-7 md:text-base lg:text-lg"
         >
           {site.tagline}
         </p>
@@ -66,10 +75,10 @@ export default function Hero() {
         )}
 
         <div style={rise(4)} className="rise mt-12 flex flex-wrap items-center gap-x-5 gap-y-3">
-          <CopyEmailButton className={pillClass}>
+          <EmailActions linkClassName={pillWrapClass} copyClassName={iconButtonClass}>
             <Mail aria-hidden="true" className="size-4 shrink-0" />
             {site.email}
-          </CopyEmailButton>
+          </EmailActions>
           <ExternalLink href={site.resume} className={resumeLinkClass}>
             Resume
           </ExternalLink>

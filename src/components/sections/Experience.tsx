@@ -2,7 +2,7 @@ import Image from "next/image";
 import { experience } from "@/data/portfolio";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
-import { containerClass, rowClass, sectionGapClass } from "@/components/ui/styles";
+import { containerClass, proseClass, rowClass, sectionGapClass } from "@/components/ui/styles";
 
 // Compact rows: logo, organisation and role on the left, dates on the right.
 // Hidden, with its nav link, while the experience list is empty.
@@ -19,7 +19,7 @@ export default function Experience() {
           {experience.map((item) => (
             <li
               key={`${item.org}-${item.start}`}
-              className={`${rowClass} relative flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6`}
+              className={`${rowClass} relative flex flex-col gap-3 py-5 sm:flex-row sm:items-start sm:justify-between sm:gap-6`}
             >
               <div className="flex min-w-0 items-center gap-3">
                 {item.logo && (
@@ -48,6 +48,9 @@ export default function Experience() {
                     )}
                   </p>
                   <p className="mt-1 text-[15px] leading-relaxed text-foreground/65">{item.role}</p>
+                  {item.summary && (
+                    <p className={`${proseClass} mt-2 text-[15px] leading-relaxed text-foreground/65`}>{item.summary}</p>
+                  )}
                 </div>
               </div>
               <p className="shrink-0 font-mono text-[13px] text-foreground/65 sm:text-right">

@@ -3,9 +3,9 @@ import { site } from "@/data/portfolio";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/ui/Reveal";
 import ExternalLink from "@/components/ui/ExternalLink";
-import CopyEmailButton from "@/components/ui/CopyEmailButton";
+import EmailActions from "@/components/ui/EmailActions";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
-import { buttonClass, containerClass, pillWrapClass, proseClass, resumeLinkClass, sectionGapClass } from "@/components/ui/styles";
+import { buttonClass, containerClass, iconButtonClass, pillWrapClass, proseClass, resumeLinkClass, sectionGapClass } from "@/components/ui/styles";
 
 export default function Contact() {
   return (
@@ -18,15 +18,17 @@ export default function Contact() {
           {site.contactNote}
         </p>
         <div className="mt-6 flex flex-col items-start gap-4">
-          <CopyEmailButton className={pillWrapClass}>
+          <EmailActions linkClassName={pillWrapClass} copyClassName={iconButtonClass}>
             <Mail aria-hidden="true" className="size-4 shrink-0" />
             <span className="min-w-0">{site.email}</span>
-          </CopyEmailButton>
+          </EmailActions>
           <div className="flex flex-wrap gap-3">
-            <ExternalLink href={site.social.github} arrow={false} className={buttonClass}>
-              <GithubIcon />
-              GitHub
-            </ExternalLink>
+            {site.social.github && (
+              <ExternalLink href={site.social.github} arrow={false} className={buttonClass}>
+                <GithubIcon />
+                GitHub
+              </ExternalLink>
+            )}
             <ExternalLink href={site.social.linkedin} arrow={false} className={buttonClass}>
               <LinkedinIcon />
               LinkedIn

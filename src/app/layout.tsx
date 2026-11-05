@@ -7,6 +7,7 @@ import "./globals.css";
 const hankenGrotesk = Hanken_Grotesk({
   variable: "--font-hanken-grotesk",
   subsets: ["latin"],
+  style: ["normal", "italic"], // the italic word in the hero heading (site.nameEmphasis)
 });
 
 const jetbrainsMono = JetBrains_Mono({

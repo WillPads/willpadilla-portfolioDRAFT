@@ -10,12 +10,13 @@
 
 export type Site = {
   name: string; // the header wordmark, the hero h1 and the footer
+  nameEmphasis?: string; // a word inside name to italicize in the hero h1
   tagline: string; // the big headline in the hero
   resume: string; // path to the PDF; the file goes in public/resume.pdf
   email: string; // used for every "Email" button
   location: string; // shown only in the footer ("Based in ...")
   social: {
-    github: string; // profile or repo URL
+    github?: string; // profile or repo URL; its buttons hide while unset
     linkedin: string;
   };
   // Optional. Leave unset until Will has a target role to show.
@@ -32,12 +33,12 @@ export type Site = {
 };
 
 export const site: Site = {
-  name: "What's Up? I'm Will :)",
-  tagline: "Love for Learning, pushed by purpose",
+  name: "What's Up? I'm Will",
+  nameEmphasis: "Will",
+  tagline: "Life-long love for learning, pushed by purpose.",
   resume: "/resume.pdf", // file goes in public/resume.pdf
   lookingFor:
     "A 520-hour internship or entry-level role in any position where I'd be a good fit for your organization. Eagerly available and looking out for opportunities.",
-  bio: "Driven by curiosity and a love for learning, I'm a lifelong student at heart. I enjoy understanding how things work, building with intention, and turning that learning into thoughtful, useful work.",
   contactNote:
     "Hi there! Still here? Let's Talk!\n\nI'd love to connect regarding internship opportunities! Reach me via email, LinkedIn, or through my resume for more info.",
   
@@ -45,7 +46,7 @@ export const site: Site = {
   email: "wgabriel.padilla@gmail.com",
   location: "Sampaloc, Manila",
   social: {
-    github: "https://github.com/WillPads/WPadilla",
+    // github: "https://github.com/WillPads/WPadilla", // TODO(Will): hidden until the GitHub is cleaned up
     linkedin: "https://www.linkedin.com/in/will-padilla/",
   },
 };
@@ -70,6 +71,7 @@ export const nav = [
 export type Experience = {
   org: string; // company, organisation or team
   role: string; // what Will did there
+  summary?: string; // 1-2 sentences on what Will did; shown under the role
   start: string; // e.g. "2026" or "Jun 2026"
   end: string; // same format, or "Present"
   url?: string; // the org's site; makes the org name a link
@@ -80,6 +82,7 @@ export const experience: Experience[] = [
   {
     org: "FEU Tech ACM Student Chapter",
     role: "Junior Officer, Externals Committee",
+    summary: "I coordinated with the Externals Committee on its work with partner organizations and outside groups for the chapter's activities.",
     start: "Sep 2024",
     end: "Jul 2026",
     url: "https://www.linkedin.com/company/33261120/",
@@ -87,6 +90,7 @@ export const experience: Experience[] = [
   {
     org: "FEU Tech Student Coordinating Council",
     role: "Junior Officer, Publicity Committee",
+    summary: "I helped the Publicity Committee promote the council's activities and announcements to FEU Tech students.", // TODO(Will): replace with specifics
     start: "Sep 2024",
     end: "Jul 2025",
     url: "https://www.linkedin.com/company/78428830/",
@@ -94,6 +98,7 @@ export const experience: Experience[] = [
   {
     org: "Junior Philippine Computer Society - FEU Tech",
     role: "Junior Officer, Events Committee",
+    summary: "I helped organize event planning and logistics, as well as hosting events for the chapter's members.",
     start: "Sep 2024",
     end: "Jul 2025",
     url: "https://www.linkedin.com/company/76572156/",
@@ -167,6 +172,7 @@ export type CaseSection = {
 
 export type CaseStudy = {
   summary: string; // one paragraph under the title; also the page description
+  myRole: string[]; // 3-5 bullets on what Will personally did; shown under the summary
   cover?: CaseImage; // wide image under the header
   facts: { label: string; value: string }[]; // e.g. Duration, Role, Team
   sections: CaseSection[];
@@ -195,6 +201,7 @@ export type FeaturedProject = ProjectBase & {
   cardImage?: { src: string }; // logo shown faintly behind the turntable card (decorative)
   screenshots: ProjectScreenshot[]; // use [] when there are none yet
   demoVideo?: ProjectVideo; // shown in the detail panel; never autoplays
+  contribution?: string; // first person: what Will did; shown on the card below the stack
   caseStudy?: CaseStudy; // when set, the project gets a page at /projects/<slug>
 };
 
@@ -206,6 +213,8 @@ export const featuredProjects: FeaturedProject[] = [
     slug: "pixelderm",
     title: "PixelDerm",
     role: "Project Manager & Co-Developer",
+    contribution:
+      "Led and managed our thesis from sprint planning to quality checks and co-developed the Android app's backend and database functions with my Lead Developer.",
     tagline:
       "Android-based Mobile Platform for Longitudinal Skin Damage Analysis & Monitoring",
     description:
@@ -225,6 +234,12 @@ export const featuredProjects: FeaturedProject[] = [
     caseStudy: {
       summary:
         "PixelDerm is an Android app for tracking UV-related skin damage over time by comparing photos of the same skin area across sessions. I managed the project, helped build the app with Ms. Patio, and used Python to clean the datasets behind the image-analysis workflow. We worked with dermatologists to verify and validate the clinical-technical trials.",
+      myRole: [
+        "Planned and ran the project as project manager, setting the sprint structure, timeline and team check-ins.",
+        "Ran quality checks on deliverables and tracked deadlines so the team stayed aligned on what came next.",
+        "Co-developed the Android app with Ms. Patio, working on its backend and database functions.",
+        "Cleaned and filtered our datasets with Python for the app's image-analysis workflow.",
+      ],
       cover: {
         src: "/projects/PixelDerm/pixelderm poster.png",
         alt: "PixelDerm poster showing the project title and a preview of the app on a phone",
@@ -237,16 +252,6 @@ export const featuredProjects: FeaturedProject[] = [
         { label: "Stack", value: "React Native, TypeScript, Android, Python, Image Processing" },
       ],
       sections: [
-        {
-          title: "Tech stack",
-          paragraphs: [
-            "Frontend: React Native 0.85 and TypeScript for the Android app.",
-            "Backend: A server receives and analyzes the photos. Its code is not in the local repository, so its technology stack is unconfirmed.",
-            "Data: Scan history is kept on the server; the app stores only a user ID on the phone using AsyncStorage.",
-            "Hosting or link: The app is not public. The repository and demo link are paused.",
-            "Tags shown on the site: React Native, TypeScript, Android, Image Processing, Python.",
-          ],
-        },
         {
           title: "Overview",
           paragraphs: [
@@ -304,6 +309,7 @@ export const featuredProjects: FeaturedProject[] = [
     slug: "syncspace",
     title: "SyncSpace",
     role: "Full-stack Developer",
+    contribution: "As sole developer, I took SyncSpace from an early prototype to a live app, handling everything from product decisions to deployment.",
     tagline: "Synchronous Co-Working Space",
     description:
       "Shared real-time rooms with synced Pomodoro timers, tasks and notes, so study groups and remote teams can focus together instead of alone. Includes role-based access, a WebSocket sync engine and a quiz pipeline built from uploaded documents. Deployed on Vercel (frontend), Render (API) and Neon (Postgres).",
@@ -311,7 +317,7 @@ export const featuredProjects: FeaturedProject[] = [
     status: "live",
     year: "Sep 2026 - Nov 2026",
     liveUrl: "https://sync-space-taupe.vercel.app",
-    repoUrl: "https://github.com/WillPads/SyncSpace",
+    // repoUrl: "https://github.com/WillPads/SyncSpace", // TODO(Will): hidden until the GitHub is cleaned up
     context: "Personal project",
     device: "desktop",
     cardImage: { src: "/projects/syncspace/syncspace sample logo.png" },
@@ -329,6 +335,13 @@ export const featuredProjects: FeaturedProject[] = [
     caseStudy: {
       summary:
         "SyncSpace is a study space where a group shares a live-running Pomodoro timer in a room, chats while they work, and can generate a quiz from the notes they uploaded when the session ends. Deployed on Vercel (frontend), Render (API) and Neon (Postgres).",
+      myRole: [
+        "Rebuilt my in-memory prototype as a separate Express and TypeScript server with Prisma, user accounts, and host and member roles.",
+        "Made the server the only owner of the shared timer, sending every room change over WebSockets as a full snapshot.",
+        "Fixed a race where the once-a-second tick could overwrite a host's reset, using versioned writes and in-memory ticks.",
+        "Built the quiz pipeline that turns uploaded notes into a quiz when the host ends the session.",
+        "Fixed every finding from a backend audit, covered the server with 234 tests on real Postgres, and deployed it on Vercel, Render and Neon.",
+      ],
       cover: {
         src: "/projects/syncspace/syncspace sample logo.png",
         alt: "SyncSpace logo and wordmark on a dark green background",
@@ -342,16 +355,6 @@ export const featuredProjects: FeaturedProject[] = [
         { label: "Hosting", value: "Vercel (web app), Render (API), Neon (database)" },
       ],
       sections: [
-        {
-          title: "Tech stack",
-          paragraphs: [
-            "Frontend: Next.js, TypeScript, and plain CSS.",
-            "Backend: Express 5, TypeScript, WebSockets, Prisma, and server-side sessions. Claude generates quiz questions when an API key is configured; otherwise, a built-in generator is used. I plan to integrate a local AI model such as Ollama.",
-            "Data: PostgreSQL (Neon).",
-            "Hosting or link: Vercel (frontend), Render (API), and Neon (database). Live at https://sync-space-taupe.vercel.app. Repository: https://github.com/WillPads/SyncSpace.",
-            "Tags shown on the site: Next.js, TypeScript, Express, Prisma, PostgreSQL, WebSockets.",
-          ],
-        },
         {
           title: "Overview",
           paragraphs: [
@@ -446,6 +449,7 @@ export const featuredProjects: FeaturedProject[] = [
     slug: "signal-no-5",
     title: "Signal No. 5",
     role: "Associate Project Manager, Backend Developer & Project Pitcher",
+    contribution: "In 20 hours, I coordinated with my team on levels, badges, game flow and debrief findings while running team checkpoints and designing the pitch.",
     tagline: "8-bit RPG that teaches typhoon preparedness, with dialogue from an AI model running locally on the laptop",
     description:
       "Players prepare a household for a fictional typhoon: manage limited resources, respond to warnings and evacuation advisories, and get through the storm and its aftermath, ending with a preparedness score, badges and a personal debrief. On the backend, I worked on the game details, levels and badges, game flow and debrief findings. As associate project manager, I helped lead the concept, run the team's plans and progress checkpoints, check documentation and status, and design the pitch. The team built a deterministic simulation engine and ran Qwen3-4B locally through llama.cpp for dialogue and debrief wording, with AI output kept apart from the game logic and checked by validation, grounding checks and fallback text. Built for kids aged 10-16 by a team of four.",
@@ -468,6 +472,13 @@ export const featuredProjects: FeaturedProject[] = [
     caseStudy: {
       summary:
         "Signal No. 5 is an 8-bit typhoon preparedness RPG for Windows, built for kids aged 10 to 16. Players prepare a Filipino home for a storm, live through it and its aftermath, and get a score, badges and a personal debrief, with dialogue written by a small AI model running on the same laptop. My team of four built it in about 20 hours for the AppBuildersPH Local AI Hackathon 2026, where I worked on the backend and was associate project manager.",
+      myRole: [
+        "Helped lead the concept as associate project manager, alongside our lead project manager.",
+        "Ran the team's plans and progress checkpoints through the 20-hour build, and checked documentation and status.",
+        "Worked on the backend's game details, levels and badges, which run on the team's deterministic simulation engine.",
+        "Took on the game flow and the debrief findings that show players what they did well and what they missed.",
+        "Designed the presentation and the reasoning behind our pitch for demo day at SM Makati CyberZone.",
+      ],
       cover: {
         src: "/projects/signal-no-5/Signal no. 5 logo.png",
         alt: "Signal No. 5 logo on its storm-themed background",
@@ -480,16 +491,6 @@ export const featuredProjects: FeaturedProject[] = [
         { label: "Stack", value: "TypeScript, Phaser 3, React, Electron, llama.cpp, Qwen3-4B" },
       ],
       sections: [
-        {
-          title: "Tech stack",
-          paragraphs: [
-            "Frontend: Phaser 3, React and TypeScript, packaged as an Electron desktop app for Windows.",
-            "Backend: A deterministic TypeScript simulation engine for game rules, events, badges and debrief; Qwen3-4B runs locally through llama.cpp for dialogue and debrief wording.",
-            "Data: None; the game runs on the player's laptop.",
-            "Hosting or link: Desktop app, with no hosting. There is no public repository link yet; the lead project manager is still finalizing it.",
-            "Tags shown on the site: TypeScript, Electron, React, Phaser 3, llama.cpp, Qwen3-4B.",
-          ],
-        },
         {
           title: "Overview",
           paragraphs: [
@@ -554,6 +555,7 @@ export const featuredProjects: FeaturedProject[] = [
     slug: "gabay-aralin",
     title: "Gabay Aralin",
     role: "Co-developer",
+    contribution: "Building on my Co-Developer's first version, I coordinated with her on core features, deployment and the UX+AI hackathon pitch.",
     tagline: "Mobile-first home tutor that helps parents teach their preschool and elementary kids",
     description:
       "A parent snaps a photo of the homework, types it in or picks a topic, and Gabay Aralin builds a step-by-step lesson with practice checks, a printable worksheet with an answer key, and tips for guiding the child. For homework, it gives guiding questions instead of answers.",
@@ -572,6 +574,11 @@ export const featuredProjects: FeaturedProject[] = [
     caseStudy: {
       summary:
         "Gabay Aralin is a mobile-first home tutor for parents of preschool and elementary kids. A parent snaps a photo of the homework, types it in or picks a topic, and the app builds a short lesson, practice questions, a printable worksheet and tips for guiding their child. My co-developer Ms. Patio came up with the concept and built the initial version during a 4-hour UX+AI hackathon sprint; I assisted with core functions, features, deployment and the pitch. Improvements are in the works.",
+      myRole: [
+        "Helped build the core functions and features on top of the first version Ms. Patio made during the hackathon.",
+        "Helped deploy the app for our initial UX+AI hackathon submission on Oct 25, 2026.",
+        "Worked on our pitch for the 3-4 hour UX+AI hackathon sprint at Zone Offices in BGC.",
+      ],
       cover: {
         src: "/projects/gabay-aralin/gabay aralin logo.jpg",
         alt: "Gabay Aralin wordmark with a notebook and pencil illustration",
