@@ -1,13 +1,12 @@
 import { ArrowUp, Mail } from "lucide-react";
 import { site } from "@/data/portfolio";
 import ExternalLink from "@/components/ui/ExternalLink";
-import EmailActions from "@/components/ui/EmailActions";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
-import { containerClass, iconLinkClass } from "@/components/ui/styles";
+import { containerClass, iconLinkClass, sectionGapClass } from "@/components/ui/styles";
 
 export default function Footer() {
   return (
-    <footer className={`${containerClass} mt-16 md:mt-24 pb-10`}>
+    <footer className={`${containerClass} ${sectionGapClass} pb-10`}>
       <div className="flex items-center justify-between gap-4 border-t border-foreground/10 pt-6">
         <div className="min-w-0">
           <p className="text-sm text-foreground">
@@ -16,9 +15,9 @@ export default function Footer() {
           <p className="mt-0.5 text-sm text-foreground/65">Based in {site.location}</p>
         </div>
         <nav aria-label="Footer" className="-mr-2.5 flex shrink-0 items-center">
-          <EmailActions linkClassName={iconLinkClass} copyClassName={iconLinkClass} iconClassName="size-[18px]" className="">
+          <a href={`mailto:${site.email}`} aria-label={`Send an email to ${site.email}`} className={iconLinkClass}>
             <Mail aria-hidden="true" className="size-[18px]" />
-          </EmailActions>
+          </a>
           {site.social.github && (
             <ExternalLink href={site.social.github} arrow={false} className={iconLinkClass}>
               <GithubIcon className="size-[18px]" />

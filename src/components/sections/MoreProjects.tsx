@@ -2,14 +2,14 @@ import { moreProjects } from "@/data/portfolio";
 import StatusBadge from "@/components/ui/StatusBadge";
 import TagList from "@/components/ui/TagList";
 import ProjectLinks from "@/components/ui/ProjectLinks";
-import { proseClass, subHeadingClass } from "@/components/ui/styles";
+import { proseClass, subHeadingClass, subSectionGapClass } from "@/components/ui/styles";
 
-// A compact list under the turntable. Hidden, heading included, while moreProjects is empty.
+// A compact list under the project cards. Hidden, heading included, while moreProjects is empty.
 export default function MoreProjects() {
   if (moreProjects.length === 0) return null;
 
   return (
-    <div className="mt-14">
+    <div className={`${subSectionGapClass} border-t border-foreground/10 pt-8`}>
       <h3 className={subHeadingClass}>More projects</h3>
       <ul className="grid gap-4 md:grid-cols-2">
         {moreProjects.map((project) => {

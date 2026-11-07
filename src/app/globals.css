@@ -48,7 +48,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  animation: site-enter 640ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: site-enter 880ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 @keyframes site-enter {
@@ -112,6 +112,69 @@ body {
 
 .rise {
   animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) var(--rise-delay, 0ms) backwards;
+}
+
+/* ---------------------------------------------------------------------------
+ * Typed greeting (TypedGreeting.tsx): each character of the hero h1 turns visible in turn, every
+ * --type-step after --type-start. Only `visibility` is animated, so the line keeps its full width
+ * from the first frame (no layout shift). A thin cursor (::after) shows on the newest character
+ * for one step, and on the last character it blinks three times, then goes (under 5 seconds).
+ * ------------------------------------------------------------------------- */
+.type-char {
+  --type-start: 620ms; /* after the page's own fade-in has mostly finished */
+  --type-step: 55ms;
+  position: relative;
+  animation: type-in 1ms linear calc(var(--type-start) + var(--i) * var(--type-step)) backwards;
+}
+
+.type-char::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 0.12em;
+  bottom: 0.1em;
+  width: 0.07em;
+  margin-left: 0.02em;
+  background: var(--foreground);
+  opacity: 0;
+  animation: type-cursor var(--type-step) linear calc(var(--type-start) + var(--i) * var(--type-step));
+}
+
+.type-char[data-last]::after {
+  animation: type-cursor-blink 0.9s step-end calc(var(--type-start) + var(--i) * var(--type-step)) 3;
+}
+
+@keyframes type-in {
+  from {
+    visibility: hidden;
+  }
+}
+
+@keyframes type-cursor {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes type-cursor-blink {
+  0% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0;
+  }
+}
+
+/* The logo's cursor (Logo.tsx) blinks three times on load, then stays solid. */
+.logo-cursor {
+  animation: logo-blink 0.9s step-end 0.6s 3;
+}
+
+@keyframes logo-blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -296,7 +359,10 @@ body {
   }
 
   .rise,
-  .drift {
+  .drift,
+  .type-char,
+  .type-char::after,
+  .logo-cursor {
     animation: none;
   }
 

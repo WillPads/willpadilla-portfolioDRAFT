@@ -9,9 +9,12 @@
  * ------------------------------------------------------------------------- */
 
 export type Site = {
-  name: string; // the header wordmark, the hero h1 and the footer
-  nameEmphasis?: string; // a word inside name to italicize in the hero h1
-  tagline: string; // the big headline in the hero
+  name: string; // full name: the header wordmark, the photo's alt text and the footer
+  greeting: string; // the hero h1, typed out on page load
+  greetingEmphasis?: string; // a word inside greeting set in italic accent colour
+  role: string; // one line under the greeting
+  tagline: string; // the core tagline, the first line of the hero's second zone
+  intro: string; // 3 sentences at most on Will's core strengths, under the tagline
   resume: string; // path to the PDF; the file goes in public/resume.pdf
   email: string; // used for every "Email" button
   location: string; // shown only in the footer ("Based in ...")
@@ -33,9 +36,13 @@ export type Site = {
 };
 
 export const site: Site = {
-  name: "What's Up? I'm Will",
-  nameEmphasis: "Will",
+  name: "Will Padilla",
+  greeting: "Hello World, I'm Will!",
+  greetingEmphasis: "Will",
+  role: "Software Engineer & CS Student at FEU Tech",
   tagline: "Life-long love for learning, pushed by purpose.",
+  intro:
+    "I build full-stack web and mobile apps and lead the teams that ship them. On my own, I took SyncSpace from prototype to a live real-time app; as project manager, I steered our Android thesis from first sprint to trials validated with dermatologists. I write tested, maintainable code and keep every teammate on the same page.",
   resume: "/resume.pdf", // file goes in public/resume.pdf
   lookingFor:
     "A 520-hour internship or entry-level role in any position where I'd be a good fit for your organization. Eagerly available and looking out for opportunities.",
@@ -125,14 +132,14 @@ export const skills: SkillGroup[] = [
  * Projects
  *
  * Two lists:
- *   featuredProjects  the turntable at the top (needs a description, screenshots, etc.)
+ *   featuredProjects  the card grid at the top (needs a description, preview, screenshots, etc.)
  *   moreProjects      a compact list under it (only the basic fields)
  * Every project belongs in exactly one of the two, so nothing is left off the page.
  * To promote a project, move it from moreProjects to featuredProjects and fill in
  * the extra fields the type asks for.
  * ------------------------------------------------------------------------- */
 
-// One status scale used everywhere (turntable, detail panel, "More projects" list):
+// One status scale used everywhere (project cards, case studies, "More projects" list):
 //   "live"           deployed, with a public URL (set liveUrl too)   -> badge "Live"
 //   "prototype"      a working build that is not deployed or finished  -> badge "Prototype"
 //   "in-development" still being built                               -> badge "In Development"
@@ -198,7 +205,10 @@ type ProjectBase = {
 export type FeaturedProject = ProjectBase & {
   description: string; // required for featured projects
   device: "mobile" | "desktop"; // shape of the screenshot frames
-  cardImage?: { src: string }; // logo shown faintly behind the turntable card (decorative)
+  cardImage?: { src: string }; // project logo, shown small beside the card title (decorative)
+  // The picture at the top of the project card, inside a device mockup: "phone" for a portrait
+  // screenshot, "browser" for a landscape one. Decorative (the card text says what the project is).
+  preview?: { src: string; frame: "phone" | "browser" };
   screenshots: ProjectScreenshot[]; // use [] when there are none yet
   demoVideo?: ProjectVideo; // shown in the detail panel; never autoplays
   contribution?: string; // first person: what Will did; shown on the card below the stack
@@ -225,6 +235,7 @@ export const featuredProjects: FeaturedProject[] = [
     context: "Thesis",
     device: "mobile",
     cardImage: { src: "/projects/PixelDerm/pixelderm-logo.png" },
+    preview: { src: "/projects/PixelDerm/pixelderm-1.jpg", frame: "phone" },
     screenshots: [
       { src: "/projects/PixelDerm/pixelderm-1.jpg", alt: "PixelDerm Homepage" },
       { src: "/projects/PixelDerm/pixelderm-2.jpg", alt: "PixelDerm Pre-Capture screen" },
@@ -321,6 +332,7 @@ export const featuredProjects: FeaturedProject[] = [
     context: "Personal project",
     device: "desktop",
     cardImage: { src: "/projects/syncspace/syncspace sample logo.png" },
+    preview: { src: "/projects/syncspace/room-hd.jpg", frame: "browser" },
     screenshots: [
       { src: "/projects/syncspace/room-hd.jpg", alt: "A SyncSpace study room during a focus session: the shared timer with host controls, the people in the room, tasks, session notes and ambient sound" },
       { src: "/projects/syncspace/dashboard-hd.jpg", alt: "The SyncSpace dashboard: create or join a room, room stats, uploading materials and notes" },
@@ -460,6 +472,7 @@ export const featuredProjects: FeaturedProject[] = [
     impact: "Built and demoed in a 20-hour sprint; the 4B-parameter AI model runs locally, with no cloud API",
     device: "desktop",
     cardImage: { src: "/projects/signal-no-5/Signal no. 5 logo.png" },
+    preview: { src: "/projects/signal-no-5/gameplay.jpg", frame: "browser" },
     screenshots: [
       { src: "/projects/signal-no-5/gameplay.jpg", alt: "Signal No. 5 gameplay: a pixel-art family preparing their home before the storm" },
       { src: "/projects/signal-no-5/cover.jpg", alt: "Signal No. 5 title art: Storm's coming, ready or not?" },
@@ -565,6 +578,7 @@ export const featuredProjects: FeaturedProject[] = [
     context: "UX+AI Hackathon, 3-4 hour sprint",
     device: "mobile",
     cardImage: { src: "/projects/gabay-aralin/gabay aralin logo.jpg" },
+    preview: { src: "/projects/gabay-aralin/poster.jpg", frame: "browser" },
     screenshots: [],
     demoVideo: {
       src: "/projects/gabay-aralin/demo.mp4",

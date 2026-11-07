@@ -10,8 +10,14 @@ export const containerClass = "mx-auto w-full max-w-[1280px] px-4 md:w-[90%] md:
 // Readable line length for long paragraphs.
 export const proseClass = "max-w-[65ch]";
 
-// Vertical rhythm between sections.
-export const sectionGapClass = "mt-16 md:mt-24";
+// The hero's shared text width: the role, greeting, tagline, intro and "Looking for" callout all
+// stop at the same right edge, so no paragraph runs past the heading.
+export const heroMeasureClass = "md:max-w-[46rem]";
+
+// Vertical rhythm between sections. One scale for the whole page:
+// 12/16/24px inside a block, 32/40px between blocks, 64px before a sub-section (subSectionGapClass),
+// 80/112px between sections. Section titles keep 32/40px below them (SectionHeading).
+export const sectionGapClass = "mt-20 md:mt-28";
 
 const motion =
   "transition-[background-color,border-color,color,scale] duration-300 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100";
@@ -60,3 +66,6 @@ export const subHeadingClass = "mb-4 text-[22px] font-medium leading-tight track
 
 // Row that picks up a faint fill on hover (experience, certifications, skills).
 export const rowClass = "-mx-3 rounded-lg px-3 py-5 hover:bg-foreground/5 transition-colors duration-300 motion-reduce:transition-none";
+
+// Space above a sub-section inside a section ("More projects", "Certifications").
+export const subSectionGapClass = "mt-16";

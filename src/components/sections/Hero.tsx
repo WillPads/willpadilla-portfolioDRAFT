@@ -4,42 +4,37 @@ import type { CSSProperties } from "react";
 import { site } from "@/data/portfolio";
 import ExternalLink from "@/components/ui/ExternalLink";
 import EmailActions from "@/components/ui/EmailActions";
-import { containerClass, iconButtonClass, pillWrapClass, resumeLinkClass } from "@/components/ui/styles";
+import TypedGreeting from "@/components/ui/TypedGreeting";
+import { containerClass, heroMeasureClass, iconButtonClass, pillWrapClass, resumeLinkClass } from "@/components/ui/styles";
 
-// Each block slides up a few pixels, one after the other (see .rise in globals.css). They only
+// Each zone slides up a few pixels, one after the other (see .rise in globals.css). They only
 // move: opacity stays at 1, so the hero is never blank.
 const rise = (step: number) => ({ "--rise-delay": `${step * 90}ms` }) as CSSProperties;
 
 // The hero is never wrapped in <Reveal>: it must be visible the moment the page loads.
-// Reading order and semantics: h1 = the name (what the page is about, and what search results show),
-// the role under it, then the tagline as a quiet line under the big heading. The tagline is a <p>, not a heading, so the
-// document outline stays h1 (name) then one h2 per section.
-// Layout: a two-column grid from md. The text sits in the left column and, when site.avatar is set,
-// the round photo sits on the right, top-aligned with the name. On phones the photo is small and sits
-// beside the name and role, and everything else runs full width underneath.
+// Three zones, top to bottom, all on one shared text width (heroMeasureClass) so nothing runs past
+// the heading's edge:
+//   1. Name header: the greeting as the page's h1 (typed out on load, in the mono font).
+//   2. Core tagline: the tagline, then a 3-sentence intro on Will's strengths.
+//   3. "Looking for" callout: a bordered panel with an underlined label, the target role and the
+//      contact actions.
+// When site.avatar is set, the round photo sits in a second column from md, top-aligned with zone 1;
+// on phones it is small and sits beside zone 1.
 export default function Hero() {
-  // site.nameEmphasis, when it appears in site.name, is set in italic accent colour.
-  const at = site.nameEmphasis ? site.name.indexOf(site.nameEmphasis) : -1;
-  const before = at < 0 ? site.name : site.name.slice(0, at);
-  const emphasis = at < 0 ? "" : site.nameEmphasis;
-  const after = at < 0 ? "" : site.name.slice(at + (site.nameEmphasis?.length ?? 0));
-
   return (
     <section
       aria-labelledby="hero-title"
-      className={`${containerClass} grid grid-cols-[minmax(0,1fr)_auto] gap-x-5 pt-8 md:gap-x-12 md:pt-14 lg:gap-x-20`}
+      className={`${containerClass} grid grid-cols-[minmax(0,1fr)_auto] gap-x-5 pt-10 md:gap-x-12 md:pt-16 lg:gap-x-20`}
     >
-      <div className="col-start-1 row-start-1 min-w-0">
+      {/* Zone 1: name header */}
+      <header style={rise(0)} className={`rise col-start-1 row-start-1 min-w-0 ${heroMeasureClass}`}>
         <h1
           id="hero-title"
-          style={rise(0)}
-          className="rise text-balance text-[clamp(1.75rem,8.5vw,2.5rem)] font-semibold leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl"
+          className="font-mono text-[clamp(1.75rem,8.6vw,2.5rem)] font-bold leading-[1.1] tracking-tighter text-foreground md:text-6xl lg:text-7xl"
         >
-          {before}
-          {emphasis && <em className="text-accent">{emphasis}</em>}
-          {after}
+          <TypedGreeting text={site.greeting} emphasis={site.greetingEmphasis} />
         </h1>
-      </div>
+      </header>
 
       {site.avatar && (
         <Image
@@ -50,31 +45,35 @@ export default function Hero() {
           sizes="(min-width: 1024px) 224px, (min-width: 768px) 176px, 64px"
           preload
           style={rise(0)}
-          className="rise col-start-2 row-start-1 size-16 self-start rounded-full border border-foreground/15 object-cover md:row-span-2 md:size-44 lg:size-56"
+          className="rise col-start-2 row-start-1 size-16 self-start rounded-full border border-foreground/15 object-cover md:row-span-3 md:size-44 lg:size-56"
         />
       )}
 
-      <div className="col-span-2 col-start-1 row-start-2 min-w-0 md:col-span-1">
-        <p
-          style={rise(1)}
-          className="rise mt-5 text-pretty font-mono text-sm leading-relaxed text-foreground/70 md:mt-7 md:text-base lg:text-lg"
-        >
+      {/* Zone 2: core tagline and strengths */}
+      <div
+        style={rise(1)}
+        className={`rise col-span-2 col-start-1 row-start-2 mt-8 min-w-0 border-t border-foreground/10 pt-8 md:col-span-1 md:mt-10 ${heroMeasureClass}`}
+      >
+        <p className="text-pretty font-mono text-lg font-medium leading-snug tracking-tight text-foreground md:text-2xl">
           {site.tagline}
         </p>
+        <p className="mt-4 text-pretty text-[17px] leading-relaxed text-foreground/75">{site.intro}</p>
+      </div>
 
-        {site.bio && (
-          <p style={rise(2)} className="rise mt-4 max-w-[65ch] text-pretty text-[17px] leading-relaxed text-foreground/75">
-            {site.bio}
-          </p>
-        )}
-
+      {/* Zone 3: what Will is looking for, with the ways to get in touch */}
+      <div
+        style={rise(2)}
+        className={`rise col-span-2 col-start-1 row-start-3 mt-8 min-w-0 rounded-lg border border-foreground/15 p-5 md:col-span-1 md:mt-10 md:p-6 ${heroMeasureClass}`}
+      >
         {site.lookingFor && (
-          <p style={rise(2.5)} className="rise mt-5 text-base leading-relaxed text-foreground/80">
-            <span className="font-mono text-xs font-medium text-foreground/65">Looking for:</span> {site.lookingFor}
-          </p>
+          <>
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-foreground">
+              <span className="inline-block border-b-2 border-accent pb-1">Looking for</span>
+            </p>
+            <p className="mt-3 text-pretty text-base leading-relaxed text-foreground/85">{site.lookingFor}</p>
+          </>
         )}
-
-        <div style={rise(4)} className="rise mt-12 flex flex-wrap items-center gap-x-5 gap-y-3">
+        <div className={`flex flex-wrap items-center gap-x-4 gap-y-3 ${site.lookingFor ? "mt-5 border-t border-foreground/10 pt-5" : ""}`}>
           <EmailActions linkClassName={pillWrapClass} copyClassName={iconButtonClass}>
             <Mail aria-hidden="true" className="size-4 shrink-0" />
             {site.email}

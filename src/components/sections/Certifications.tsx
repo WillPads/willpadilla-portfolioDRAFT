@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from "react";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 import { certifications, type Certification } from "@/data/portfolio";
-import { iconButtonClass, subHeadingClass } from "@/components/ui/styles";
+import { iconButtonClass, subHeadingClass, subSectionGapClass } from "@/components/ui/styles";
 
 // "2026-09" becomes "September 2026". Falls back to the raw text if it is not year-month.
 function formatIssued(issued: string) {
@@ -87,7 +87,7 @@ function CertificationCarousel() {
   const center = count === 2 ? (active === 0 ? 0.5 : -0.5) : 0;
 
   return (
-    <div className="mt-14 border-t border-foreground/10 pt-8">
+    <div className={`${subSectionGapClass} border-t border-foreground/10 pt-8`}>
       <h3 className={subHeadingClass}>Certifications</h3>
       <section
         aria-roledescription="carousel"

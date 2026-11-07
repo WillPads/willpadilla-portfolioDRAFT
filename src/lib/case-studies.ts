@@ -5,7 +5,7 @@ export type CaseStudyProject = FeaturedProject & { caseStudy: CaseStudy };
 // The page for a project lives at /projects/<slug>, using the slug from portfolio.ts.
 export const caseStudyPath = (project: Pick<FeaturedProject, "slug">) => `/projects/${project.slug}`;
 
-// Only projects with a filled-in caseStudy get a page, in the same order as the turntable.
+// Only projects with a filled-in caseStudy get a page, in the same order as the project cards.
 export function getCaseStudyProjects(): CaseStudyProject[] {
   return featuredProjects.filter((project): project is CaseStudyProject => Boolean(project.caseStudy));
 }

@@ -23,7 +23,7 @@ appear. Nothing says "replace this" on the live site. All the examples below use
 | `experience` | Internships, org roles, freelance work (hidden while empty) |
 | `nav` | The links in the top bar, in page order: Projects, Skills, Experience, About, Contact (keep this order in step with `src/app/page.tsx`) |
 | `skills` | Skill tags, grouped by category |
-| `featuredProjects` | The turntable carousel at the top of Work (detailed projects) |
+| `featuredProjects` | The project card grid at the top of Projects (detailed projects) |
 | `moreProjects` | The compact "More projects" list under it |
 | `certifications` | The certifications block (hidden while the list is empty) |
 
@@ -33,10 +33,12 @@ appear. Nothing says "replace this" on the live site. All the examples below use
 
 | Field | Required? | What it does | When it is left unset |
 | --- | --- | --- | --- |
-| `name` | Yes | Header wordmark, the hero name (the page's h1), footer | n/a |
-| `role` | Yes | The line under the name in the hero | n/a |
-| `tagline` | Yes | The big headline in the hero, under the name and role | n/a |
-| `intro` | Yes | Short paragraph under the role | n/a |
+| `name` | Yes | Full name: header wordmark (beside the logo), the photo's alt text | n/a |
+| `greeting` | Yes | The hero h1, typed out on page load (e.g. "Hello World, I'm Will!") | n/a |
+| `greetingEmphasis` | No | A word inside `greeting` set in italic accent colour | Plain greeting |
+| `role` | Yes | The small line above the greeting | n/a |
+| `tagline` | Yes | The core tagline: first line of the hero's second zone | n/a |
+| `intro` | Yes | Strengths intro under the tagline. **3 sentences at most** | n/a |
 | `email` | Yes | Every "Email" button | n/a |
 | `resume` | Yes | Where the Resume buttons point (`/resume.pdf`) | n/a |
 | `location` | Yes | Footer and the About facts | n/a |
@@ -98,8 +100,8 @@ Every project goes in exactly one of two lists, so nothing is left off the page.
 
 | List | Where it shows | What it needs |
 | --- | --- | --- |
-| `featuredProjects` | The turntable carousel. A "View project" button opens a detail panel with the description, screenshots and demo | The basic fields **plus** `description`, `device` and `screenshots` |
-| `moreProjects` | A compact list under the carousel | Only the basic fields. The "More projects" heading stays hidden while the list is empty |
+| `featuredProjects` | The card grid (two columns from 768px). Each card shows a device mockup preview and links to the project's case study page | The basic fields **plus** `description`, `device` and `screenshots`; add `preview` and `cardImage` for the card visuals |
+| `moreProjects` | A compact list under the cards | Only the basic fields. The "More projects" heading stays hidden while the list is empty |
 
 The order in the list is the order on the page.
 
@@ -116,7 +118,7 @@ The order in the list is the order on the page.
 
 ### Status values
 
-One scale, used everywhere. The badge looks the same in the carousel, the panel and the list.
+One scale, used everywhere. The badge looks the same on the cards, the case study pages and the list.
 
 | `status` value | Badge label | Use it when |
 | --- | --- | --- |
@@ -135,11 +137,13 @@ One scale, used everywhere. The badge looks the same in the carousel, the panel 
 | `impact` | One measurable result | Hidden |
 | `demoVideo` | A video player in the detail panel (featured projects only) | No player |
 | `description` | A paragraph in the detail panel (required for featured projects) | Not shown for listed projects |
+| `preview` | The card's top picture inside a device mockup: `{ src, frame: "phone" }` for a portrait screenshot, `{ src, frame: "browser" }` for a landscape one (featured only) | The card shows `cardImage` on the dotted panel instead |
+| `cardImage` | The small logo beside the card title (featured only) | No logo |
 
 **The "Links coming soon" rule:** if a project has none of `repoUrl`, `liveUrl` or `demoVideo`, the site shows
 "Links coming soon" in its place. Add any one of them and that text goes away.
 
-### Add a featured project (turntable)
+### Add a featured project (card grid)
 
 Add this block inside `featuredProjects`:
 
@@ -158,6 +162,7 @@ Add this block inside `featuredProjects`:
   repoUrl: "https://github.com/your-username/project-name",
   liveUrl: "https://project-name.example.com",
   device: "desktop", // "mobile" or "desktop": the shape of the screenshot frames
+  preview: { src: "/projects/project-name/home.jpg", frame: "browser" }, // or frame: "phone"
   screenshots: [], // use [] until you have images; see below
 },
 ```
