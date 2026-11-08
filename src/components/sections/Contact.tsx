@@ -5,7 +5,7 @@ import Reveal from "@/components/ui/Reveal";
 import ExternalLink from "@/components/ui/ExternalLink";
 import EmailActions from "@/components/ui/EmailActions";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
-import { buttonClass, containerClass, iconButtonClass, pillWrapClass, proseClass, resumeLinkClass, sectionGapClass } from "@/components/ui/styles";
+import { buttonClass, containerClass, pillWrapClass, proseClass, resumeLinkClass, sectionGapClass } from "@/components/ui/styles";
 
 export default function Contact() {
   return (
@@ -18,7 +18,7 @@ export default function Contact() {
           {site.contactNote}
         </p>
         <div className="mt-6 flex flex-col items-start gap-4">
-          <EmailActions linkClassName={pillWrapClass} copyClassName={iconButtonClass}>
+          <EmailActions linkClassName={pillWrapClass}>
             <Mail aria-hidden="true" className="size-4 shrink-0" />
             <span className="min-w-0">{site.email}</span>
           </EmailActions>

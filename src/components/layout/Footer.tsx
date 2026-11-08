@@ -1,5 +1,6 @@
 import { ArrowUp, Mail } from "lucide-react";
 import { site } from "@/data/portfolio";
+import EmailActions from "@/components/ui/EmailActions";
 import ExternalLink from "@/components/ui/ExternalLink";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
 import { containerClass, iconLinkClass, sectionGapClass } from "@/components/ui/styles";
@@ -15,9 +16,9 @@ export default function Footer() {
           <p className="mt-0.5 text-sm text-foreground/65">Based in {site.location}</p>
         </div>
         <nav aria-label="Footer" className="-mr-2.5 flex shrink-0 items-center">
-          <a href={`mailto:${site.email}`} aria-label={`Send an email to ${site.email}`} className={iconLinkClass}>
+          <EmailActions linkClassName={iconLinkClass} align="end">
             <Mail aria-hidden="true" className="size-[18px]" />
-          </a>
+          </EmailActions>
           {site.social.github && (
             <ExternalLink href={site.social.github} arrow={false} className={iconLinkClass}>
               <GithubIcon className="size-[18px]" />

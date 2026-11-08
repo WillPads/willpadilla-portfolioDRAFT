@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from "react";
-import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { certifications, type Certification } from "@/data/portfolio";
 import { iconButtonClass, subHeadingClass, subSectionGapClass } from "@/components/ui/styles";
 
@@ -23,14 +23,19 @@ export default function Certifications() {
 
 const SWIPE_DISTANCE = 48;
 
+// Signed shortest distance around the loop: 0 is the active slide, 1 the next, -1 the previous.
 function loopOffset(index: number, from: number, count: number) {
   const distance = (((index - from) % count) + count) % count;
   return distance > Math.floor(count / 2) ? distance - count : distance;
 }
 
+// A coverflow: the active certificate large and centred, its two neighbours angled toward it,
+// smaller, dimmed and cut off by the edge of the stage. Nothing moves by itself. It is turned with
+// the arrow buttons, the Left/Right keys, a swipe, or by clicking a side certificate; clicking the
+// active one opens the enlarged view. It loops, and a slide that wraps around fades in instead of
+// flying across the stage (.coverflow-slide in globals.css; reduced motion switches instantly).
 function CertificationCarousel() {
   const count = certifications.length;
-  const loops = count >= 3;
   const [active, setActive] = useState(0);
   const [previous, setPrevious] = useState(0);
   const [turn, setTurn] = useState(0);
@@ -46,9 +51,7 @@ function CertificationCarousel() {
   }, [zoomedCertification]);
 
   function goTo(index: number) {
-    const next = loops
-      ? ((index % count) + count) % count
-      : Math.min(Math.max(index, 0), count - 1);
+    const next = ((index % count) + count) % count;
     if (next === active) return;
     setPrevious(active);
     setTurn((value) => value + 1);
@@ -84,7 +87,8 @@ function CertificationCarousel() {
     goTo(active + (deltaX < 0 ? 1 : -1));
   }
 
-  const center = count === 2 ? (active === 0 ? 0.5 : -0.5) : 0;
+  const current = certifications[active];
+  const meta = [current.issuer, formatIssued(current.issued)].filter(Boolean).join(" / ");
 
   return (
     <div className={`${subSectionGapClass} border-t border-foreground/10 pt-8`}>
@@ -100,16 +104,14 @@ function CertificationCarousel() {
           onPointerDown={onPointerDown}
           onPointerUp={onPointerUp}
           onPointerCancel={() => (pointerStart.current = null)}
-          className="-mx-4 touch-pan-y select-none overflow-x-clip py-3 md:mx-0"
+          className="coverflow touch-pan-y select-none overflow-x-clip py-6"
         >
-          <div className="turntable grid grid-cols-[minmax(0,1fr)]">
+          <div className="grid grid-cols-[minmax(0,1fr)]">
             {certifications.map((certification, index) => {
-              const offset = loops ? loopOffset(index, active, count) : index - active;
-              const position = offset === 0 ? "active" : Math.abs(offset) === 1 ? "near" : "far";
-              const jumped = loops && Math.abs(offset - loopOffset(index, previous, count)) > 1;
-              const meta = [formatIssued(certification.issued), certification.credentialId]
-                .filter(Boolean)
-                .join(" / ");
+              const offset = loopOffset(index, active, count);
+              const distance = Math.abs(offset);
+              const position = offset === 0 ? "active" : distance === 1 ? "near" : "far";
+              const jumped = Math.abs(offset - loopOffset(index, previous, count)) > 1;
 
               return (
                 <div
@@ -120,42 +122,30 @@ function CertificationCarousel() {
                   data-pos={position}
                   data-wrap={jumped ? (turn % 2 ? "a" : "b") : undefined}
                   inert={position === "far"}
-                  style={{ "--d": offset, "--c": center } as CSSProperties}
-                  className="turntable-slide group relative flex flex-col gap-3 rounded-lg border border-foreground/15 bg-background p-4 hover:-translate-y-1 hover:border-foreground focus-within:-translate-y-1 focus-within:border-foreground data-[pos=active]:border-foreground motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0 sm:p-5"
+                  style={{ "--d": offset } as CSSProperties}
+                  className="coverflow-slide relative"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-foreground/10 bg-background">
-                    {position !== "far" && (
+                    {distance <= 2 && (
                       <Image
                         src={certification.image}
                         alt={certification.alt}
                         fill
-                        loading="lazy"
-                        sizes="(min-width: 1280px) 448px, (min-width: 768px) 36vw, 80vw"
+                        loading={distance <= 1 ? "eager" : "lazy"}
+                        sizes="(min-width: 768px) 52vw, 84vw"
                         className="object-contain"
                       />
                     )}
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute bottom-2 right-2 z-20 inline-flex items-center gap-1 rounded-lg border border-foreground/15 bg-background/95 px-2 py-1 font-mono text-[10px] text-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none"
-                    >
-                      <ZoomIn aria-hidden="true" className="size-3" />
-                      Enlarge
-                    </span>
-                  </div>
-                  <div className="flex min-w-0 flex-col gap-1">
-                    <h4 className="text-lg font-medium leading-tight text-foreground">{certification.name}</h4>
-                    <p className="text-[15px] leading-relaxed text-foreground/65">{certification.issuer}</p>
-                    <p className="font-mono text-xs text-foreground/65">{meta}</p>
                   </div>
                   <button
                     type="button"
-                    aria-label={position === "active" ? `${certification.name}, current certification` : `Show ${certification.name}`}
-                    aria-current={position === "active" ? "true" : undefined}
+                    aria-label={position === "active" ? `Enlarge ${certification.name}` : `Show ${certification.name}`}
                     onClick={() => {
-                      if (!swiped.current) setZoomedCertification(certification);
+                      if (swiped.current) return;
+                      if (position === "active") setZoomedCertification(certification);
+                      else goTo(index);
                     }}
-                    title={`Enlarge ${certification.name}`}
-                    className="absolute inset-0 z-10 cursor-pointer rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-foreground"
+                    className={`absolute inset-0 z-10 rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-foreground ${position === "active" ? "cursor-zoom-in" : "cursor-pointer"}`}
                   />
                 </div>
               );
@@ -163,29 +153,32 @@ function CertificationCarousel() {
           </div>
         </div>
 
-        {count > 1 && (
-          <div className="mt-4 flex items-center justify-center gap-4">
-            <button
-              type="button"
-              aria-label="Previous certification"
-              onClick={() => goTo(active - 1)}
-              className={iconButtonClass}
-            >
-              <ChevronLeft aria-hidden="true" className="size-5" />
-            </button>
-            <p className="min-w-16 text-center font-mono text-[13px] tabular-nums text-foreground/65">
-              {active + 1} / {count}
-            </p>
-            <button
-              type="button"
-              aria-label="Next certification"
-              onClick={() => goTo(active + 1)}
-              className={iconButtonClass}
-            >
-              <ChevronRight aria-hidden="true" className="size-5" />
-            </button>
-          </div>
-        )}
+        <div key={active} className="coverflow-caption mx-auto mt-2 flex max-w-2xl flex-col items-center gap-1 text-center">
+          <h4 className="text-balance text-lg font-medium leading-tight text-foreground md:text-xl">{current.name}</h4>
+          <p className="font-mono text-xs text-foreground/65 md:text-[13px]">{meta}</p>
+        </div>
+
+        <div className="mt-6 flex items-center justify-center gap-5">
+          <button
+            type="button"
+            aria-label="Previous certification"
+            onClick={() => goTo(active - 1)}
+            className={`${iconButtonClass} !size-14 !rounded-full`}
+          >
+            <ChevronLeft aria-hidden="true" className="size-6" />
+          </button>
+          <p className="min-w-16 text-center font-mono text-sm tabular-nums text-foreground/65">
+            {active + 1} / {count}
+          </p>
+          <button
+            type="button"
+            aria-label="Next certification"
+            onClick={() => goTo(active + 1)}
+            className={`${iconButtonClass} !size-14 !rounded-full`}
+          >
+            <ChevronRight aria-hidden="true" className="size-6" />
+          </button>
+        </div>
       </section>
 
       <p aria-live="polite" className="sr-only">

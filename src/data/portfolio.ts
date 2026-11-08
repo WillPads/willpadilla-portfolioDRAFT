@@ -40,9 +40,9 @@ export const site: Site = {
   greeting: "Hello World, I'm Will!",
   greetingEmphasis: "Will",
   role: "Software Engineer & CS Student at FEU Tech",
-  tagline: "Life-long love for learning, pushed by purpose.",
+  tagline: "Lifelong Learner, pushed by purpose",
   intro:
-    "I build full-stack web and mobile apps and lead the teams that ship them. On my own, I took SyncSpace from prototype to a live real-time app; as project manager, I steered our Android thesis from first sprint to trials validated with dermatologists. I write tested, maintainable code and keep every teammate on the same page.",
+    "I'm a full-stack developer and project manager who builds web and mobile apps with TypeScript, React, Node.js and PostgreSQL. I lead teams through sprint planning, quality checks and pitching, and take products from first prototype to live deployment. I write tested, maintainable code and keep every teammate on the same page.",
   resume: "/resume.pdf", // file goes in public/resume.pdf
   lookingFor:
     "A 520-hour internship or entry-level role in any position where I'd be a good fit for your organization. Eagerly available and looking out for opportunities.",
@@ -658,6 +658,36 @@ export type Certification = {
   alt: string;
   credentialId?: string;
 };
+
+/* ----------------------------------------------------------------------------
+ * Belt: the slow scrolling strip between the hero and Projects
+ * ------------------------------------------------------------------------- */
+
+// Each row is one strip, and the rows scroll in opposite directions. Keep every item a plain fact
+// that is already true elsewhere on the site. Mark at most one item `open: true` to give it the
+// blue availability dot. Leave the array empty and the belt does not appear.
+export type BeltItem = { text: string; open?: boolean };
+
+export const belt: BeltItem[][] = [
+  [
+    { text: "Full-stack Developer" },
+    { text: "Project Manager" },
+    { text: "Sprint planning" },
+    { text: "Quality checks" },
+    { text: "Pitching" },
+    { text: "Prototype to live deployment" },
+    { text: "Open to a 520-hour internship", open: true },
+    { text: "Based in Sampaloc, Manila" },
+  ],
+  [
+    { text: "SAP Certified Associate - SAP Activate Project Manager" },
+    { text: "PMI: Generative AI Overview for Project Managers" },
+    { text: "Cisco: CCNA Introduction to Networks" },
+    { text: "LinkedIn Learning: TypeScript Essential Training" },
+    { text: "Credly by Pearson: IT Specialist - Python" },
+    { text: "AppBuildersPH Hackathon 2026" },
+  ],
+];
 
 // Newest first. This list reflects the certificates and memberships Will supplied on 2026-11-01.
 export const certifications: Certification[] = [

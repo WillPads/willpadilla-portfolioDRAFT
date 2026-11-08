@@ -5,7 +5,7 @@ import { site } from "@/data/portfolio";
 import ExternalLink from "@/components/ui/ExternalLink";
 import EmailActions from "@/components/ui/EmailActions";
 import TypedGreeting from "@/components/ui/TypedGreeting";
-import { containerClass, heroMeasureClass, iconButtonClass, pillWrapClass, resumeLinkClass } from "@/components/ui/styles";
+import { containerClass, heroMeasureClass, pillWrapClass, resumeLinkClass } from "@/components/ui/styles";
 
 // Each zone slides up a few pixels, one after the other (see .rise in globals.css). They only
 // move: opacity stays at 1, so the hero is never blank.
@@ -74,7 +74,7 @@ export default function Hero() {
           </>
         )}
         <div className={`flex flex-wrap items-center gap-x-4 gap-y-3 ${site.lookingFor ? "mt-5 border-t border-foreground/10 pt-5" : ""}`}>
-          <EmailActions linkClassName={pillWrapClass} copyClassName={iconButtonClass}>
+          <EmailActions linkClassName={pillWrapClass}>
             <Mail aria-hidden="true" className="size-4 shrink-0" />
             {site.email}
           </EmailActions>

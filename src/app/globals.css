@@ -178,98 +178,89 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
- * Turntable carousel (Tailwind cannot express the per-slide calc() transform).
- * Each slide sets --d = its distance from the active slide (0, 1, -1, 2 ...), --c = the middle of
- * the visible group in the same units, and data-pos = "active" | "near" | "far".
- * No blur, shadow or glow: translate, scale, rotate and opacity only.
- * On wide screens --balance is 1: with exactly two projects, --c keeps the pair centred
- * (--c = +-0.5), so the active card never sits next to an empty half of the track.
- * With three or more, --c is 0 and the active card is centred.
+ * Certifications coverflow (Certifications.tsx). Tailwind cannot express the per-slide calc()
+ * transform, so it lives here. Each slide sets --d = its signed distance from the active slide
+ * (0, 1, -1, 2 ...) and data-pos = "active" | "near" | "far". The active slide is large and centred;
+ * the two neighbours sit to either side, turned toward the centre, smaller and dimmed, and are cut
+ * off by the stage edge. Everything else is hidden. Translate, rotate, scale and opacity only.
  * ------------------------------------------------------------------------- */
-.turntable {
+.coverflow {
   perspective: 1400px;
 }
 
-.turntable-slide {
-  --step: 96%; /* how far each step moves, as a share of the slide's own width */
-  --rot: -12deg; /* neighbours turn slightly toward the centre */
+.coverflow-slide {
+  --step: 92%; /* how far a neighbour sits from the centre, as a share of the slide's own width */
+  --rot: -28deg; /* neighbours turn toward the centre */
   --sc: 1;
-  --c: 0;
-  --balance: 0;
   grid-area: 1 / 1;
   justify-self: center;
-  width: min(80%, 30rem);
-  transform: translateX(calc((var(--d) - var(--c) * var(--balance)) * var(--step)))
-    rotateY(calc(var(--d) * var(--rot))) scale(var(--sc));
+  width: 84%;
+  transform: translateX(calc(var(--d) * var(--step))) rotateY(calc(var(--d) * var(--rot))) scale(var(--sc));
   transition:
     transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
-    opacity 0.5s ease,
-    border-color 0.3s ease,
-    translate 180ms ease-out;
+    opacity 0.5s ease;
 }
 
 @media (min-width: 768px) {
-  .turntable-slide {
-    --step: 108%;
-    --rot: -8deg;
-    --balance: 1;
-    width: min(46%, 30rem);
+  .coverflow-slide {
+    --step: 86%;
+    width: 52%;
   }
 }
 
-/* From lg up the cards are narrow enough that both neighbours sit fully inside the track. Card text is
- * left-aligned, so the left neighbour (whose outer edge is its left edge) used to lose its title to the
- * clip while the right one kept it. Width 33% and step 100% leave the neighbours' outer edges inside
- * the track at 1024-1440, including the perspective growth of the near edge. */
-@media (min-width: 1024px) {
-  .turntable-slide {
-    --step: 100%;
-    --rot: -6deg;
-    width: min(33%, 28rem);
-  }
-}
-
-.turntable-slide[data-pos="active"] {
+.coverflow-slide[data-pos="active"] {
   opacity: 1;
+  z-index: 2;
 }
 
-.turntable-slide[data-pos="near"] {
-  --sc: 0.88;
-  opacity: 0.9;
+.coverflow-slide[data-pos="near"] {
+  --sc: 0.82;
+  opacity: 0.5;
+  z-index: 1;
 }
 
-.turntable-slide[data-pos="far"] {
-  --sc: 0.88;
+.coverflow-slide[data-pos="far"] {
+  --sc: 0.82;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-/* Loop mode: a slide that wrapped to the other side (data-wrap = a | b, alternating each turn so the
- * animation restarts) jumps there without a transition and fades in, instead of flying across the
- * centre. If it lands out of sight (far) it simply disappears. */
-@keyframes turntable-wrap-a {
+/* A slide that wrapped to the other side (data-wrap = a | b, alternating each turn so the animation
+ * restarts) jumps there without a transition and fades in, instead of flying across the stage. */
+@keyframes coverflow-wrap-a {
   from {
     opacity: 0;
   }
 }
 
-@keyframes turntable-wrap-b {
+@keyframes coverflow-wrap-b {
   from {
     opacity: 0;
   }
 }
 
-.turntable-slide[data-wrap] {
+.coverflow-slide[data-wrap] {
   transition: none;
 }
 
-.turntable-slide[data-wrap="a"]:not([data-pos="far"]) {
-  animation: turntable-wrap-a 0.5s ease;
+.coverflow-slide[data-wrap="a"]:not([data-pos="far"]) {
+  animation: coverflow-wrap-a 0.5s ease;
 }
 
-.turntable-slide[data-wrap="b"]:not([data-pos="far"]) {
-  animation: turntable-wrap-b 0.5s ease;
+.coverflow-slide[data-wrap="b"]:not([data-pos="far"]) {
+  animation: coverflow-wrap-b 0.5s ease;
+}
+
+@keyframes coverflow-caption {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+}
+
+.coverflow-caption {
+  animation: coverflow-caption 0.4s ease-out;
 }
 
 /* A selected project card exits as the case-study article enters; keep the rest of the page anchored. */
@@ -360,6 +351,7 @@ body {
 
   .rise,
   .drift,
+  .coverflow-caption,
   .type-char,
   .type-char::after,
   .logo-cursor {
@@ -371,22 +363,69 @@ body {
   ::view-transition-new(*) {
     animation: none !important;
   }
+}
 
-  .turntable-slide,
-  .turntable-slide[data-pos="near"],
-  .turntable-slide[data-pos="far"],
-  .turntable-slide[data-wrap] {
+@media (prefers-reduced-motion: reduce) {
+  .coverflow-slide,
+  .coverflow-slide[data-wrap] {
     animation: none;
+    transition: none;
     --rot: 0deg;
     --sc: 1;
-    --step: 104%;
-    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Belt (Belt.tsx): each row is a track of four identical lists; sliding by half its width lands
+ * the third list exactly where the first one started, so the loop has no seam. Translate only.
+ * Paused while the strip is hovered or focused. Reduced motion: one static, wrapped, centred row.
+ * ------------------------------------------------------------------------- */
+.belt-track {
+  animation: belt-run var(--belt-time, 140s) linear infinite;
+  animation-direction: var(--belt-dir, normal);
+}
+
+/* The cursor never stops it; only keyboard focus does, so keyboard users can read it. */
+.belt:focus-visible .belt-track {
+  animation-play-state: paused;
+}
+
+@keyframes belt-run {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: -50% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .belt-track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.5rem;
+    padding-inline: 1rem;
   }
 
-  /* Without the scale-down the neighbours are full size, so the cards are a little narrower. */
-  @media (min-width: 1024px) {
-    .turntable-slide {
-      width: min(31%, 28rem);
-    }
+  .belt-track > ul {
+    flex: 0 1 auto;
+    min-width: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.5rem;
+    padding-right: 0;
+  }
+
+  .belt-track li {
+    flex-shrink: 1;
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .belt-dup {
+    display: none;
   }
 }

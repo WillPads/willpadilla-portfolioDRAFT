@@ -43,23 +43,25 @@ export default function ProjectCard({
             <h3 id={`card-title-${project.slug}`} className="text-xl font-medium leading-tight tracking-tight text-foreground">
               {project.title}
             </h3>
-            {meta && <p className="mt-1 font-mono text-[11px] leading-snug text-foreground/65">{meta}</p>}
+            <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+              <StatusBadge status={project.status} />
+              {meta && <p className="font-mono text-[11px] leading-snug text-foreground/65">{meta}</p>}
+            </div>
           </div>
         </div>
 
-        <div className="mt-4">
-          <StatusBadge status={project.status} />
+        <p className="mt-5 text-pretty text-lg font-medium leading-snug text-foreground">{project.tagline}</p>
+
+        <div className="mt-5 border-l-2 border-foreground/20 pl-4">
+          <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-foreground/65">My role</p>
+          <p className="mt-1 text-[15px] font-medium leading-snug text-foreground">{project.role}</p>
+          {project.contribution && (
+            <p className="mt-2 text-pretty text-[15px] leading-relaxed text-foreground/70">{project.contribution}</p>
+          )}
         </div>
 
-        <p className="mt-3 text-pretty text-base leading-relaxed text-foreground/80">{project.tagline}</p>
-
-        <p className="mt-3 text-[15px] leading-snug text-foreground">
-          <span className="font-mono text-xs text-foreground/65">Role: </span>
-          {project.role}
-        </p>
-
         {project.stack.length > 0 && (
-          <TagList items={project.stack} label={`${project.title} tech stack`} className="mt-4" />
+          <TagList items={project.stack} label={`${project.title} tech stack`} className="mt-5" />
         )}
 
         <div className="mt-auto pt-6">
