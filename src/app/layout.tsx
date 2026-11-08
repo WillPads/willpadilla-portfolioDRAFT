@@ -40,6 +40,14 @@ export const metadata: Metadata = {
   title: "Will Padilla — Portfolio",
   description:
     "Software Engineer and Computer Science student at FEU Tech.",
+  // Stop phone browsers (iOS Safari above all) from turning the email address, phone numbers and
+  // places in the text into their own links. On the email buttons that detection takes over the tap,
+  // so the site's Gmail / Outlook / mail app menu never opens.
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
 };
 
 export default function RootLayout({
